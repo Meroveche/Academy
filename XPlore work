@@ -1,0 +1,30 @@
+//var class_id = "2e47b29f1b22e6105c8ccbb6624bcb53";
+//var class_id = "5b1996f81bebae503b5e657fe54bcbc0";
+//var class_id = "ffa5f8961bd762103b5e657fe54bcb1b";
+var class_id = "209d3e611b932a543b5e657fe54bcb5c";
+class_id = "6e75bf051b27a2903b5e657fe54bcb5e";
+ 
+// get course_config_id
+var conGR = new GlideRecord(Constants.COURSE_CONFLICT_TABLE);
+//conGR.addEncodedQuery("course_id", "c2f4aba11b1762945c8ccbb6624bcb4b"); 
+//conGR.addEncodedQuery("course_id.class_id", "2e47b29f1b22e6105c8ccbb6624bcb53");
+if (class_id) {
+  conGR.addQuery("course_id.class_id.sys_id", class_id);
+}
+conGR.addEncodedQuery("is_resolved!=true");
+//conGR.addEncodedQuery("course_id.class_id.class_numberLIKE2514");
+conGR.orderBy("course_id");
+conGR.query();
+
+var today = new GlideDate();
+
+//if (conGR.getRowCount() > 0) gs.info("success " + conGR.getRowCount());
+var inc = 0;
+while (conGR.next()) {
+  var courseGR = conGR.course_id.getRefRecord();
+  var courseDateTime = courseGR.getValue("start_date_time");
+  if (courseDateTime > today) {
+    inc++;
+    gs.info(inc + ": " + conGR.course_id.getDisplayValue() + " Class: " + conGR.course_id.class_id.getDisplayValue()+ " ID: " + conGR.course_id.class_id);
+  }
+}
