@@ -1,0 +1,1998 @@
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<unload unload_date="2025-09-26 17:19:53">
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class_enrollment</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class_enrollment">
+is_activeCHANGESTOfalse^EQ
+<item goto="false" or="false" field="is_active" endquery="false" value="false" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>HAISP Remove Graduated Students from grp</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { // check for multiple class enrollments: var userEnrollmentsGR = new GlideRecord("x_g_dh5_hsisat_class_enrollment"); userEnrollmentsGR.addQuery("student_id", current.student_id); userEnrollmentsGR.addQuery("is_active", true); userEnrollmentsGR.query(); while (userEnrollmentsGR.next()) { // Check if student is in another active class? if (userEnrollmentsGR.getRowCount() == 1) { var groupMember = new GlideRecord('sys_user_grmember'); groupMember.addQuery("user.sys_id", current.student_id.user_id.getValue()); //groupMember.addEncodedQuery("user.sys_idSTARTSWITHe5c5420b4748ee50dc855ff2e16d433b"); //test my account groupMember.addEncodedQuery("group=b93fba4a1b88e6503b5e657fe54bcb21"); groupMember.query(); if (groupMember.next()) { //If only in ONE class, delete member from the Student Group: groupMember.deleteRecord(); //gs.info("user_enrollments = 1, will delete from student group: " + current.student_id.getDisplayValue()); } } /*if (userEnrollmentsGR.getRowCount() > 1) { // do not remove from the student group //gs.info("user_enrollments > 1, will not delete from student group: " + current.student_id.getDisplayValue()); }*/ } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-09-22 13:45:40</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>43713ac31b4832503b5e657fe54bcbfb</sys_id>
+<sys_mod_count>7</sys_mod_count>
+<sys_name>HAISP Remove Graduated Students from grp</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="Global" source="global">global</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_script_43713ac31b4832503b5e657fe54bcbfb</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-22 15:42:02</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_facility</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_facility"/>
+<is_rest>false</is_rest>
+<message/>
+<name>On Facility changes notifications</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { // Add your code here var hideFacility = current.course_id.course_configuration_id.hide_facility; if (hideFacility == false) { var start_date = new GlideDateTime(); var end_date = new GlideDateTime(); var facility = current.facility_id.getDisplayValue(); var cousre = current.course_id.getDisplayValue(); var contentmsg = "Facility has been relocated for " + cousre + "\n scheduled on " + start_date + "\nto " + facility; var start_date1 = new GlideDateTime(current.course_id.start_date_time); //var end_date = new GlideDateTime(current.course_id.end_date_time); var ann = new GlideRecord("x_g_dh5_hsisat_announcement"); ann.initialize(); ann.setValue('content', contentmsg); ann.setValue('announcement_for', 'class'); ann.setValue('class', current.course_id.class_id); ann.setValue('type', 'danger'); ann.setValue('start_date', start_date.getDate()); ann.setValue('end_date', end_date.getDate()); ann.insert(); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-22 19:34:28</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>633954991b6fa2903b5e657fe54bcbbc</sys_id>
+<sys_mod_count>45</sys_mod_count>
+<sys_name>On Facility changes notifications</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_633954991b6fa2903b5e657fe54bcbbc</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-12 15:38:38</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>false</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+start_dateISEMPTY^end_dateISEMPTY^EQ
+<item goto="false" or="false" field="start_date" endquery="false" value="" operator="ISEMPTY" newquery="false"/>
+<item goto="false" or="false" field="end_date" endquery="false" value="" operator="ISEMPTY" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>[deprecated] Draft state</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { // Add your code here })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-06-13 12:24:41</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4de792a21b4a6a105c8ccbb6624bcb70</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>[deprecated] Draft state</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_4de792a21b4a6a105c8ccbb6624bcb70</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-12 14:30:08</sys_updated_on>
+<template>state=1^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>false</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+start_date<javascript:gs.beginningOfToday()^end_date<=javascript:gs.endOfToday()^EQ
+<item goto="false" or="false" field="start_date" endquery="false" value="javascript:gs.beginningOfToday()" operator="<" newquery="false"/>
+<item goto="false" or="false" field="end_date" endquery="false" value="javascript:gs.endOfToday()" operator="<=" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>[deprecated] Complete Status</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { // Add your code here })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-06-13 12:34:10</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>a5d99ea61b4a6a105c8ccbb6624bcbd7</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>[deprecated] Complete Status</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_a5d99ea61b4a6a105c8ccbb6624bcbd7</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-12 14:29:51</sys_updated_on>
+<template>state=5^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>false</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+start_date<=javascript:gs.endOfToday()^end_date>javascript:gs.endOfToday()^EQ
+<item goto="false" or="false" field="start_date" endquery="false" value="javascript:gs.endOfToday()" operator="<=" newquery="false"/>
+<item goto="false" or="false" field="end_date" endquery="false" value="javascript:gs.endOfToday()" operator=">" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>[deprecated] In Progress Status</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { // Add your code here })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-06-13 12:32:18</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>5929da261b4a6a105c8ccbb6624bcb34</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>[deprecated] In Progress Status</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_5929da261b4a6a105c8ccbb6624bcb34</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-11 19:36:57</sys_updated_on>
+<template>state=4^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>false</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+start_date>javascript:gs.endOfToday()^end_date>javascript:gs.endOfToday()^EQ
+<item goto="false" or="false" field="start_date" endquery="false" value="javascript:gs.endOfToday()" operator=">" newquery="false"/>
+<item goto="false" or="false" field="end_date" endquery="false" value="javascript:gs.endOfToday()" operator=">" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>[deprecated] Scheduled Status</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { // Add your code here })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-06-13 12:29:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>58981ee21b4a6a105c8ccbb6624bcbda</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>[deprecated] Scheduled Status</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_58981ee21b4a6a105c8ccbb6624bcbda</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-11 19:36:43</sys_updated_on>
+<template>state=3^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Course - Handle Missing Config</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const actions_required = new Set(GlideRecordUtils.getValue(current, "actions_required")); if (GeneralUtils.isEmpty(current.getValue("course_configuration_id"))) { actions_required.add(CourseUtils.ACTION_REQUIRED_CONFIG); } else { actions_required.delete(CourseUtils.ACTION_REQUIRED_CONFIG); } current.setValue("actions_required", Array.from(actions_required).toString()); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-09-11 19:10:57</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>7af21fa31bb3aad0065762cae54bcbe1</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Course - Handle Missing Config</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_7af21fa31bb3aad0065762cae54bcbe1</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-11 19:21:22</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Instructor - Add Instructor to Group</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { const INSTRUCTOR_GROUP_ID = "145ebec61b88e6503b5e657fe54bcb87"; const memberGR = new GlideRecord(Constants.USER_GROUP_MEMBER_TABLE); memberGR.addQuery("user", current.getValue("user_id")); memberGR.addQuery("group.name", SecurityUtils.GROUP_INSTRUCTORS); memberGR.query(); if (LogicUtils.not(memberGR.next())) { memberGR.newRecord(); memberGR.setValue("user", current.getValue("user_id")); memberGR.setValue("group", INSTRUCTOR_GROUP_ID); memberGR.insert(); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-06-03 05:24:42</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>92b615971b3166503b5e657fe54bcb80</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Instructor - Add Instructor to Group</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_92b615971b3166503b5e657fe54bcb80</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-11 16:39:44</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>true</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_schedule"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Review Instructor Schedule updates</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { const log = new Logger("Review Instructor Schedule updates", "Business Rule"); const instructorGR = current.instructor_id.getRefRecord(); //see if there is a corresponding instructor record for this course and instructor: var beginning = new GlideDateTime(current.start_date); //get the start time of the leave request var end = new GlideDateTime(current.end_date); //get the end time of the leave request var beginning_arr = beginning.getDisplayValue().split(" "); var end_arr = end.getDisplayValue().split(" "); var gaScheduled = new GlideAggregate("x_g_dh5_hsisat_instructor_schedule"); gaScheduled.addQuery('instructor_id', current.getValue("instructor_id")); gaScheduled.addEncodedQuery("course_id!=" + current.getValue("course_id")); gaScheduled.addEncodedQuery("start_date<javascript:gs.dateGenerate('" + end_arr.join("','") + "')^end_date>javascript:gs.dateGenerate('" + beginning_arr.join("','") + "')"); gaScheduled.groupBy('course_id'); gaScheduled.query(); while (gaScheduled.next()) { //gs.info("Review_Instructor_Schedule, found a matching Instructor schedule:" + gaScheduled.course_id + ", Instructor: " + current.getValue("instructor_id")); //found records on the same date, see if a conflict exists //see if there is a corresponding conflict record for this course and instructor: conflictGR = new GlideRecord(Constants.COURSE_CONFLICT_TABLE); conflictGR.addQuery("course_id", current.getValue("course_id")); conflictGR.addQuery("record_id", current.getValue("instructor_id")); conflictGR.addEncodedQuery("is_resolved!=true"); conflictGR.query(); // matching course and assigned instructor: if (LogicUtils.not(conflictGR.next())) { //no conflict record exists, create a new record try { GlideRecordUtils.save(new GlideRecord(Constants.COURSE_CONFLICT_TABLE), { course_id: current.getValue("course_id"), conflict_type: CourseUtils.ACTION_REQUIRED_INSTRUCTOR, record_type: instructorGR.getTableName(), record_id: current.getValue("instructor_id"), }); } catch (err) { log.error("conflictAssessment_for_InstructorConflicts[resolved]"); } } else { // conflict already exists if (current.deleted_at) { // conflict is deleted - set conflict to resolved try { GlideRecordUtils.save(conflictGR, { is_resolved: true, resolved_date: new GlideDate().getValue(), }); } catch (err) { log.error("conflictAssessment_for_InstructorConflicts[resolved issue]"); } } } } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-08-28 17:42:51</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>a9a9f64b1b67e6103b5e657fe54bcb74</sys_id>
+<sys_mod_count>52</sys_mod_count>
+<sys_name>Review Instructor Schedule updates</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_a9a9f64b1b67e6103b5e657fe54bcb74</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-08 15:17:09</sys_updated_on>
+<template/>
+<when>async_always</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_configuration</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_configuration">
+aor_class_sequenceVALCHANGES^EQ
+<item goto="false" or="false" field="aor_class_sequence" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Course Config - Handle AOR Sequence</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const sequence = GlideRecordUtils.getValue(current, "aor_class_sequence") /* eslint-disable-next-line */ .replace(/[\x00-\x1F\x7F]/g, "") .replace(/\s/g, "") .replace(/\./g, "") .toUpperCase(); current.setValue("aor_class_sequence", sequence); const parts = sequence.match(/(\d+)([A-Za-z]*)/); let numeric = parseInt(parts[1], 10); const alpha = parts[2]; if (isNaN(numeric)) return current.setValue("aor_class_sequence_number", 0); if (GeneralUtils.isEmpty(alpha)) return current.setValue("aor_class_sequence_number", numeric); for (let i = 0; i < alpha.length; i++) { numeric += (alpha.charCodeAt(i) - 64) / ((i + 1) * 10); } current.setValue("aor_class_sequence_number", numeric); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 17:20:09</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>73461daf1bdb1a105c8ccbb6624bcbeb</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Course Config - Handle AOR Sequence</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_73461daf1bdb1a105c8ccbb6624bcbeb</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-26 18:46:36</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_facility</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_facility"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Facility - Set Display Name</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const name = [ GlideRecordUtils.getValue(current, "building"), GlideRecordUtils.getValue(current, "room"), ].filter(Boolean).join(" - "); current.setValue("building_room", name); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-28 20:47:14</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>a53a37011b4bea903b5e657fe54bcbb9</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Facility - Set Display Name</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_a53a37011b4bea903b5e657fe54bcbb9</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-25 21:16:27</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_facility</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_facility"/>
+<is_rest>false</is_rest>
+<message/>
+<name>HAISP - Course Facility Validation</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { var gr_facilities = new GlideRecord("x_g_dh5_hsisat_course_facility"); gr_facilities.addQuery('course_id', current.getValue('course_id')); gr_facilities.query(); const fac_count = gr_facilities.getRowCount(); const fac_arr = []; while(gr_facilities.next()){ fac_arr.push({ 'sys_id': gr_facilities.getValue('facility_id'), 'found': false }); } //gs.info('jw fac count ' + gr_facilities.getRowCount()); var gr_prefs = new GlideRecord("x_g_dh5_hsisat_course_facility_preference"); gr_prefs.addQuery('course_configuration_id', current.course_id.course_configuration_id.getValue()); gr_prefs.query(); const pref_count = gr_prefs.getRowCount(); const pref_arr = []; while(gr_prefs.next()){ pref_arr.push(gr_prefs.getValue('facility_id')); } //gs.info('jw pref count ' + gr_prefs.getRowCount()); const fac_not_found = []; const fac_found = []; fac_arr.forEach(function(fac) { if(pref_arr.indexOf(fac.sys_id) > -1){ fac.found = true; fac_found.push(fac.sys_id); } else { fac_not_found.push(fac.sys_id); } }); //gs.info('jw obj ' + JSON.stringify(fac_arr)); //gs.info('jw not found arr ' + fac_not_found); if(fac_count >= pref_count){ if(fac_found.length == pref_count){ current.setValue('is_approved', true); current.update(); return; } } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-07-09 19:18:20</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4defe1071be6e210065762cae54bcb58</sys_id>
+<sys_mod_count>8</sys_mod_count>
+<sys_name>HAISP - Course Facility Validation</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_4defe1071be6e210065762cae54bcb58</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-22 14:14:25</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_announcement</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_announcement"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Announcement - Handle Load</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { g_scratchpad.showSelectionOnLoad = SecurityUtils.isApplicationAdministrator(); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-18 21:50:05</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>6af11cc01b63a250065762cae54bcbf9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Announcement - Handle Load</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_6af11cc01b63a250065762cae54bcbf9</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-18 21:50:05</sys_updated_on>
+<template/>
+<when>before_display</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_schedule">
+start_dateVALCHANGES^ORend_dateVALCHANGES^ORhours_unavailableISEMPTY^start_dateISNOTEMPTY^end_dateISNOTEMPTY^EQ
+<item goto="false" or="false" field="start_date" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="end_date" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="hours_unavailable" endquery="false" value="" operator="ISEMPTY" newquery="false"/>
+<item goto="false" or="false" field="start_date" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="end_date" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>HAISP Calculate Class Hours</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { var hoursUtil = new InstructorHoursUtil(); var hours = hoursUtil.calculateHours(current.start_date, current.end_date); current.setValue('hours_unavailable', hours); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-18 17:31:53</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>264757ff1b5366505c8ccbb6624bcbf1</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>HAISP Calculate Class Hours</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_264757ff1b5366505c8ccbb6624bcbf1</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-18 17:34:29</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course">
+start_date_timeVALCHANGES^ORend_date_timeVALCHANGES^ORclass_hours_decISEMPTY^start_date_timeISNOTEMPTY^end_date_timeISNOTEMPTY^EQ
+<item goto="false" or="false" field="start_date_time" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="end_date_time" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="class_hours_dec" endquery="false" value="" operator="ISEMPTY" newquery="false"/>
+<item goto="false" or="false" field="start_date_time" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="end_date_time" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>HAISP Calculate Class Hours</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { var hoursUtil = new InstructorHoursUtil(); var hours = hoursUtil.calculateHours(current.start_date_time, current.end_date_time); current.setValue('class_hours_dec', hours); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-18 16:44:06</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>7d5b0b731b1366505c8ccbb6624bcbe4</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>HAISP Calculate Class Hours</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_7d5b0b731b1366505c8ccbb6624bcbe4</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-18 16:48:08</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course">
+course_configuration_idISNOTEMPTY^course_configuration_idVALCHANGES^EQ
+<item goto="false" or="false" field="course_configuration_id" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="course_configuration_id" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Course - Transfer Course Config Fields</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const configGR = current.course_configuration_id.getRefRecord(); current.setValue("uniform_code", configGR.getValue("dress_code")); current.setValue("instructional_block_name", configGR.getValue("name")); current.setValue("instructional_block_description", configGR.getValue("description")); //current.setValue("required_instructors_number", configGR.getValue("required_instructor_count")); current.setValue("course_material", configGR.getValue("course_material")); current.setValue("sass_lp", configGR.getValue("sass_lp")); current.setValue("unit_aor", configGR.getValue("aor_code")); current.setValue("course_number", configGR.getValue("course_number")); current.setValue("unit_class_sequence", configGR.getValue("aor_class_sequence")); current.setValue("hsisat_week", configGR.getValue("class_week")); current.setValue("hsisat_day", configGR.getValue("class_day")); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-12 15:23:35</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>b810cc461bdb6a54065762cae54bcb62</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>Course - Transfer Course Config Fields</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_b810cc461bdb6a54065762cae54bcb62</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-08-18 15:57:56</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+stateCHANGESTO3^EQ
+<item goto="false" or="false" field="state" endquery="false" value="3" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Class - Send Assignment Emails</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { ClassUtils.triggerEvent_SendClassAssignments(current); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-08-14 04:39:44</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>3e6f7b921b1be2103b5e657fe54bcbd8</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>Class - Send Assignment Emails</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_3e6f7b921b1be2103b5e657fe54bcbd8</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-15 19:06:47</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>true</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_instructor_configuration</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_instructor_configuration">
+instructor_countVALCHANGES^EQ
+<item goto="false" or="false" field="instructor_count" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Instructor Config - Manage Count</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const courseGR = current.course_configuration_id.getRefRecord(); const instructorGA = new GlideAggregate(Constants.COURSE_INSTRUCTOR_CONFIGURATION_TABLE); instructorGA.addQuery("course_configuration_id", current.getValue("course_configuration_id")); if (GlideRecordUtils.isDeleting(current)) { instructorGA.addQuery("sys_id", "!=", current.getUniqueValue()); } instructorGA.addAggregate("SUM", "instructor_count"); instructorGA.query(); let count = 0; if (instructorGA.next()) { count = parseInt(instructorGA.getAggregate("SUM", "instructor_count"), 10) || 0; } GlideRecordUtils.save(courseGR, { required_instructor_count: count }); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-15 17:58:01</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>af8e73f21b9b2a10065762cae54bcb53</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Instructor Config - Manage Count</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_af8e73f21b9b2a10065762cae54bcb53</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-15 17:58:01</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>true</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition>InstructorScheduleUtils.shouldFilterQueries(current)</condition>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_schedule"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Instructor Schedule - Before Query</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { current.addNullQuery("deleted_at"); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-14 15:56:01</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>ecd9922a1bdf26103b5e657fe54bcb9e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Instructor Schedule - Before Query</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_ecd9922a1bdf26103b5e657fe54bcb9e</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 15:56:01</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>true</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_instructor</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_instructor">
+course_idISNOTEMPTY^EQ
+<item goto="false" or="false" field="course_id" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Course Instructor - Manage Schedule</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { if (GlideRecordUtils.isDeleting(current)) { InstructorScheduleUtils.deleteSchedule(current); } else { InstructorScheduleUtils.createSchedule(current); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-06-18 17:47:19</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>ded9f8d01b5e6e505c8ccbb6624bcbfe</sys_id>
+<sys_mod_count>7</sys_mod_count>
+<sys_name>Course Instructor - Manage Schedule</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_ded9f8d01b5e6e505c8ccbb6624bcbfe</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 14:22:09</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+stateCHANGESTO-1^EQ
+<item goto="false" or="false" field="state" endquery="false" value="-1" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Class - Handle Cancel</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { ClassUtils.handleCancelClass(current); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-14 13:32:57</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>ca0a7dea1b9b26103b5e657fe54bcbd5</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Class - Handle Cancel</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_ca0a7dea1b9b26103b5e657fe54bcbd5</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 13:42:49</sys_updated_on>
+<template/>
+<when>async_always</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+class_coordinator_user_idVALCHANGES^EQ
+<item goto="false" or="false" field="class_coordinator_user_id" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Class - Set Coordinator Info</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { if (GeneralUtils.isEmpty(current.getValue("class_coordinator_user_id"))) { current.setValue("class_coordinator_email", Constants.VALUE_EMPTY); current.setValue("class_coordinator_phone_number", Constants.VALUE_EMPTY); } else { if (GeneralUtils.isEmpty(current.getValue("class_coordinator_email"))) { current.setValue( "class_coordinator_email", GlideRecordUtils.getValue(current, "class_coordinator_user_id.email")); } if (GeneralUtils.isEmpty(current.getValue("class_coordinator_phone_number"))) { current.setValue( "class_coordinator_phone_number", GlideRecordUtils.getValue(current, "class_coordinator_user_id.phone") ); } } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-12 22:21:30</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>ffcedd061bdbaa54065762cae54bcb77</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Class - Set Coordinator Info</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_ffcedd061bdbaa54065762cae54bcb77</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-12 22:21:30</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course">
+start_date_timeVALCHANGES^ORend_date_timeVALCHANGES^reschedule_reasonINweather,facility_issue,other^EQ
+<item goto="false" or="false" field="start_date_time" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="end_date_time" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="reschedule_reason" endquery="false" value="weather,facility_issue,other" operator="IN" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Create Reschedule Audit</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { var gr = new GlideRecord("x_g_dh5_hsisat_course_reschedule"); gr.initialize(); gr.setValue('start_date_time', current.getValue('start_date_time')); gr.setValue('end_date_time', current.getValue('end_date_time')); gr.setValue('reason_ind', current.getValue('reschedule_reason')); gr.setValue('explanation_str', current.getValue('reschedule_explanation')); gr.insert(); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-12 12:55:12</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>e60e17f11b976a54065762cae54bcb0d</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Create Reschedule Audit</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_e60e17f11b976a54065762cae54bcb0d</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-12 17:19:09</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class"/>
+<is_rest>false</is_rest>
+<message/>
+<name>HSI Academy: Create New Class</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { // set increment: var i = 0; // get schedule: // get Class Start date: // Get all of the Courses from the Course Configuration table: var courseTemplates = new GlideRecord('x_g_dh5_hsisat_course_configuration'); //courseTemplates.addQuery('class_configuration_id', current.class_configuration_id); courseTemplates.query(); var gdt = new GlideDateTime(); var gdt2 = new GlideDateTime(gdt.getDisplayValue()); gs.info("create_new_class: Templates: " + courseTemplates.getRowCount() + " Date Time: " + gdt + "/" + gdt2); // for each course configuration, create a course for this class: while (courseTemplates.next()) { var newCourse = new GlideRecord('x_g_dh5_hsisat_course'); newCourse.initialize(); // set values for the new course: newCourse.setValue("class_id", current.sys_id); newCourse.class_hours_dec = courseTemplates.a_class_hours; newCourse.course_number = courseTemplates.course_number; newCourse.course_configuration_id = courseTemplates.sys_id; newCourse.uniform_code = courseTemplates.dress_code; newCourse.facility_type_code = courseTemplates.fletc_facility_set; newCourse.uniform_code = courseTemplates.dress_code; newCourse.hsisat_day = courseTemplates.hsisat_day; newCourse.hsisat_week = courseTemplates.hsisat_week; newCourse.instructional_block_description = courseTemplates.description; newCourse.instructional_block_name = courseTemplates.name; newCourse.required_instructors_number = courseTemplates.required_instructor_count; newCourse.unit_aor = courseTemplates.aor_code; newCourse.unit_class_sequence = courseTemplates.unit_class_sequence; newCourse.start_date_time = gdt2; // Insert the new course: newCourse.insert(); i++; } gs.info("create_new_class Created: " + i + " courses"); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-06-04 13:47:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>8d4454f31b316a50065762cae54bcbc9</sys_id>
+<sys_mod_count>10</sys_mod_count>
+<sys_name>HSI Academy: Create New Class</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_8d4454f31b316a50065762cae54bcbc9</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-08 16:30:46</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_email</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_email"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Email - Clean Inputs</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const to = GlideRecordUtils.getValue(current, "to") .split(/[,;|\s]/).map((item) => item.trim()).filter(Boolean); current.setValue("to", to.join(",")); const cc = GlideRecordUtils.getValue(current, "cc") .split(/[,;|\s]/).map((item) => item.trim()).filter(Boolean); current.setValue("cc", cc.join(",")); const bcc = GlideRecordUtils.getValue(current, "bcc") .split(/[,;|\s]/).map((item) => item.trim()).filter(Boolean); current.setValue("bcc", bcc.join(",")); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-07 17:08:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>fa68a2501b97e614065762cae54bcb31</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Email - Clean Inputs</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_fa68a2501b97e614065762cae54bcb31</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-07 17:15:42</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_email</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_email">
+stateCHANGESTOSENT^EQ
+<item goto="false" or="false" field="state" endquery="false" value="SENT" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Email - Trigger Notification</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { gs.eventQueue("x_g_dh5_hsisat.action.send_email", current, GlideRecordUtils.getValue(current, "to")); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-07 16:40:21</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path/>
+<sys_id>aac1e2501b57e614065762cae54bcb63</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Email - Trigger Notification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_aac1e2501b57e614065762cae54bcb63</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-07 16:40:21</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_configuration</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_configuration">
+a_class_hoursVALCHANGES^ORb_class_hoursVALCHANGES^ORab_class_hoursVALCHANGES^EQ
+<item goto="false" or="false" field="a_class_hours" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="b_class_hours" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="ab_class_hours" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Course Config - Handle Total Class Hours</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const totalHours = [ GlideRecordUtils.getValue(current, "a_class_hours"), GlideRecordUtils.getValue(current, "b_class_horus"), GlideRecordUtils.getValue(current, "ab_class_hours"), ].reduce((total, hours) => total + hours, 0); current.setValue("total_class_hours", totalHours); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 17:21:23</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>1bb65def1bdb1a105c8ccbb6624bcbd1</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Course Config - Handle Total Class Hours</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_1bb65def1bdb1a105c8ccbb6624bcbd1</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-01 21:20:55</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_student</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_student"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Student - Before Submit</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const userGR = current.user_id.getRefRecord(); if (userGR.isValidRecord()) { current.setValue("name", userGR.getValue("name")); } else { current.setValue( "name", [ current.getValue("last_name"), [ current.getValue("first_name"), current.getValue("middle_name"), ].filter(Boolean).join(" "), ].filter(Boolean).join(", ") ); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-25 14:32:20</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4007c7cc1b8722903b5e657fe54bcb1f</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Student - Before Submit</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_4007c7cc1b8722903b5e657fe54bcb1f</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-07-29 17:12:58</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class_enrollment</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class_enrollment"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Enrollment - Handle Insert</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { const log = new Logger("Enrollment - Handle Insert", "Business Rule"); log.error(GlideRecordUtils.getValue(current, "student_id.user_id")); if (GeneralUtils.isEmpty(current.getValue("student_id"))) { const studentGR = new GlideRecord(Constants.STUDENT_TABLE); current.student_id = studentGR.insert(); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-29 14:45:59</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>6c1177111b03ae903b5e657fe54bcbd4</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Enrollment - Handle Insert</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_6c1177111b03ae903b5e657fe54bcbd4</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-07-29 15:17:28</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_class">
+cancellation_reasonVALCHANGES^cancellation_reasonISNOTEMPTY^EQ
+<item goto="false" or="false" field="cancellation_reason" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="cancellation_reason" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Class - Set to Cancelled</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { current.setValue("state", ClassUtils.STATE_CANCELLED); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-24 21:25:40</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>bfacd3b31b366e503b5e657fe54bcb2a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Class - Set to Cancelled</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_bfacd3b31b366e503b5e657fe54bcb2a</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-07-24 21:25:40</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>true</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>false</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_course_configuration</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_course_configuration"/>
+<is_rest>false</is_rest>
+<message/>
+<name>HSI - Facility Preference Management</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { var count = [1, 2, 3]; if (current.operation() == 'insert') { for (var c in count) { var gr_ins = new GlideRecord("x_g_dh5_hsisat_course_facility_preference"); gr_ins.initialize(); gr_ins.setValue('course_configuration_id', current.getValue('sys_id')); gr_ins.setValue('preference_order', count[c]); gr_ins.insert(); } } if (current.operation() == 'delete') { for (var c in count) { var gr_del = new GlideRecord("x_g_dh5_hsisat_course_facility_preference"); gr_del.addQuery('course_configuration_id', current.getValue('sys_id')); gr_del.query(); gr_del.deleteMultiple(); } } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-06-06 13:49:37</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>f848ee981b0aee50065762cae54bcbd6</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>HSI - Facility Preference Management</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_f848ee981b0aee50065762cae54bcbd6</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-06-27 12:30:08</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_skill">
+status=REJECTED^sys_updated_bySAMEASsys_created_by^explanation_of_your_experienceVALCHANGES^ORrecent_experience_dateVALCHANGES^EQ
+<item goto="false" or="false" field="status" endquery="false" value="REJECTED" operator="=" newquery="false"/>
+<item goto="false" or="false" field="sys_updated_by" endquery="false" value="sys_created_by" operator="SAMEAS" newquery="false"/>
+<item goto="false" or="false" field="explanation_of_your_experience" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="true" field="recent_experience_date" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Restart Knowledge Skll Request on Update</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { //if(current.sys_updated_by==current.instructor_id){ //current.status = "SECTION_CHIEF"; //gs.log("Restart_Certification_Req: "+current.status); //} })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-05-13 17:15:47</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>8961bb241b69aa50065762cae54bcb41</sys_id>
+<sys_mod_count>8</sys_mod_count>
+<sys_name>Restart Knowledge Skll Request on Update</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_8961bb241b69aa50065762cae54bcb41</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-05-22 14:46:22</sys_updated_on>
+<template>status=SECTION_CHIEF^approval=not requested^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition>current.status=='REJECTED';</condition>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_certification">
+status=REJECTED^sys_updated_bySAMEASsys_created_by^effective_dateVALCHANGES^EQ
+<item goto="false" or="false" field="status" endquery="false" value="REJECTED" operator="=" newquery="false"/>
+<item goto="false" or="false" field="sys_updated_by" endquery="false" value="sys_created_by" operator="SAMEAS" newquery="false"/>
+<item goto="false" or="false" field="effective_date" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Restart Certification Request on Update</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { //current.status = 'SECTION_CHIEF'; //gs.log("This is running "); })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-05-13 16:20:22</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>9754a7e01ba5aa50065762cae54bcb12</sys_id>
+<sys_mod_count>51</sys_mod_count>
+<sys_name>Restart Certification Request on Update</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_9754a7e01ba5aa50065762cae54bcb12</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-05-22 14:29:30</sys_updated_on>
+<template>status=SECTION_CHIEF^approval=not requested^EQ</template>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor"/>
+<is_rest>false</is_rest>
+<message/>
+<name>HAISP - Prevent Duplicate Instructor</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/) { var gr = new GlideRecord("x_g_dh5_hsisat_instructor"); gr.addQuery("user_id", current.getValue('user_id')); gr.query(); if(gr.next()){ current.setAbortAction(true); gs.addErrorMessage("An instructor profile already exists for the user identified on the form. Creating a duplicate profile is not allowed. If you believe this is an error, please contact a system admin.<br><br><a href='?id=haisp_instructor_profile&table=x_g_dh5_hsisat_instructor&sys_id=" + gr.getValue('sys_id') + "'>View existing profile</a>"); } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-05-19 15:38:58</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>3323daa61b65ee903b5e657fe54bcb56</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>HAISP - Prevent Duplicate Instructor</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_3323daa61b65ee903b5e657fe54bcb56</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-05-21 13:57:32</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_skill"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Bypass Knowledge Approval Process</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { //if the user is a member of the Academy Admin, Program Manager, scheduler, Section or Unit chief groups: if (gs.getUser().isMemberOf('HAISP - Application Administrators') || gs.getUser().isMemberOf('HAISP - Unit Program Managers') || gs.getUser().isMemberOf('HAISP - Schedulers') || gs.getUser().isMemberOf('HAISP - Section Chiefs') || gs.getUser().isMemberOf('HAISP - Unit Chiefs')) { current.status = "APPROVED"; } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-05-16 17:13:50</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>29bd8bed1b61a6903b5e657fe54bcb4a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Bypass Knowledge Approval Process</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_29bd8bed1b61a6903b5e657fe54bcb4a</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-05-16 17:13:50</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_certification"/>
+<is_rest>false</is_rest>
+<message/>
+<name>Bypass Certification Approval Process</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { //if the user is a member of the Academy Admin, Program Manager, scheduler, Section or Unit chief groups: if (gs.getUser().isMemberOf('HAISP - Application Administrators') || gs.getUser().isMemberOf('HAISP - Unit Program Managers') || gs.getUser().isMemberOf('HAISP - Schedulers') || gs.getUser().isMemberOf('HAISP - Section Chiefs') || gs.getUser().isMemberOf('HAISP - Unit Chiefs')) { current.status = "APPROVED"; } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-05-16 17:09:05</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>94ac4b2d1b61a6903b5e657fe54bcbc2</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Bypass Certification Approval Process</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_94ac4b2d1b61a6903b5e657fe54bcbc2</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-05-16 17:12:25</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="x_g_dh5_hsisat_instructor_certification">
+certification_codeISNOTEMPTY^effective_dateVALCHANGES^EQ
+<item goto="false" or="false" field="certification_code" endquery="false" value="" operator="ISNOTEMPTY" newquery="false"/>
+<item goto="false" or="false" field="effective_date" endquery="false" value="" operator="VALCHANGES" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Populate expiration date</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script>
+<![CDATA[ (function executeRule(current, previous /*null when async*/ ) { const certificationId = GlideRecordUtils.getValue(current, 'certification_code'); const dateOfCompletion = GlideRecordUtils.getValue(current, 'effective_date'); if (certificationId && dateOfCompletion) { // Create a GlideRecord to query the Certification table const certcodegr = new GlideRecord('x_g_dh5_hsisat_certification_code'); if (certcodegr.get(certificationId)) { // Check if the certification has an expiration date if (GlideRecordUtils.getValue(certcodegr, 'does_cert_expire')) { // Get the number of years until expiration const yearsUntilExpiration = GlideRecordUtils.getValue(certcodegr, 'certification_expiration_period'); // Calculate the expiration date const expirationDate = new GlideDateTime(dateOfCompletion); expirationDate.addYearsLocalTime(yearsUntilExpiration); // Set the expiration date on the current record current.setValue('expiration_date', expirationDate); } else { // If no expiration is needed, clear the expiration date current.setValue('expiration_date', Constants.VALUE_EMPTY); } } } })(current, previous); ]]>
+</script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-05-15 20:11:18</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>af2ba29d1b2da2903b5e657fe54bcbb8</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>Populate expiration date</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_af2ba29d1b2da2903b5e657fe54bcbb8</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-05-15 21:13:37</sys_updated_on>
+<template/>
+<when>before</when>
+</sys_script>
+</unload>
