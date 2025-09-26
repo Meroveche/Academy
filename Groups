@@ -1,0 +1,332 @@
+<unload unload_date="2025-09-26 17:24:13">
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Unit Program Managers</name>
+<parent display_value="HAISP - All Users" name="HAISP - All Users">48eb7ffe1bd4a2103b5e657fe54bcb47</parent>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:52:16</sys_created_on>
+<sys_id>b2eef24a1b88e6503b5e657fe54bcb64</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-15 16:08:09</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Unit Chiefs</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:50:31</sys_created_on>
+<sys_id>809ef60a1b88e6503b5e657fe54bcbeb</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:33:51</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value=""/>
+<name>HAISP - Testers</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-09-25 13:14:39</sys_created_on>
+<sys_id>21c80e401b947610065762cae54bcbb7</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-25 13:14:39</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name/>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Students</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:53:23</sys_created_on>
+<sys_id>b93fba4a1b88e6503b5e657fe54bcb21</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:33:35</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Section Chiefs</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:50:09</sys_created_on>
+<sys_id>3e7e360a1b88e6503b5e657fe54bcb14</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:33:01</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Schedulers</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:33:08</sys_created_on>
+<sys_id>745076861b08e6503b5e657fe54bcb4d</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:32:45</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Instructors</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:49:39</sys_created_on>
+<sys_id>145ebec61b88e6503b5e657fe54bcb87</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:32:24</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Class Coordinators</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-04 15:52:54</sys_created_on>
+<sys_id>3a1f7a4a1b88e6503b5e657fe54bcb4d</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:32:09</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - Application Administrators</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-03-03 20:10:15</sys_created_on>
+<sys_id>45607e3d1bc82650065762cae54bcb3a</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-07-28 14:31:39</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+<sys_user_group action="INSERT_OR_UPDATE">
+<active>true</active>
+<average_daily_fte/>
+<cost_center display_value=""/>
+<default_assignee display_value=""/>
+<description/>
+<email/>
+<exclude_manager>false</exclude_manager>
+<hourly_rate>0</hourly_rate>
+<include_members>false</include_members>
+<manager display_value="Null, Richard A">91dc29a6db8ba20046d430340f9619e2</manager>
+<name>HAISP - All Users</name>
+<parent display_value=""/>
+<points>0</points>
+<roles/>
+<source/>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-19 14:29:33</sys_created_on>
+<sys_id>48eb7ffe1bd4a2103b5e657fe54bcb47</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_updated_by>JDAlcorn</sys_updated_by>
+<sys_updated_on>2025-07-14 15:09:42</sys_updated_on>
+<type/>
+<u_exempt_45_day>false</u_exempt_45_day>
+<u_group_ownership/>
+<u_manager_backup_name>bf7d2eb51b024e1402a20e1ce54bcbd0,219f90941b65d2d044886571f54bcb84</u_manager_backup_name>
+<u_queue/>
+<u_region display_value=""/>
+<u_service_region/>
+<u_sub_area/>
+<u_sub_site_code/>
+<vendors/>
+</sys_user_group>
+</unload>
