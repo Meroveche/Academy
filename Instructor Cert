@@ -1,0 +1,449 @@
+-------------------  HTML --------------------------------
+<div ng-if="data.instructorId" class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Certifications and Job-Related Education
+    </h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <caption>Please include any relevant certifications and/or advanced educational training or education.</caption>
+      <thead>
+        <tr>
+          <th scope="col" aria-sort="{{sort['name'].sort}}">
+          	<button type="button" class="btn btn-clear" aria-label="{{sort['name'].label}}" ng-click="sortData($event, 'certification_code')">
+              Name <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </th>
+          <th scope="col"  aria-sort="{{sort['expiration_date'].sort}}" class="date">
+          	<button type="button" class="btn btn-clear" aria-label="{{sort['expiration_date'].label}}" ng-click="sortData($event, 'expiration_date')">
+              Expiration Date <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </th>
+          <th scope="col" aria-sort="{{sort['status'].sort}}">
+          	<button type="button" class="btn btn-clear" aria-label="{{sort['status'].label}}" ng-click="sortData($event, 'status')">
+              Status <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+          </th>
+          <th scope="col">
+          	<span class="sr-only">Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="certification in data.instructor.certifications track by certification.sys_id">
+        <tr>
+          <th scope="row">
+            <a ng-href="?id=hsi_form&instructor_id={{data.instructorId}}&table=x_g_dh5_hsisat_instructor_certification&sys_id={{certification.sys_id}}"> 
+              {{certification.name}}
+            </a>
+          </th>
+          <td class="date">{{certification.expiration_date | date}}</td>
+          <td>{{certification.status}}</td>
+          <td>
+          	<button type="button" class="btn btn-default pull-right" ng-click="expand($event)" aria-expanded="false" aria-controls="details-{{certification.sys_id}}">
+              <span class="sr-only">Expand {{certification.certification_code}}</span>
+              <i aria-hidden="true" class="fa fa-plus"></i>
+            </button>
+          </td>
+        </tr>
+        <tr id="details-{{certification.sys_id}}" class="hidden">
+        	<td colspan="3">
+          	<div class="row">
+              <div class="col-xs-12">
+                <a ng-if="certification.attachment_id" href="/sys_attachment.do?sys_id={{certification.attachment_id}}" download>Download Certification</a>
+                <p ng-if="!certification.attachment_id">
+                  No certification attachment provided.
+                </p>
+                
+                <div>
+                  <h4>
+                    Approval History
+                  </h4>
+                  <ol ng-if="certification.history.length">
+                    <li ng-repeat="history in certification.history" ng-bind-html="history"></li>
+                  </ol>
+                	<p ng-if="!certification.history.length">
+                  	No approval history for this certification.
+                	</p>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody ng-if="!data.instructor.certifications.length">
+        <tr>
+          <td colspan="4">There are no recorded certifications for this instructor.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-default" ng-click="open()"  ng-if="data.canEdit">
+      Add Certification
+    </button>
+    
+    <uib-pagination total-items="data.totalCount" items-per-page="data.batchSize" ng-model="data.page" ng-change="paginate()" boundary-link-numbers="true" rotate="false"></uib-pagination>
+  </div>
+</div>
+
+--------------------------------  SERVER ----------------------------------------
+(function() {
+    /* populate the 'data' object */
+    /* e.g., data.table = $sp.getValue('table'); */
+	const log = new Logger("Academy Instructor Certifications", "Portal Widget");
+	data.page = 1;
+	if (input?.sort) {
+		data.page = 1;
+	}
+	if (input?.action === "paginate") {
+		data.page = Math.max(input.page, 1);
+	}
+	
+	data.batchSize = 5;
+	
+	data.instructorId = $sp.getParameter("sys_id");
+	if (GeneralUtils.isEmpty(data.instructorId)) return;
+	
+	const instructorGR = new GlideRecord(Constants.INSTRUCTOR_TABLE);
+	if (GeneralUtils.areEqual(data.instructorId, "me")) {
+		instructorGR.addQuery("user_id", gs.getUserID());
+	} else {
+		instructorGR.addQuery("sys_id", data.instructorId);
+	}
+	instructorGR.query();
+	if (LogicUtils.not(instructorGR.next())) {
+		data.instructorId = Constants.VALUE_EMPTY;
+		return;
+	}
+	
+	data.instructorId = instructorGR.getUniqueValue();
+	data.sysUserId = GlideRecordUtils.getValue(instructorGR, "user_id");
+	data.canEdit = LogicUtils.or(
+		GeneralUtils.areEqual(data.sysUserId, gs.getUserID()),
+		SecurityUtils.isInstructorEditor()
+	);
+	
+	if (GeneralUtils.hasValue(input?.dataToInsert)) {
+		try {
+			data.newCertificationId = GlideRecordUtils.save(
+				new GlideRecord(Constants.INSTRUCTOR_CERTIFICATION_TABLE),
+				input.dataToInsert
+			);
+		} catch (err) {
+			log.error(err.message, "dataToInsert");
+		}
+	}
+	
+	data.sort = GeneralUtils.defaultValue(input?.sort, { field: "expiration_date", asc: false });
+	
+	const startIndex = (data.page - 1) * data.batchSize;
+	const endIndex = data.page * data.batchSize;
+	
+	const certificationGR = new GlideRecord(Constants.INSTRUCTOR_CERTIFICATION_TABLE);
+	certificationGR.addQuery("instructor_id", data.instructorId);
+	if (LogicUtils.not(data.canEdit)) {
+		certificationGR.addQuery("approval", "approved");
+	}
+	if (data.sort.asc) {
+		certificationGR.orderBy(data.sort.field);
+	} else {
+		certificationGR.orderByDesc(data.sort.field);
+	}
+	certificationGR.chooseWindow(startIndex, endIndex);
+	certificationGR.query();
+	
+	data.totalCount = certificationGR.getRowCount();
+	const certifications = [];
+	while (certificationGR.next()) {
+		const attachmentGR = new GlideRecord(Constants.ATTACHMENT_TABLE);
+		attachmentGR.orderByDesc("sys_created_on");
+		attachmentGR.setLimit(1);
+		attachmentGR.addQuery("table_name", Constants.INSTRUCTOR_CERTIFICATION_TABLE);
+		attachmentGR.addQuery("table_sys_id", certificationGR.getUniqueValue());
+		attachmentGR.query();
+		let attachmentId = null;
+		if (attachmentGR.next()) attachmentId = attachmentGR.getUniqueValue();
+		
+		certifications.push({
+			sys_id: certificationGR.getUniqueValue(),
+			name: GlideRecordUtils.getDisplayValue(certificationGR, "certification_code"),
+			certification_code: GlideRecordUtils.getValue(certificationGR, "certification_code"),
+			effective_date: GlideRecordUtils.getValue(certificationGR, "effective_date"),
+			expiration_date: GlideRecordUtils.getValue(certificationGR, "expiration_date"),
+			status: GlideRecordUtils.getDisplayValue(certificationGR, "status"),
+			status_code: GlideRecordUtils.getValue(certificationGR, "status"),
+			approval: GlideRecordUtils.getValue(certificationGR, "approval"),
+			history: (() => {
+				const journalGR = new GlideRecord("sys_journal_field");
+				journalGR.addQuery("element", "approval_history");
+				journalGR.addQuery("element_id", certificationGR.getUniqueValue());
+				journalGR.orderByDesc("sys_created_on");
+				journalGR.query();
+				
+				const history = [];
+				while (journalGR.next()) {
+					history.push(journalGR.getValue("sys_created_on") + " - " + journalGR.getValue("value").replaceAll("\n", "<br>"));
+				}
+				
+				return history.filter(Boolean);
+			})(),
+			attachment_id: attachmentId,
+		});
+	}
+	
+	data.certification_codes = (() => {
+		const NOT_SELECTABLE_STATUSES = ["not requested", "requested", "approved"];
+		const NOT_SELECTABLE_CODES = certifications.filter((item) => NOT_SELECTABLE_STATUSES.includes(item.approval))
+			.map((item) => item.certification_code);
+		
+		const codeGR = new GlideRecord(Constants.CERTIFICATION_CODE_TABLE);
+		if (GeneralUtils.hasValue(NOT_SELECTABLE_CODES)) {
+			codeGR.addQuery("sys_id", "NOT IN", NOT_SELECTABLE_CODES);
+		}
+		codeGR.addQuery("is_active", true);
+		codeGR.orderBy("name");
+		codeGR.query();
+		
+		const certification_codes = [];
+		while (codeGR.next()) {
+			certification_codes.push({
+				id: codeGR.getUniqueValue(),
+				name: GlideRecordUtils.getDisplayValue(codeGR, "name"),
+			});
+		}
+		
+		return certification_codes;
+	})();
+	
+	data.instructor = {
+		certifications,
+	};
+})();
+
+--------------------------   CLIENT -------------------------
+api.controller=function($scope, $uibModal) {
+  /* widget controller */
+  const c = this;
+	
+	function getSortData() {		
+		$scope.sort = {
+			name: (() => {
+				if ($scope.data?.sort.field !== "certification_code") {
+					return { sort: "none", label: "Sort by name" };
+				}
+			
+				if ($scope.data?.sort.asc) {
+					return { sort: "ascending", label: "Sorted by name, ascending" };
+				} else {
+					return { sort: "descending", label: "Sorted by name, descending" };
+				}
+			})(),
+			expiration_date: (() => {
+				if ($scope.data?.sort.field !== "expiration_date") {
+					return { sort: "none", label: "Sort by expiration date" };
+				}
+				
+				if ($scope.data?.sort.asc) {
+					return { sort: "ascending", label: "Sorted by expiration date, ascending" };
+				} else {
+					return { sort: "descending", label: "Sorted by expiration date, descending" };
+				}
+			})(),
+			status: (() => {
+				if ($scope.data?.sort.field !== "status") {
+					return { sort: "none", label: "Sort by status" };
+				}
+				
+				if ($scope.data?.sort.asc) {
+					return { sort: "ascending", label: "Sorted by status, ascending" };
+				} else {
+					return { sort: "descending", label: "Sorted by status, descending" };
+				}
+			})(),
+		};
+	}
+	
+	if ($scope.data.instructorId) getSortData();
+	
+	c.modalController = function ($scope, $uibModalInstance) {
+		$scope.errors = [];
+		$scope.max_date = new Date().toISOString().split("T")[0];
+		$scope.certification_codes = c.data.certification_codes;
+		
+		$scope.certification = {
+			instructor_id: c.data.instructorId,
+			effective_date: "",
+			certification_code: "",
+			attachment: null,
+		};
+		
+		$scope.validate = function (certification) {
+			$scope.errors = [];
+			
+			if (!certification.certification_code) $scope.errors.push("Certification selection is required");
+			if (!certification.effective_date) $scope.errors.push("Completion Date is required");
+			if (!certification.attachment) $scope.errors.push("Proof of certification must be attached");
+			
+			return !$scope.errors.length;
+		};
+		
+		$scope.submit = function () {
+			if (!$scope.validate($scope.certification)) return;
+			$uibModalInstance.close($scope.certification);
+		};
+		
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss("cancel");
+		};
+	};
+	
+	$scope.open = function () {
+		const modalInstance = $uibModal.open({
+			animation: true,
+			controller: c.modalController,
+			templateUrl: "add-certification-modal.html",
+		})
+			.result
+			.then(function (certification) {
+				c.data.dataToInsert = certification;
+				c.server.update()
+					.then(function (response) {
+						delete c.data.dataToInsert;
+						if (response.newCertificationId) {
+							fetch("/api/now/attachment/file?table_name=x_g_dh5_hsisat_instructor_certification&table_sys_id=" + response.newCertificationId + "&file_name=" + certification.attachment.name, {
+								method: "POST",
+								headers: {
+									"Content-Type": "multipart/form-data",
+									"X-UserToken": g_ck,
+								},
+								body: certification.attachment,
+							})
+								.then((res) => {
+									if (res.ok) return res.json();
+									throw res;
+								})
+								.then(({ result }) => {
+									const sysId = result.sys_id;
+									const cert = $scope.data.instructor.certifications.find(
+										(item) => item.id === response.newCertificationId
+									);
+									if (cert) {
+										cert.attachment_id = sysId;
+									}
+								})
+						}
+					});
+			});
+	};
+	
+	$scope.sortData = function (event, field) {
+		const header = event.target.closest("th");
+		const order = header.getAttribute("aria-sort");
+		$scope.data.sort = {
+			field,
+			asc: order === "ascending" ? false : true,
+		};
+		
+		getSortData();
+		c.data.sort = $scope.data.sort;
+		c.server.update()
+			.then(function (response) {
+				delete c.data.sort;
+			});
+	};
+	
+	$scope.expand = function (event) {
+		event.target.closest("tr").nextElementSibling.classList.toggle("hidden");
+		
+		const btn = event.target.closest("button");
+		const icon = btn.querySelector(".fa");
+		if (btn.getAttribute("aria-expanded") === "false") {
+			icon.classList.remove("fa-plus");
+			icon.classList.add("fa-minus");
+			
+			btn.setAttribute("aria-expanded", "true");
+		} else {
+			icon.classList.remove("fa-minus");
+			icon.classList.add("fa-plus");
+			
+			btn.setAttribute("aria-expanded", "false");
+		}
+	};
+	
+	$scope.paginate = function () {
+		c.data.action = "paginate";
+		c.server.update()
+			.then(function (response) {
+				delete c.data.action;
+			});
+	};
+};
+
+------------------ CSS ---------------------------
+ol {
+  list-style: none;
+  padding: 0;
+  
+  > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
+tbody {
+  border: none !important;
+  
+  tr + tr > * {
+    border-top: none !important;
+  }
+  
+  th, td {
+    vertical-align: middle !important;
+  }
+}
+
+[scope="row"] {
+  font-weight: normal;
+}
+
+[scope="row"],
+[scope="row"] ~ td {
+  vertical-align: initial;
+}
+
+[aria-sort] > button {
+  font-weight: bold;
+  padding: 0;
+}
+
+[aria-sort="none"] .fa-chevron-down {
+  display: none;
+}
+
+[aria-sort="ascending"] .fa-chevron-down,
+[aria-sort="descending"] .fa-chevron-down {
+  display: inline-block;
+}
+
+[aria-sort="ascending"] .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.date,
+.actions {
+  text-align: right;
+}
+
+.panel-body > * + * {
+  margin-top: 1rem;
+}
+
+.panel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagination {
+  margin: 0;
+}
