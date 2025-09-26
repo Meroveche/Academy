@@ -354,7 +354,7 @@
 <item_table/>
 <mandatory>false</mandatory>
 <message/>
-<message_html><![CDATA[<p><span style="font-size: 12pt;">Your time-off request for ${start_date} to ${end_date} has been approved. Please submit a time-off request in GovTA to finalize this request.</span></p>
+<message_html><![CDATA[<p><span style="font-size: 12pt;">Your time-off request for ${start_date} to ${end_date} has been approved. Please submit a time-off request to finalize this request.</span></p>
 <p style="font-family: calibri; font-size: 12pt;"><span style="font-size: 12pt;">{link to GovTA - <a href="https://dhsgta.nfc.usda.gov/govta/Login">https://dhsgta.nfc.usda.gov/govta/Login</a>} </span></p>]]></message_html>
 <message_list/>
 <message_text/>
