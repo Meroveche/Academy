@@ -1,0 +1,112 @@
+-------------------------  HTML   -------------------
+<div class="panel panel-default" ng-if="!c.data.isStudent">
+  <div class="panel-heading">
+    <h3 class="panel-title">Quick Links</h3>
+  </div>
+  <nav class="panel-body" aria-label="quick links">
+    <ul>
+      <li ng-repeat="link in data.links"><a href="{{link.url}}">{{link.label}}</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+-------------------  SERVER --------------------------
+(function() {
+	/* populate the "data" object */
+	/* e.g., data.table = $sp.getValue("table"); */
+	var instance = gs.getProperty("instance_name");
+	var links = [];
+	var isHSIAdmin = SecurityUtils.isApplicationAdministrator();
+	var isInstructor = SecurityUtils.isInstructorUser();
+	var isSectionChief = SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS);
+	var isUnitChief = SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_CHIEFS);
+	var isClassCoordinator = SecurityUtils.isClassCoordinator();
+	var isScheduler = SecurityUtils.isSchedulerUser();
+	var isProgramManager = SecurityUtils.isProgramManager();
+	data.isStudent = (SecurityUtils.isStudentUser() && !gs.hasRole("admin"));
+
+	if (isHSIAdmin || isScheduler || isProgramManager) {
+		links.push({
+			label: "All Requests",
+			url: "?id=haisp_instructor_requests"
+		});
+	}
+	if (isHSIAdmin) {
+		links.push({
+			label: "All Pending Requests",
+			url: "?id=haisp_pending_requests"
+		});
+	}
+	if (isInstructor) {
+    links.push({
+			label: "My Requests",
+		  url: "?id=haisp_my_pending_requests"
+			
+		});
+	}
+	if (isUnitChief) {
+		links.push({
+			label: "My Pending Approvals",
+			url: "?id=haisp_my_pending_approvals"
+		});
+	}
+		if (isSectionChief) {
+		links.push({
+			label: "My Pending Approvals",
+			url: "?id=haisp_my_pending_approvals"
+		});
+	}
+	if (isHSIAdmin || isClassCoordinator || isScheduler || isProgramManager) {
+		links.push({
+			label: "Scheduler",
+			url: "?id=haisp_class_details"
+		});
+	}
+	if (isHSIAdmin || isScheduler) {
+		links.push({
+			label: "Import Facility Assignments",
+			url: "?id=hsi_upload_sass_report"
+		});
+	}
+	if (isHSIAdmin || isScheduler) {
+		links.push({
+			label: "Import Course List",
+			url: "?id=hsi_import_course_list"
+		});
+	}
+	if (isHSIAdmin || isScheduler) {
+		links.push({
+			label: "Import Student List",
+			url: "?id=haisp_import_class_enrollment"
+		});
+	}
+	if (isHSIAdmin || isClassCoordinator || isScheduler || isProgramManager) {
+		links.push({
+			label: "Add Announcement",
+			url: "?id=haisp_announcement&sys_id=-1"
+		});
+	}
+
+	data.links = links;
+})();
+
+------------------------ CLIENT -----------------------------
+
+api.controller = function($scope, $location) {
+    /* widget controller */
+    var c = this;
+};
+
+
+
+--------- CSS ----------------------------------------------
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  display: inline-block;
+  padding-block: 1rem;
+}
