@@ -1,0 +1,1010 @@
+<unload unload_date="2025-09-26 17:20:52">
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ArrayUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ArrayUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * ArrayUtils * @author John MacKenzie <john.mackenzie@icf.com> * * Utilities for managing arrays */ var ArrayUtils = Class.create(); ArrayUtils.prototype = { initialize: function() {}, type: "ArrayUtils", }; /** * Flatten an array of values * @param {Array} array the array to flatten * @returns {Array} */ ArrayUtils.flatten = function flatten(array) { var flattenedArray = []; if (Array.isArray(array)) { array.forEach(function(element) { if (Array.isArray(element)) { flattenedArray = flattenedArray.concat(flatten(element)); } else { flattenedArray = flattenedArray.concat(element); } }); } return flattenedArray; }; /** * Returns the index of items matching a conditional function * * @param {any[]} array the array to check * @param {Function} conditionFn function containing logic for returning correct indices * @returns {number[]} */ ArrayUtils.whereInArray = function whereInArray(array, conditionFn) { var newArray = []; if ( LogicUtils.and( Array.isArray(array), GeneralUtils.isTypeOf(conditionFn, "function") ) ) { for (var index = 0; index < array.length; index += 1) { var element = array[index]; if (conditionFn(element)) { newArray[newArray.length] = index; } } } return newArray; }; /** * Drops a given number of values from the left side of an array and returns the resulting array * @param {any[]} array the array to modify * @param {number} number the number of values to drop from the array * @returns {any[]} */ ArrayUtils.ldrop = function ldrop(array, number) { var finalNumber = GeneralUtils.defaultValue(number, 0); if ( LogicUtils.or(Array.isArray(array), GeneralUtils.isTypeOf(array, "string")) ) { return array.slice(finalNumber); } return null; }; /** * Drops a given number of values from the right side of an array and returns the resulting array * @param {any[]} array the array to modify * @param {number} number the number of values to drop from the array * @returns {any[]} */ ArrayUtils.rdrop = function rdrop(array, number) { var finalNumber = GeneralUtils.defaultValue(number, 0); if ( LogicUtils.or(Array.isArray(array), GeneralUtils.isTypeOf(array, "string")) ) { return array.slice(0, array.length - finalNumber); } return null; }; /** * Concatenates the elements of an array together into one string and inserts a string * separator between each element * @param {any[]} array an array of elements to be concatenated * @param {string} separator a string that will be inserted between each element of the given array * @returns {string} */ ArrayUtils.join = function join(array, separator) { if (Array.isArray(array)) { return array.join(separator); } return array; }; /** * Appends a value or values to the given array and returns the resulting array * @param {any[]} array the array to modify * @param {any|any[]} value the value or values to append * @returns {any[]} */ ArrayUtils.append = function append(array, value) { if (Array.isArray(array)) { return array.concat(value); } return array; }; /** * Inserts a value into the given array and returns the resulting array * @param {any[]} array the array to modify * @param {any|any[]} value the value or values to insert * @param {number|Array[number]} index the index or array of indices at which the value should be inserted * @returns {any[]} */ ArrayUtils.insert = function insert(array, value, index) { var finalIndex = [].concat(GeneralUtils.defaultValue(index, 0)).sort(); if (Array.isArray(array)) { var newArray = array.slice(0, finalIndex); newArray = newArray.concat(value); newArray = newArray.concat(array.slice(index)); return newArray; } return array; }; /** * Returns the number of elements in an array * @param {any[]} array the array in which to calculate the number of elements * @returns {number} */ ArrayUtils.countEntries = function countEntries(array) { if (Array.isArray(array)) { return array.length; } return 0; }; /** * Removes values from an array based on a conditional function * @param {any[]} array the array to modify * @param {Function} conditionFn the condition for removal * @returns {any[]} */ ArrayUtils.remove = function remove(array, conditionFn) { var newArray = []; if ( LogicUtils.and( Array.isArray(array), GeneralUtils.isTypeOf(conditionFn, "function") ) ) { var initArray = Array.prototype.slice.call(array); for (var index = 0; index < array.length; index += 1) { var element = array[index]; if (LogicUtils.not(conditionFn(element, index, initArray))) { newArray[newArray.length] = element; } } } return newArray; }; /** * Removes the value from the array at a given index * @param {any[]} array the array to modify * @param {number} index the index to remove from the array */ ArrayUtils.removeAtIndex = function removeAtIndex(array, index) { return ArrayUtils.remove(array, function(_ignore, _index) { return GeneralUtils.areEqual(index, _index); }); }; /** * Returns an array in reverse order * @param {any[]} array the array to modify * @returns {any[]} */ ArrayUtils.reverse = function reverse(array) { if (Array.isArray(array)) { return array.reverse(); } if (typeof array === "string") { return array.split("").reverse().join(""); } return array; }; /** * Check if the array contains the result of the conditional function for any * value * * @param {any[]} array the array to search * @param {Function} conditionFn the conditional function `(element, index, initialArray)` * @returns {boolean} */ ArrayUtils.some = function some(toSearch, conditionFn) { if (GeneralUtils.isTypeOf(conditionFn, "function")) { var initArray = []; if (Array.isArray(toSearch)) { initArray = Array.prototype.slice.call(toSearch); } else { initArray = [toSearch]; } return initArray.some(conditionFn); } return false; }; /** * Check if the array contains the result of the conditional function for all * values * * @param {any[]} array the array to search * @param {Function} conditionFn the conditional function `(element, index, initialArray)` * @returns {boolean} */ ArrayUtils.every = function every(toSearch, conditionFn) { if (GeneralUtils.isTypeOf(conditionFn, "function")) { var initArray = []; if (Array.isArray(toSearch)) { initArray = Array.prototype.slice.call(toSearch); } else { initArray = [toSearch]; } return initArray.every(conditionFn); } return false; }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:48:11</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>523f4d671b5b1a105c8ccbb6624bcb3a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>ArrayUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_523f4d671b5b1a105c8ccbb6624bcb3a</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-30 16:48:11</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.AssigningUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>AssigningUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ var AssigningUtils = Class.create(); AssigningUtils.prototype = { initialize: function(class_id) { var grClass = new GlideRecord(Constants.CLASS_TABLE); grClass.get(class_id); this.class_gr = grClass; this.course_gr = ""; this.course_config = ""; this.req_instructor_obj = {}; this.pref_instructor_obj = []; this.unavailable = []; this.class_preferred_unit = ""; this.instructorHoursUtil = new InstructorHoursUtil(); }, assignInstructors: function() { this.class_gr.setValue('assignment_state', 'I'); this.class_gr.update(); // Loop through courses updating the global variable var grCourse = new GlideRecord(Constants.COURSE_TABLE); grCourse.addQuery('class_id', this.class_gr.getValue('sys_id')); grCourse.orderBy('start_date_time'); grCourse.query(); while (grCourse.next()) { // Reset global vars for each course this.req_instructor_obj = {}; this.pref_instructor_obj = []; this.unavailable = []; this.course_gr = grCourse; this.course_config = grCourse.getValue('course_configuration_id') || ""; if (this.course_config != "") { this.buildInstructorObjs(); } if (Object.keys(this.req_instructor_obj).length == 0) { //gs.info("JW: No instructor config was found for " + grCourse.getValue('instructional_block_name')); continue; } //gs.info('JW: req ' + grCourse.getValue('sys_id') + ' - ' + JSON.stringify(this.req_instructor_obj)); //gs.info('JW: pref ' + grCourse.getValue('sys_id') + ' - ' + JSON.stringify(this.pref_instructor_obj)); //gs.info('JW: has class pref ' + this.checkClassPrefInstructors()); if (this.checkClassPrefInstructors()) { this.assignPref(); } else { if (this.pref_instructor_obj.length > 0) { this.assignPref(); } // Find all unavailable instructors first this.buildUnavailableArray(); // Loop through roles to find certified instructors for (var r in this.req_instructor_obj) { var role = this.req_instructor_obj[r]; if (role.certifications != "") { if (role.count > role.instructors.length) { this.assignCertified(r); } } } // Loop through roles to find In Unit instructors for (var r in this.req_instructor_obj) { var role = this.req_instructor_obj[r]; if (this.course_gr.getValue('unit_aor')) { if (role.count > role.instructors.length) { this.assignInUnit(r); } } } // Loop through roles to find any available instructors for (var r in this.req_instructor_obj) { var role = this.req_instructor_obj[r]; if (role.count > role.instructors.length) { this.assignAnyAvailable(r); } } } //gs.info('JW: req ' + grCourse.getValue('sys_id') + ' - ' + JSON.stringify(this.req_instructor_obj)); } this.class_gr.setValue('assignment_state', 'C'); this.class_gr.update(); }, assignPref: function() { // Check for any preferred instructors that are not inactive and return an array // If there are not enough preferred of the Lead role, use any sub roles to fill // Use global 'all_assigned' to make sure we don't double assign to multiple roles // If there are more preferred than required, then use the InstructorHoursUtil to get the instructors with the lowest hours first for (var i in this.pref_instructor_obj) { var instructor = this.pref_instructor_obj[i]; this.pref_instructor_obj[i].hours = this.instructorHoursUtil.getTheWeek( instructor.instructor_id, this.course_gr.getValue('start_date_time') ); } this.pref_instructor_obj = this.sortByHours(this.pref_instructor_obj); //gs.info('JW: hours added ' + JSON.stringify(this.pref_instructor_obj)); for (var i in this.pref_instructor_obj) { var instructor = this.pref_instructor_obj[i]; if (this.req_instructor_obj.hasOwnProperty(instructor.role_code)) { if (this.req_instructor_obj[instructor.role_code].count > this.req_instructor_obj[instructor.role_code].instructors.length) { this.req_instructor_obj[instructor.role_code].instructors.push(instructor.instructor_id); this.unavailable.push(instructor.instructor_id); this.createInstructorRecord(instructor); } } } }, buildInstructorObjs: function(courseGr) { var gr_config = new GlideRecord(Constants.COURSE_CONFIGURATION_TABLE); if (gr_config.get(this.course_config)) { var gr_instructor_config = new GlideRecord(Constants.COURSE_INSTRUCTOR_CONFIGURATION_TABLE); gr_instructor_config.addQuery("course_configuration_id", gr_config.getValue('sys_id')); gr_instructor_config.query(); while (gr_instructor_config.next()) { var role_code = gr_instructor_config.getValue('instructor_role_code'); this.req_instructor_obj[role_code] = { 'count': gr_instructor_config.getValue('instructor_count'), 'instructors': [], 'certifications': gr_instructor_config.getValue('certifications') || "" }; } if (this.checkClassPrefInstructors()) { var gr_pref_class = new GlideRecord(Constants.CLASS_PREFERRED_INSTRUCTOR_TABLE); gr_pref_class.addQuery('class_id', this.class_gr.getValue('sys_id')); gr_pref_class.addQuery('aor_code', this.course_gr.getValue('unit_aor')); gr_pref_class.query(); while (gr_pref_class.next()) { this.pref_instructor_obj.push({ 'instructor_id': gr_pref_class.getValue('instructor_id'), 'role_code': gr_pref_class.getValue('role_code') }); } //gs.info('JW: class_pref ' + this.course_gr.getValue('sys_id') + ' - ' + JSON.stringify(this.pref_instructor_obj)); } else { var gr_pref_instructor = new GlideRecord(Constants.COURSE_INSTRUCTOR_PREFERENCE_CONFIGURATION_TABLE); gr_pref_instructor.addQuery("course_configuration_id", gr_config.getValue('sys_id')); gr_pref_instructor.query(); while (gr_pref_instructor.next()) { this.pref_instructor_obj.push({ 'instructor_id': gr_pref_instructor.getValue('instructor_id'), 'role_code': gr_pref_instructor.getValue('role_code') }); } //gs.info('JW: course_pref ' + this.course_gr.getValue('sys_id') + ' - ' + JSON.stringify(this.pref_instructor_obj)); } } }, assignCertified: function(role_code) { // Check for instructors that match the certification required and are available (not already teaching or not in TimeOff) // If multiple find that match use the InstructorHoursUtil to assign the instructors with the lowest hours // If multiple have the same hours then just pick at random var certs_arr = this.req_instructor_obj[role_code].certifications.split(','); var certs_dv_arr = []; for (var c in certs_arr) { var cert_sys_id = certs_arr[c]; var grCerts = new GlideRecord(Constants.CERTIFICATION_CODE_TABLE); grCerts.get("sys_id", cert_sys_id); certs_dv_arr.push('certification_codeLIKE' + grCerts.getValue('name')); } var cert_query = certs_dv_arr.join('^OR'); var foundCertified = []; var gaCertified = new GlideAggregate(Constants.INSTRUCTOR_CERTIFICATION_TABLE); gaCertified.addEncodedQuery("instructor_id.sys_idNOT IN" + this.unavailable); gaCertified.addEncodedQuery("status=APPROVED"); gaCertified.addEncodedQuery("instructor_idISNOTEMPTY"); gaCertified.addEncodedQuery(cert_query); gaCertified.groupBy('instructor_id'); gaCertified.query(); //gs.info('JW: unavailable ' + this.unavailable); //gs.info('JW: instructors found for ' + this.course_gr.getValue('instructional_block_name') + ' - ' + gaCertified.getRowCount()); while (gaCertified.next()) { var instructor_id = gaCertified.getValue('instructor_id'); foundCertified.push({ 'instructor_id': instructor_id, 'role_code': role_code, 'hours': this.instructorHoursUtil.getTheWeek(instructor_id, this.course_gr.getValue('start_date_time')) }); } foundCertified = this.sortByHours(foundCertified); //gs.info('JW: foundCertified ' + this.course_gr.getValue('instructional_block_name') + ' - ' + JSON.stringify(foundCertified)); if (foundCertified.length > 0) { for (var i in foundCertified) { if (this.req_instructor_obj[role_code].count > this.req_instructor_obj[role_code].instructors.length) { this.unavailable.push(foundCertified[i].instructor_id); this.req_instructor_obj[role_code].instructors.push(foundCertified[i].instructor_id); this.createInstructorRecord(foundCertified[i]); } } } }, assignInUnit: function(role_code) { // Check for instructors that match the course unit and are avialable (not already teaching or not in TimeOff) // If multiple find that match use the InstructorHoursUtil to assign the instructors with the lowest hours // If multiple have the same hours then just pick at random var foundInUnit = []; var gaInUnit = new GlideAggregate(Constants.INSTRUCTOR_TABLE); gaInUnit.addEncodedQuery("sys_idNOT IN" + this.unavailable); gaInUnit.addEncodedQuery("aor_code=" + this.course_gr.getValue('unit_aor')); gaInUnit.groupBy('user_id'); gaInUnit.groupBy('sys_id'); gaInUnit.query(); while (gaInUnit.next()) { foundInUnit.push({ 'instructor_id': gaInUnit.getValue('sys_id'), 'role_code': role_code, 'hours': this.instructorHoursUtil.getTheWeek(gaInUnit.getValue('sys_id'), this.course_gr.getValue('start_date_time')) }); } foundInUnit = this.sortByHours(foundInUnit); //gs.info('JW: foundInUnit ' + this.course_gr.getValue('instructional_block_name') + ' - ' + JSON.stringify(foundInUnit)); if (foundInUnit.length > 0) { for (var i in foundInUnit) { if (this.req_instructor_obj[role_code].count > this.req_instructor_obj[role_code].instructors.length) { this.unavailable.push(foundInUnit[i].instructor_id); this.req_instructor_obj[role_code].instructors.push(foundInUnit[i].instructor_id); this.createInstructorRecord(foundInUnit[i]); } } } }, assignAnyAvailable: function(role_code) { // Check for any available instructor (not already teaching or not in TimeOff) // If multiple find that match use the InstructorHoursUtil to assign the instructors with the lowest hours // If multiple have the same hours then just pick at random var foundAny = []; var gaAny = new GlideAggregate(Constants.INSTRUCTOR_TABLE); gaAny.addEncodedQuery("sys_idNOT IN" + this.unavailable); gaAny.groupBy('user_id'); gaAny.groupBy('sys_id'); gaAny.query(); while (gaAny.next()) { foundAny.push({ 'instructor_id': gaAny.getValue('sys_id'), 'role_code': role_code, 'hours': this.instructorHoursUtil.getTheWeek(gaAny.getValue('sys_id'), this.course_gr.getValue('start_date_time')) }); } foundAny = this.sortByHours(foundAny); //gs.info('JW: foundInUnit ' + this.course_gr.getValue('instructional_block_name') + ' - ' + JSON.stringify(foundAny)); if (foundAny.length > 0) { for (var i in foundAny) { if (this.req_instructor_obj[role_code].count > this.req_instructor_obj[role_code].instructors.length) { this.unavailable.push(foundAny[i].instructor_id); this.req_instructor_obj[role_code].instructors.push(foundAny[i].instructor_id); this.createInstructorRecord(foundAny[i]); } } } }, checkClassPrefInstructors: function() { var class_preferred = false; var grClassPref = new GlideRecord(Constants.CLASS_UNIT_REQUIREMENTS_TABLE); grClassPref.addQuery("class_configuration_id", this.class_gr.getValue('class_configuration_id')); grClassPref.addQuery("unit_code", this.course_gr.getValue('unit_aor')); grClassPref.addQuery('use_defined_instructors', true); grClassPref.query(); //gs.info('JW: found class units ' + grClassPref.getRowCount()); if (grClassPref.next()) { class_preferred = true; this.class_preferred_unit = grClassPref.getValue('unit_code'); } return class_preferred; }, createInstructorRecord: function(instructor) { var grInsert = new GlideRecord(Constants.COURSE_INSTRUCTOR_TABLE); grInsert.initialize(); grInsert.setValue('course_id', this.course_gr.getValue('sys_id')); grInsert.setValue('instructor_id', instructor.instructor_id); grInsert.setValue('instructor_role_code', instructor.role_code); grInsert.insert(); }, sortByHours: function(array) { return array.sort((a, b) => { const valA = a['hours']; const valB = b['hours']; if (valA < valB) { return -1; } if (valA > valB) { return 1; } return 0; // values are equal }); }, buildUnavailableArray: function() { var start = this.course_gr.getValue('start_date_time'); var end = this.course_gr.getValue('end_date_time'); var start_arr = start.split(' '); var end_arr = end.split(' '); var grCourseSchedule = new GlideRecord(Constants.COURSE_INSTRUCTOR_TABLE); grCourseSchedule.addEncodedQuery("course_id.start_date_time<javascript:gs.dateGenerate('" + end_arr.join("','") + "')^course_id.end_date_time>javascript:gs.dateGenerate('" + start_arr.join("','") + "')"); grCourseSchedule.query(); while (grCourseSchedule.next()) { this.unavailable.push(grCourseSchedule.getValue('instructor_id')); } var grInstructorSchedule = new GlideRecord(Constants.INSTRUCTOR_SCHEDULE_TABLE); grInstructorSchedule.addEncodedQuery("start_date<javascript:gs.dateGenerate('" + end_arr.join("','") + "')^end_date>javascript:gs.dateGenerate('" + start_arr.join("','") + "')"); grInstructorSchedule.addEncodedQuery("state=2"); grInstructorSchedule.query(); while (grInstructorSchedule.next()) { this.unavailable.push(grInstructorSchedule.getValue('instructor_id')); } var grLocation = new GlideRecord(Constants.INSTRUCTOR_TABLE); grLocation.addEncodedQuery("active=false^ORlocation_code!=" + this.class_gr.getValue('location_code')); grLocation.query(); while (grLocation.next()) { this.unavailable.push(grLocation.getValue('sys_id')); } }, type: 'AssigningUtils' }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-21 12:40:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>5651f13c1be3ea50065762cae54bcb3c</sys_id>
+<sys_mod_count>91</sys_mod_count>
+<sys_name>AssigningUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_5651f13c1be3ea50065762cae54bcb3c</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-09-12 19:23:11</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.CertificationUtils</api_name>
+<caller_access/>
+<client_callable>true</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>CertificationUtils</name>
+<sandbox_callable>true</sandbox_callable>
+<script>
+<![CDATA[ var CertificationUtils = Class.create(); CertificationUtils.prototype = { initialize: function() {}, getExpirationData: function() { var certName = this.getParameter('certification_name'); var result = {}; var certcodegr = new GlideRecord('x_g_dh5_hsisat_certification_code'); if (certcodegr.get('name', certName)) { result.hasExpiration = certcodegr.does_cert_expire; result.yearsUntilExpiration = certcodegr.certification_expiration_period; } return JSON.stringify(result); }, type: 'CertificationUtils' }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-05-15 13:02:22</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>067041151ba962903b5e657fe54bcbcd</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>CertificationUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_067041151ba962903b5e657fe54bcbcd</sys_update_name>
+<sys_updated_by>JHudson1</sys_updated_by>
+<sys_updated_on>2025-05-15 20:56:20</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ClassAjaxUtils</api_name>
+<caller_access/>
+<client_callable>true</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ClassAjaxUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ var ClassAjaxUtils = Class.create(); ClassAjaxUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, { getCoordinatorDetails: function (coordinatorUserId) { const userId = GeneralUtils.defaultValue(this.getParameter("sysparm_user_id"), coordinatorUserId); if (GeneralUtils.isEmpty(userId)) { return JSON.stringify({ status: "error", message: "No user information found" }); } const userGR = new GlideRecord(Constants.USER_TABLE); if (LogicUtils.not(userGR.get(userId))) { return JSON.stringify({ status: "error", message: "No user information found" }); } return JSON.stringify({ status: "success", user: { email: GlideRecordUtils.getValue(userGR, "email"), phone: GlideRecordUtils.getValue(userGR, "phone"), }, }); }, addLocationToSession: function addLocationToSession(locationCode) { const finalLocationCode = GeneralUtils.defaultValue( locationCode, this.getParameter("sysparm_location_code") ); gs.getSession().putClientData("location_code", finalLocationCode); }, addCurriculumModelToSession: function addCurriculumModelToSession(modelId) { const finalModelId = GeneralUtils.defaultValue(modelId, this.getParameter("sysparm_model_id")); gs.getSession().putClientData("curriculum_model_id", finalModelId); }, doesModelHavePreferredInstructors: function doesModelHavePreferredInstructors(modelId) { const finalModelId = GeneralUtils.defaultValue(modelId, this.getParameter("sysparm_model_id")); this.addCurriculumModelToSession(finalModelId); return ClassConfigUtils.doesModelHavePreferredInstructors(finalModelId); }, type: 'ClassAjaxUtils' }); ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-12 22:28:45</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>0ca1ed8a1bdbaa54065762cae54bcbb4</sys_id>
+<sys_mod_count>11</sys_mod_count>
+<sys_name>ClassAjaxUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_0ca1ed8a1bdbaa54065762cae54bcbb4</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-27 23:07:01</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ClassConfigUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ClassConfigUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ClassConfigUtils() { if (this.constructor === ClassConfigUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Security Rules // ************************************************** ClassConfigUtils.canReadRecord = function canReadRecord(configGR) { return true; }; ClassConfigUtils.canCreateRecord = function canCreateRecord(configGR) { return LogicUtils.or( SecurityUtils.isAdmin(), SecurityUtils.isClassAdmin() ); }; ClassConfigUtils.canWriteRecord = function canWriteRecord(configGR) { return LogicUtils.or( SecurityUtils.isAdmin(), SecurityUtils.isClassAdmin(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS) ); }; ClassConfigUtils.canDeleteRecord = function canDeleteRecord(configGR) { return gs.hasRole("nobody"); }; // ************************************************** // Functions // ************************************************** ClassConfigUtils.doesModelHavePreferredInstructors = function doesModelHavePreferredInstructors(modelId) { if (GeneralUtils.isEmpty(modelId)) return false; const ureqGR = new GlideRecord(Constants.CLASS_UNIT_REQUIREMENTS_TABLE); ureqGR.addQuery("class_configuration_id", modelId); ureqGR.addQuery("use_defined_instructors", true); ureqGR.setLimit(1); ureqGR.query(); return ureqGR.hasNext(); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-17 18:43:17</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>061226de1b94ae145c8ccbb6624bcb20</sys_id>
+<sys_mod_count>8</sys_mod_count>
+<sys_name>ClassConfigUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_061226de1b94ae145c8ccbb6624bcb20</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-27 23:06:24</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ClassUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ClassUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ClassUtils() { if (this.constructor === ClassUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** ClassUtils.STATE_DRAFT = 1; ClassUtils.STATE_PENDING_REVIEW = 2; ClassUtils.STATE_SCHEDULED = 3; ClassUtils.STATE_IN_PROGRESS = 4; ClassUtils.STATE_COMPLETED = 5; ClassUtils.STATE_CANCELLED = -1; ClassUtils.STATE_REJECTED = -5; ClassUtils.ASSIGNMENT_NOT_RUN = 'X'; // ************************************************** // Properties // ************************************************** ClassUtils.PROPERTY_FEATURE_CLASS_STATS = "x_g_dh5_hsisat.feature.class_stats"; ClassUtils.getProperty_FeatureClassStatus = function getProperty_FeatureClassStatus() { return GeneralUtils.getProperty(ClassUtils.PROPERTY_FEATURE_CLASS_STATS); }; // ************************************************** // Events // ************************************************** ClassUtils.EVENT_SEND_CLASS_ASSIGNMENTS = "x_g_dh5_hsisat.send_class_assignments"; ClassUtils.triggerEvent_SendClassAssignments = function triggerEvent_SendClassAssignments(classGR) { gs.eventQueue(ClassUtils.EVENT_SEND_CLASS_ASSIGNMENTS, classGR); }; // ************************************************** // Functions // ************************************************** ClassUtils.isDraft = function isDraft(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_DRAFT ); }; ClassUtils.isPendingReview = function isPendingReview(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_PENDING_REVIEW ); }; ClassUtils.isScheduled = function isScheduled(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_SCHEDULED ); }; ClassUtils.isInProgress = function isInProgress(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_IN_PROGRESS ); }; ClassUtils.isCompleted = function isCompleted(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_COMPLETED ); }; ClassUtils.isCancelled = function isCancelled(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_CANCELLED ); }; ClassUtils.isRejected = function isRejected(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "state"), ClassUtils.STATE_REJECTED ); }; ClassUtils.assignmentNotRun = function assignmentNotRun(classGR) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "assignment_state"), ClassUtils.ASSIGNMENT_NOT_RUN ); }; ClassUtils.isUserClassCoordinator = function isUserClassCoordinator(classGR, userId) { return GeneralUtils.areEqual( GlideRecordUtils.getValue(classGR, "class_coordinator_user_id"), userId ); }; ClassUtils.isCurrentUserClassCoordinator = function isCurrentUserClassCoordinator(classGR) { return ClassUtils.isUserClassCoordinator(classGR, gs.getUserID()); }; ClassUtils.isClassStatisticsActive = function isClassStatisticsActive() { return ClassUtils.getProperty_FeatureClassStatus(); }; ClassUtils.getClassCoordinatorRefQual = function getClassCoordinatorRefQual(classGR) { const memberGR = new GlideRecord(Constants.USER_GROUP_MEMBER_TABLE); memberGR.addQuery("group.name", SecurityUtils.GROUP_CLASS_COORDINATORS); memberGR.addQuery("user.active", true); memberGR.query(); const userIds = []; while (memberGR.next()) { userIds.push(memberGR.getValue("user")); } return `sys_idIN${userIds}`; }; ClassUtils.handleCancelClass = function handleCancelClass(classGR) { // unassign all instructors from courses for this class const assignmentGR = new GlideRecord(Constants.COURSE_INSTRUCTOR_TABLE); assignmentGR.addQuery("course_id.class_id", classGR.getUniqueValue()); assignmentGR.query(); while (assignmentGR.next()) { assignmentGR.deleteRecord(); } }; ClassUtils.getMyClassesRefQual = function getMyClassesRefQual(userId) { const grAssigned = new GlideRecord(Constants.COURSE_INSTRUCTOR_TABLE); grAssigned.addQuery('instructor_id.user_id', userId); grAssigned.query(); const my_classes = []; while (grAssigned.next()) { my_classes.push(grAssigned.course_id.class_id.getValue()); } return `sys_idIN${[...new Set(my_classes)]}`; }; // ************************************************** // Security Rules // ************************************************** ClassUtils.canReadRecord = function canReadRecord(classGR) { return true; }; ClassUtils.canCreateRecord = function canCreateRecord(classGR) { if (SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS)) return false; return LogicUtils.or( //SecurityUtils.isClassAdmin(), SecurityUtils.isAdmin(), SecurityUtils.isSchedulerUser() ); }; ClassUtils.canWriteRecord = function canWriteRecord(classGR) { if (SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS)) return false; return LogicUtils.or( SecurityUtils.isAdmin(), SecurityUtils.isSchedulerUser() ); }; ClassUtils.canDeleteRecord = function canDeleteRecord(classGR) { return false; }; ClassUtils.canWriteEnrollmentRecord = function canWriteEnrollmentRecord(enrollmentGR) { return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isScheduler() ); }; // ************************************************** // Portal Actions Visibility // ************************************************** ClassUtils.showEditClassDetailsAction = function showEditClassDetailsAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ClassUtils.showEditClassDatesAction = function showEditClassDatesAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return SecurityUtils.isApplicationAdministrator(); }; ClassUtils.showCreateClassAnnouncementAction = function showCreateClassAnnouncementAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler(), ClassUtils.isCurrentUserClassCoordinator(classGR) ); }; ClassUtils.showViewStudentLibraryAction = function showViewStudentLibraryAction(classGR) { return true; }; ClassUtils.showScheduleClassAction = function showScheduleClassAction(classGR) { if (LogicUtils.not(ClassUtils.isDraft(classGR))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ClassUtils.showCancelClassAction = function showCancelClassAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return SecurityUtils.isApplicationAdministrator(); }; ClassUtils.showCompleteClassAction = function showCompleteClassAction(classGR) { if (LogicUtils.not(ClassUtils.isInProgress(classGR))) return false; const today = new GlideDate().getValue(); const end = GlideRecordUtils.getValue(classGR, "end_date"); if (today < end) return false; return SecurityUtils.isApplicationAdministrator(); }; ClassUtils.showEditEnrollmentAction = function showEditEnrollmentAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ClassUtils.showImportClassEnrollmentAction = function showImportClassEnrollmentAction(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ClassUtils.showAddStudentEnrollmentAction = function showAddStudentEnrollmentAction(classGR) { return false; }; ClassUtils.showAssignInstructors = function showAssignInstructors(classGR) { if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; // check for courses for this class: var courseGR = new GlideRecord(Constants.COURSE_TABLE); courseGR.addQuery("class_id", classGR.getUniqueValue()); courseGR.setLimit(1); courseGR.query(); if (courseGR.hasNext()) { return LogicUtils.and( LogicUtils.or(SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler()), ClassUtils.assignmentNotRun(classGR), ClassUtils.isScheduled(classGR) ); } return false; }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-31 21:21:14</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>cc9f07f71b9b5e103b5e657fe54bcb91</sys_id>
+<sys_mod_count>34</sys_mod_count>
+<sys_name>ClassUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_cc9f07f71b9b5e103b5e657fe54bcb91</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-24 13:18:22</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.Constants</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>Constants</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function Constants() { if (this.constructor === Constants) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } Constants.APPLICATION_NAME = "HSI Academy Instructor Scheduling Portal"; Constants.SCOPE = "x_g_dh5_hsisat"; // ************************************************** // Application Core Tables // ************************************************** Constants.ANNOUNCEMENT_TABLE = `${Constants.SCOPE}_announcement`; Constants.CLASS_TABLE = `${Constants.SCOPE}_class`; Constants.CLASS_CONFIGURATION_TABLE = `${Constants.SCOPE}_class_configuration`; Constants.CLASS_ENROLLMENT_TABLE = `${Constants.SCOPE}_class_enrollment`; Constants.CLASS_UNIT_REQUIREMENTS_TABLE = `${Constants.SCOPE}_class_configuration_aor_requirement`; Constants.CLASS_PREFERRED_INSTRUCTOR_TABLE = `${Constants.SCOPE}_class_preferred_instructor`; Constants.COURSE_TABLE = `${Constants.SCOPE}_course`; Constants.COURSE_CONFIGURATION_TABLE = `${Constants.SCOPE}_course_configuration`; Constants.COURSE_FACILITY_TABLE = `${Constants.SCOPE}_course_facility`; Constants.COURSE_FACILITY_PREFERENCE_TABLE = `${Constants.SCOPE}_course_facility_preference`; Constants.COURSE_INSTRUCTOR_TABLE = `${Constants.SCOPE}_course_instructor`; Constants.COURSE_INSTRUCTOR_CONFIGURATION_TABLE = `${Constants.SCOPE}_course_instructor_configuration`; Constants.COURSE_INSTRUCTOR_PREFERENCE_CONFIGURATION_TABLE = `${Constants.SCOPE}_course_instructor_preference_configuration`; Constants.COURSE_STAGING_TABLE = `${Constants.SCOPE}_course_staging`; Constants.COURSE_CONFLICT_TABLE = `${Constants.SCOPE}_course_conflict`; Constants.EMAIL_TABLE = `${Constants.SCOPE}_email`; Constants.EXPORT_BASE_TABLE = `${Constants.SCOPE}_export_base`; Constants.EXPORT_CURRICULUM_MODEL_TABLE = `${Constants.SCOPE}_export_curriculum_model`; Constants.FACILITY_TABLE = `${Constants.SCOPE}_facility`; Constants.FACILITY_SCHEDULE_TABLE = `${Constants.SCOPE}_facility_schedule`; Constants.INSTRUCTOR_TABLE = `${Constants.SCOPE}_instructor`; Constants.INSTRUCTOR_CERTIFICATION_TABLE = `${Constants.SCOPE}_instructor_certification`; Constants.INSTRUCTOR_SKILL_TABLE = `${Constants.SCOPE}_instructor_skill`; Constants.INSTRUCTOR_SCHEDULE_TABLE = `${Constants.SCOPE}_instructor_schedule`; Constants.STUDENT_TABLE = `${Constants.SCOPE}_student`; Constants.STUDENT_STAGING_TABLE = `${Constants.SCOPE}_student_staging`; // ************************************************** // Application Code Tables // ************************************************** Constants.REFERENCE_DATA_TABLE = `${Constants.SCOPE}_reference_data`; Constants.AREA_OF_RESPONSIBILITY_CODE_TABLE = `${Constants.SCOPE}_aor_code`; Constants.CERTIFICATION_CODE_TABLE = `${Constants.SCOPE}_certification_code`; Constants.SKILL_CODE_TABLE = `${Constants.SCOPE}_instructor_skill_code`; Constants.FACILITY_TYPE_CODE_TABLE = `${Constants.SCOPE}_facility_type_code`; Constants.INSTRUCTOR_ROLE_CODE_TABLE = `${Constants.SCOPE}_instructor_role_code`; Constants.LOCATION_CODE_TABLE = `${Constants.SCOPE}_location_code`; Constants.UNIFORM_CODE_TABLE = `${Constants.SCOPE}_uniform_code`; // ************************************************** // Platform Tables // ************************************************** Constants.ATTACHMENT_TABLE = "sys_attachment"; Constants.CHOICE_TABLE = "sys_choice"; Constants.USER_TABLE = "sys_user"; Constants.USER_GROUP_MEMBER_TABLE = "sys_user_grmember"; // ************************************************** // Database Views // ************************************************** // ************************************************** // Constant Values // ************************************************** Constants.TRUE = "1"; Constants.FALSE = "0"; Constants.VALUE_EMPTY = ""; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:51:22</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>535f09a71b5b1a105c8ccbb6624bcb94</sys_id>
+<sys_mod_count>13</sys_mod_count>
+<sys_name>Constants</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_535f09a71b5b1a105c8ccbb6624bcb94</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-27 23:14:30</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.CourseConfigurationUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description>Table x_g_dh5_hsisat_course_configuration </description>
+<mobile_callable>false</mobile_callable>
+<name>CourseConfigurationUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * CourseConfigurationUtils */ function CourseConfigurationUtils() { if (this.constructor === CourseConfigurationUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** // ************************************************** // Functions // ************************************************** // ************************************************** // Security Rules // ************************************************** CourseConfigurationUtils.canReadRecord = function canReadRecord(courseGR) { const classGR = courseGR.class_id.getRefRecord(); return ClassUtils.canReadRecord(classGR); }; CourseConfigurationUtils.canCreateRecord = function canCreateRecord(courseGR) { //const classGR = courseGR.class_id.getRefRecord(); return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS), // ClassUtils.canCreateRecord(classGR) ); }; CourseConfigurationUtils.canWriteRecord = function canWriteRecord(courseGR) { //const classGR = courseGR.class_id.getRefRecord(); return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS), //ClassUtils.canWriteRecord(classGR) ); }; CourseConfigurationUtils.canDeleteRecord = function canDeleteRecord(courseGR) { //const classGR = courseGR.class_id.getRefRecord(); //return ClassUtils.canDeleteRecord(classGR); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-08-01 15:15:26</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>2ac41b9a1b8b26d0065762cae54bcb47</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>CourseConfigurationUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_2ac41b9a1b8b26d0065762cae54bcb47</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-08-01 15:35:47</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.CourseFacilityUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>CourseFacilityUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function CourseFacilityUtils() { if (this.constructor === CourseFacilityUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Security Rules // ************************************************** CourseFacilityUtils.canReadRecord = function canReadRecord(facilityGR) { return true; }; CourseFacilityUtils.canCreateRecord = function canCreateRecord(facilityGR) { return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser() ); }; CourseFacilityUtils.canWriteRecord = function canWriteRecord(facilityGR) { return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser() ); }; CourseFacilityUtils.canDeleteRecord = function canDeleteRecord(facilityGR) { return false; }; // ************************************************** // Functions // ************************************************** /** * Validates whether the course meets the preferred facilities criteria * @param {GlideRecord} courseGR Course to validate * @returns {boolean} */ CourseFacilityUtils.validatePreferredFacilities = function validatePreferredFacilities(courseGR) { const facilityGR = new GlideRecord(Constants.COURSE_FACILITY_TABLE); facilityGR.addQuery("course_id", courseGR.getUniqueValue()); facilityGR.addQuery("is_deleted", false); // ignore assigned facilities that have been "deleted" facilityGR.query(); const facilities = []; while (facilityGR.next()) { facilities.push(GlideRecordUtils.toJson(facilityGR)); } const preferenceGR = new GlideRecord(Constants.COURSE_FACILITY_PREFERENCE_TABLE); preferenceGR.addQuery("course_configuration_id", courseGR.getValue("course_configuration_id")); preferenceGR.addNotNullQuery("facility_id"); // return where there is an identified facility preferenceGR.addQuery( "facility_id.location_code", GlideRecordUtils.getValue(courseGR, "class_id.location_code") ); // return only facilities that are at the current class's location preferenceGR.query(); const preferences = []; while (preferenceGR.next()) { preferences.push(GlideRecordUtils.getValue(preferenceGR, "facility_id")); } // if no defined preferred facilities: pass if (GeneralUtils.isEmpty(preferences)) return true; // if all assigned facilities are approved: pass if (facilities.every((facility) => facility.is_approved)) return true; const preferred = facilities.filter((facility) => preferences.includes(facility.facility_id)); // if defined preferred facilities == assigned preferred facilities: pass if (GeneralUtils.areEqual(preferred.length, facilities.length)) return true; // if all defined preferred facilities are assigned: pass if (GeneralUtils.areEqual(preferred.length, preferences.length)) return true; // if all defined preferred facilities are not assigned and there are more // assigned facilities than preferred facilities: fail return false; }; CourseFacilityUtils.isDeleted = function isDeleted(facilityGR) { return GlideRecordUtils.getValue(facilityGR, "is_deleted"); }; CourseFacilityUtils.isApproved = function isApproved(facilityGR) { return GlideRecordUtils.getValue(facilityGR, "is_approved"); }; CourseFacilityUtils.isPreferredFacility = function isPreferredFacility(facilityGR) { const preferenceGR = new GlideRecord(Constants.COURSE_FACILITY_PREFERENCE_TABLE); preferenceGR.addQuery( "course_configuration_id", GlideRecordUtils.getValue(facilityGR, "course_id.course_configuration_id") ); preferenceGR.addQuery("facility_id", GlideRecordUtils.getValue(facilityGR, "facility_id")); preferenceGR.setLimit(1); preferenceGR.query(); return preferenceGR.hasNext(); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-17 19:26:30</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>8edb269a1b58ae145c8ccbb6624bcbb7</sys_id>
+<sys_mod_count>18</sys_mod_count>
+<sys_name>CourseFacilityUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_8edb269a1b58ae145c8ccbb6624bcbb7</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-02 20:46:45</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.CourseInstructorUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>CourseInstructorUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function CourseInstructorUtils() { if (this.constructor === CourseInstructorUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Security Rules // ************************************************** CourseInstructorUtils.canReadRecord = function canReadRecord(assignmentGR) { return true; }; CourseInstructorUtils.canCreateRecord = function canCreateRecord(assignmentGR) { const courseGR = assignmentGR.course_id.getRefRecord(); return CourseUtils.canCreateRecord(courseGR); }; CourseInstructorUtils.canWriteRecord = function canWriteRecord(assignmentGR) { const courseGR = assignmentGR.course_id.getRefRecord(); return CourseUtils.canWriteRecord(courseGR); }; CourseInstructorUtils.canDeleteRecord = function canDeleteRecord(assignmentGR) { return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-17 19:37:59</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>d8eeee161b98ae145c8ccbb6624bcb83</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>CourseInstructorUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_d8eeee161b98ae145c8ccbb6624bcb83</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 16:00:02</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.CourseUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>CourseUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * CourseUtils */ function CourseUtils() { if (this.constructor === CourseUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** CourseUtils.ACTION_REQUIRED_VENUE = "venue"; CourseUtils.ACTION_REQUIRED_INSTRUCTOR = "instructor"; CourseUtils.ACTION_REQUIRED_CONFIG = "config"; // ************************************************** // Events // ************************************************** CourseUtils.EVENT_CHECK_PREFERRED_FACILITY = "x_g_dh5_hsisat.check_preferred_facility"; CourseUtils.triggerEvent_CheckPreferredFacility = function triggerEvent_CheckPreferredFacility(courseGR) { return gs.eventQueue(CourseUtils.EVENT_CHECK_PREFERRED_FACILITY, courseGR); }; CourseUtils.EVENT_FACILITY_CONFLICT_ASSESSMENT = "x_g_dh5_hsisat.check_facility_conflict"; CourseUtils.triggerEvent_FacilityConflictAssessment= function triggerEvent_FacilityConflictAssessment(courseGR) { return gs.eventQueue(CourseUtils.EVENT_FACILITY_CONFLICT_ASSESSMENT, courseGR); }; CourseUtils.EVENT_FACILITY_CHANGES = "x_g_dh5_hsisat.course.facility.changed"; CourseUtils.triggerEvent_FacilityChanges = function triggerEvent_FacilityChanges(courseGR) { return gs.eventQueue(CourseUtils.EVENT_FACILITY_CHANGES, courseGR); }; // ************************************************** // Functions // ************************************************** CourseUtils.updateActionsRequired_PreferredFacility = function updateActionsRequired_PreferredFacility(courseGR) { if (LogicUtils.not(GlideRecordUtils.isGlideRecord(courseGR))) return; const actions = new Set(GlideRecordUtils.getValue(courseGR, "actions_required")); if (CourseFacilityUtils.validatePreferredFacilities(courseGR)) { actions.delete(CourseUtils.ACTION_REQUIRED_VENUE); } else { actions.add(CourseUtils.ACTION_REQUIRED_VENUE); } // check facility conflicts: CourseUtils.triggerEvent_FacilityConflictAssessment(courseGR); return GlideRecordUtils.save(courseGR, { actions_required: [...actions] }); }; function conflictAssessment_CheckFacilityConflicts(courseGR) { //updated version by RJM const log = new Logger("CourseUtils", "Script Include"); // a little redundant since this gets called by the this function's calling function /shrug // if passes validation all facility conflicts should be set to resolved if (CourseFacilityUtils.validatePreferredFacilities(courseGR)) { const conflictGR = new GlideRecord(Constants.COURSE_CONFLICT_TABLE); conflictGR.addQuery("record_type", Constants.COURSE_FACILITY_TABLE); conflictGR.addQuery("course_id", courseGR.getUniqueValue()); conflictGR.addNullQuery("resolved_date"); conflictGR.query(); while (conflictGR.next()) { try { GlideRecordUtils.save(conflictGR, { is_resolved: true, resolved_date: new GlideDate().getValue(), }); } catch (err) { log.error(err.message, "conflictAssessment_CheckFacilityConflicts[all_resolved]"); } } } else { const assignedGR = new GlideRecord(Constant.COURSE_FACILITY_TABLE); assignedGR.addQuery("course_id", courseGR.getUniqueValue()); assignedGR.query(); while (assignedGR.next()) { // only get unresolved conflicts const conflictGR = new GlideRecord(Constants.COURSE_CONFLICT_TABLE); conflictGR.addQuery("record_type", assignedGR.getTableName()); conflictGR.addQuery("record_id", assignedGR.getUniqueValue()); conflictGR.addNullQuery("resolved_date"); conflictGR.setLimit(1); conflictGR.query(); if ( LogicUtils.or( CourseFacilityUtils.isDeleted(assignedGR), CourseFacilityUtils.isApproved(assignedGR), CourseFacilityUtils.isPreferredFacility(assignedGR) ) ) { // if the course facility has been deleted, approved, or is a preferred facility // then we need remove it from the conflict report if it exists if (conflictGR.next()) { try { GlideRecordUtils.save(conflictGR, { is_resolved: true, resolved_date: new GlideDate().getValue(), }); } catch (err) { log.error(err.message, "conflictAssessment_CheckFacilityConflicts[resolved]"); } } } else { // otherwise, add the facility to the conflict report if it doesn't already exist if (LogicUtils.not(conflictGR.next())) { try { GlideRecordUtils.save(new GlideRecord(Constants.COURSE_CONFLICT_TABLE), { course_id: courseGR.getUniqueValue(), conflict_type: CourseUtils.ACTION_REQUIRED_VENUE, record_type: assignedGR.getTableName(), record_id: assignedGR.getUniqueValue(), }); } catch (err) { log.error(err.message, "conflictAssessment_CheckFacilityConflicts[new_conflict]"); } } } } } } // ************************************************** // Security Rules // ************************************************** CourseUtils.canReadRecord = function canReadRecord(courseGR) { const classGR = courseGR.class_id.getRefRecord(); return ClassUtils.canReadRecord(classGR); }; CourseUtils.canCreateRecord = function canCreateRecord(courseGR) { return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS) ); }; CourseUtils.canWriteRecord = function canWriteRecord(courseGR) { return LogicUtils.or( SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS) ); }; CourseUtils.canDeleteRecord = function canDeleteRecord(courseGR) { return false; }; CourseUtils.canCreateInstructorRecord = function canCreateInstructorRecord(courseGR) { return LogicUtils.or( SecurityUtils.isAdmin(), SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS) ); }; CourseUtils.canWriteInstructorRecord = function canWriteInstructorRecord(courseGR) { return LogicUtils.or( SecurityUtils.isAdmin(), SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS) ); }; // ************************************************** // Portal Actions Visibility // ************************************************** CourseUtils.showViewCourseMaterialAction = function showViewCourseMaterialAction(courseGR) { if (GeneralUtils.isEmpty(courseGR.getValue("course_material"))) return false; return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isClassCoordinator(), SecurityUtils.isInstructor(), SecurityUtils.isScheduler(), SecurityUtils.isSectionChief(), SecurityUtils.isUnitChief(), SecurityUtils.isProgramManager() ); }; CourseUtils.showEditSessionDetailsAction = function showEditSessionDetailsAction(courseGR) { const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; CourseUtils.showRescheduleCourseAction = function showRescheduleCourseAction(courseGR) { const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; CourseUtils.showScheduleInstructorsAction = function showScheduleInstructorsAction(courseGR) { const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; CourseUtils.showManageFacilitiesAction = function showManageFacilitiesAction(courseGR) { const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; CourseUtils.showConfirmAssignedFacilitiesAction = function showConfirmAssignedFacilitiesAction( courseGR, facilities = [] ) { if (GeneralUtils.isEmpty(facilities)) return false; if (facilities.every((item) => item.is_approved)) return false; const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; CourseUtils.showRequestFacilityChangeAction = function showRequestFacilityChangeAction( courseGR, facilities = [] ) { if (GeneralUtils.isEmpty(facilities)) return false; if (facilities.every((item) => item.is_approved)) return false; const classGR = courseGR.class_id.getRefRecord(); if (LogicUtils.or(ClassUtils.isCompleted(classGR), ClassUtils.isCancelled(classGR))) return false; const today = new GlideDateTime(); const start = new GlideDateTime(GlideRecordUtils.getValue(courseGR, "start_date_time")); if (GeneralUtils.hasValue(start.getValue())) { if (today.after(start)) return false; } return LogicUtils.or( SecurityUtils.isApplicationAdministrator(), SecurityUtils.isScheduler() ); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-02-18 15:27:37</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>b4e2f2ad1bbf9650065762cae54bcb00</sys_id>
+<sys_mod_count>31</sys_mod_count>
+<sys_name>CourseUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_b4e2f2ad1bbf9650065762cae54bcb00</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-12 18:56:13</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.DataGrouper</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>DataGrouper</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ class DataGrouper { constructor(data) { this.originalData = data; this.filteredData = data; this.keyFns = []; this.sortKeysFns = []; this.sortItemFn = null; } filter(fn) { this.filteredData = this.filteredData.filter(fn); return this; } groupBy(...keyFns) { this.keyFns = keyFns; return this; } sortKeys(...sortFns) { this.sortKeysFns = sortFns; return this; } sortItems(fn) { this.sortItemFn = fn; return this; } getGrouped() { const groupRecursive = (arr, keys, sortKeys, level = 0) => { if (keys.length === 0) { return this.sortItemFn ? [...arr].sort(this.sortItemFn) : arr; } const [currentKeyFn, ...restKeys] = keys; const [currentSortFn, ...restSorts] = sortKeys; const grouped = arr.reduce((acc, item) => { const key = currentKeyFn(item); if (!acc[key]) acc[key] = []; acc[key].push(item); return acc; }, {}); const sortedKeys = currentSortFn ? Object.keys(grouped).sort(currentSortFn) : Object.keys(grouped); const result = {}; for (const key of sortedKeys) { result[key] = groupRecursive(grouped[key], restKeys, restSorts, level + 1); } return result; }; return groupRecursive(this.filteredData, this.keyFns, this.sortKeysFns); } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-09-11 20:02:38</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>83ee5f631b77aad0065762cae54bcb9e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>DataGrouper</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_83ee5f631b77aad0065762cae54bcb9e</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-11 20:02:38</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.DateUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>DateUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * DateUtils * @author John MacKenzie <john.mackenzie@icf.com> * * ServiceNow date scripting utilities */ var DateUtils = Class.create(); DateUtils.prototype = { initialize: function() {}, type: "DateUtils", }; DateUtils.REGEX_DATE = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/; DateUtils.REGEX_ISO8601_DATE_FORMAT = /(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})(\.?\d+)(([-+])(\d{2}:\d{2})|Z)/; /** * Returns the difference between two `GlideDateTime` values * @param {string|GlideDateTime} start the start date * @param {string|GlideDateTime} end the end date * @returns {number} the number of days between two dates */ DateUtils.dateDiff = function dateDiff(start, end) { var finalStart = new GlideDateTime(start); var finalEnd = new GlideDateTime(end); if ( LogicUtils.or( GeneralUtils.hasValue(finalStart.getErrorMsg()), GeneralUtils.hasValue(finalEnd.getErrorMsg()) ) ) { return Infinity; } return GlideDateTime.subtract(finalStart, finalEnd).getDayPart(); }; /** * Parse an ISO 8601 date string and convert it to a `GlideDateTime` record. * Takes into account timezone as `GlideDateTime` will convert to local timezone. * @param {string} input - the ISO8601 date string to be converted * @returns {GlideDateTime} */ GeneralUtils.parseDateTime = function parseDateTime(input) { var gdt = new GlideDateTime(); if (!input) { return gdt; } if (LogicUtils.not(GeneralUtils.isTypeOf(input, "string"))) { return gdt; } var parts = input.match(DateUtils.REGEX_ISO8601_DATE_FORMAT); if (!parts) { return gdt; } var newDateString = GeneralUtils.cleanValue( (parts[1] || "") + " " + (parts[2] || "") ); gdt = new GlideDateTime(newDateString); var offsetInfo = parts[4]; if (offsetInfo == "Z") { return gdt; } if (parts[5] && parts[6]) { var direction = parts[5] == "-" ? 1 : -1; var tzOffset = parseInt(parts[6].split(":")[0], 10); var msOffset = direction * tzOffset * 60 * 60 * 1000; gdt.add(msOffset); } return gdt; }; /** * Calculates the duration between two datetimes * @param {GlideDateTime} start the start of the duration * @param {GlideDateTime} end the end of the duration * @returns {GlideDuration} */ DateUtils.getDuration = function getDuration(start, end) { var totalElapsedTime = GlideDateTime.subtract(start, end).getNumericValue(); var elapsedTimeInHours = Math.floor(totalElapsedTime / 3600000); return elapsedTimeInHours < 1 ? new GlideDuration(totalElapsedTime) : new GlideDuration(elapsedTimeInHours * 3600000); // convert to milliseconds }; /** * Set current date time to UTC midnight * @params {GlideDateTime|string} gdtOrDateString the value to convert * @returns {GlideDateTime} */ DateUtils.getTrueDate = function getTrueDate(gdtOrDateString) { var g1 = new GlideDateTime(gdtOrDateString); var tz = g1.getTZOffset(); var g2 = new GlideDateTime(); var dayInMs = 24 * 60 * 60 * 1000; var numeric = Math.floor(g1.getNumericValue() / dayInMs) * dayInMs - tz; g2.setNumericValue(numeric); return g2; }; /** * Converts a `GlideDateTime` to a `Date` * @param {GlideDateTime|string} glideDateTimeOrString the value to convert * @returns {Date} */ DateUtils.convertGlideDateTimeToDate = function convertGlideDateTimeToDate(glideDateTimeOrString) { var gdt = new GlideDateTime(glideDateTimeOrString); if (!gdt.getValue()) { throw Error(`Not a valid 'GlideDateTime'`); } return new Date(gdt.getNumericValue()); }; /** * Converts a `Date` to a `GlideDateTime` * @param {Date} date the value to convert * @returns {GlideDateTime} */ DateUtils.convertDateToGlideDateTime = function convertDateToGlideDateTime(date) { if (GeneralUtils.isTypeOf(date.getTime, "function")) { var gdt = new GlideDateTime(); gdt.subtract(gdt.getNumericValue()); // set back to epoch start gdt.add(date.getTime()); return gdt; } throw Error(`Not a valid 'Date'`); }; /** * Gets the fiscal year from the inputted date * @param {string|GlideDate|GlideDateTime} the date to extract the fiscal year * @returns {number} */ DateUtils.getFiscalYearFromDate = function getFiscalYearFromDate(input) { if (GeneralUtils.isEmpty(input)) return Constants.VALUE_EMPTY; const gdt = new GlideDateTime(input); if (GeneralUtils.isEmpty(gdt.getValue())) return Constants.VALUE_EMPTY; if (gdt.getMonthUTC() > 9) return gdt.getYearUTC() + 1; return gdt.getYearUTC(); }; /** * Gets the fiscal year for the current date * @returns {number} the current fiscal year */ DateUtils.getCurrentFiscalYear = function getCurrentFiscalYear() { const today = new GlideDateTime(); return DateUtils.getFiscalYearFromDate(today); }; /** * */ DateUtils.getISO8601String = function getISO8601String(gdtOrString) { const gdt = new GlideDateTime(gdtOrString); if (GeneralUtils.isEmpty(gdt.getValue())) return Constants.VALUE_EMPTY; return gdt.getValue().replace(/\s/, "T") + ".000Z"; }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:51:53</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>6b1091eb1b5b1a105c8ccbb6624bcbbf</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>DateUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_6b1091eb1b5b1a105c8ccbb6624bcbbf</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-07-31 15:29:45</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ErrorUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ErrorUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ErrorUtils() { if (this.constructor === ErrorUtils) { throw Error(ErrorUtils.getMessage_CannotInstantiateRecord(this.constructor.name)); } } ErrorUtils.MESSAGE_CANNOT_INSTANTIATE_RECORD = "x_g_dh5_hsisat.error.cannot_instantiate_record"; ErrorUtils.MESSAGE_TABLE_DOES_NOT_EXIST = "x_g_dh5_hsisat.error.table_does_not_exist"; ErrorUtils.MESSAGE_INVALID_REFERENCE_VALUE = "x_g_dh5_hsisat.error.invalid_reference_value"; ErrorUtils.getMessage_CannotInstantiateRecord = (...args) => GeneralUtils.getMessage(ErrorUtils.MESSAGE_CANNOT_INSTANTIATE_RECORD, ...args); ErrorUtils.getMessage_TableDoesNotExist = (...args) => GeneralUtils.getMessage(ErrorUtils.MESSAGE_TABLE_DOES_NOT_EXIST, ...args); ErrorUtils.getMessage_InvalidReferenceValue = (...args) => GeneralUtils.getMessage(ErrorUtils.MESSAGE_INVALID_REFERENCE_VALUE, ...args); ErrorUtils.throw_CannotInstantiateRecord = (...args) => { throw Error(ErrorUtils.getMessage_CannotInstantiateRecord(...args)); }; ErrorUtils.throw_TableDoesNotExist = (...args) => { throw Error(ErrorUtils.getMessage_TableDoesNotExist(...args)); }; ErrorUtils.throw_InvalidReferenceValue = (...args) => { throw Error(ErrorUtils.getMessage_InvalidReferenceValue(...args)); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:52:26</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>003051eb1b5b1a105c8ccbb6624bcbff</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>ErrorUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_003051eb1b5b1a105c8ccbb6624bcbff</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-31 21:26:41</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.EventInviteUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>EventInviteUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function EventInviteUtils() { if (this.constructor === EventInviteUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } EventInviteUtils.getInviteBuilder = function getInviteBuilder() { return new VCalendar("HSI Academy Instructor Scheduling Portal"); }; EventInviteUtils.createInviteFile = function createInviteFile(theGR, builder, { filename = "" } = {}) { let name; if (GeneralUtils.hasValue(filename)) { name = filename; } else { name = `${theGR.getDisplayValue()}.ics`; } return new GlideSysAttachment().write(theGR, name, "text/calendar", builder.getOutput()); }; EventInviteUtils.getInstructorInviteForCourse = function getInstructorInviteForCourse(courseGR) { const builder = EventInviteUtils.getInviteBuilder(); // var EmailGR = new GlideRecord('x_g_dh5_hsisat_email'); var allInstructors = []; var facilities = []; const facilitiesGR = new GlideRecord(Constants.COURSE_FACILITY_TABLE); facilitiesGR.addQuery('course_id', courseGR.getUniqueValue()); facilitiesGR.query(); while(facilitiesGR.next()){ facilities.push(GlideRecordUtils.getDisplayValue(facilitiesGR, 'facility_id')); } var courseName = GlideRecordUtils.getValue(courseGR,'instructional_block_name'); var courseDate = GlideRecordUtils.getValue(courseGR,'start_date_time'); var courseEndDate = GlideRecordUtils.getValue(courseGR,'end_date_time'); var courseClass = GlideRecordUtils.getDisplayValue(courseGR, 'class_id'); var messageBody = `<p>You have been assigned as the instructor for the following course:<br> Course Name: ${courseName} <br>Start Time: ${courseDate}<br>End Time: ${courseEndDate}<br>Location: ${facilities.join(',')}<br>Class: ${courseClass}<br>A calendar invitation is attached to this email for your convenience. <br>Please add it to your calendar to ensure you're aware of your upcoming assignment.</p>`; var fullSubject = `You have been assigned to a Course - ${courseName} on ${courseDate}`; // CODE FOR HA-318 /** * define the different variables for the email * from: who we want the email to appear it was sent by. I was thinking * HSIAcademyScheduling@ice.dhs.gov (it doesn't need to be a real email address * cc: get all the assigned course instructors */ const eventName = [ GlideRecordUtils.getDisplayValue(courseGR, "class_id"), GlideRecordUtils.getValue(courseGR, "instructional_block_name") ].filter(Boolean).join(" - "); const event = builder .addEvent(courseGR.getUniqueValue(), GlideRecordUtils.getValue(courseGR, "start_date_time")) .setSummary(eventName) // .setDescription(messageBody) .setEndDate(GlideRecordUtils.getValue(courseGR, "end_date_time")) .setCreated(GlideRecordUtils.getValue(courseGR, "sys_created_on")) .setLastModified(GlideRecordUtils.getValue(courseGR, "sys_updated_on")) .setSequence(GlideRecordUtils.getValue(courseGR, "sys_mod_count")) .setURL(courseGR.getLink(true)) .addAlarm(eventName + " starts soon", "-PT15M") .done() .setOrganizer(GlideRecordUtils.getValue(courseGR, "class_id.class_coordinator_user_id.email", { name: GlideRecordUtils.getDisplayValue(courseGR, "class_id.class_coordinator_user_id"), })); const attendeeGR = new GlideRecord(Constants.COURSE_INSTRUCTOR_TABLE); attendeeGR.addQuery("course_id", courseGR.getUniqueValue()); attendeeGR.query(); while (attendeeGR.next()) { // allInstructors.push(GlideRecordUtils.getDisplayValue(attendeeGR, "instructor_id.user_id.email")); event.addAttendee( GlideRecordUtils.getDisplayValue(attendeeGR, "instructor_id.user_id"), GlideRecordUtils.getValue(attendeeGR, "instructor_id.user_id.email") ); } event.done(); // EmailGR.initialize(); EmailGR.setValue('from', 'academy.no-reply@ice.dhs.gov'); EmailGR.setValue('to', GlideRecordUtils.getDisplayValue(courseGR, "class_id.class_coordinator_user_id")); EmailGR.setValue('subject', fullSubject); EmailGR.setValue('message', messageBody); EmailGR.setValue('cc', allInstructors.join(',')); EmailGR.setValue('state', 'SENT'); EmailGR.insert(); return EventInviteUtils.createInviteFile(EmailGR, builder, { filename: `${eventName.replace(/\s/g, "-")}.ics`, }); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-22 21:05:11</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>90b309931bf2a6503b5e657fe54bcb19</sys_id>
+<sys_mod_count>22</sys_mod_count>
+<sys_name>EventInviteUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_90b309931bf2a6503b5e657fe54bcb19</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-08-20 19:41:46</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.Exporter</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>Exporter</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ class Exporter { constructor(exportGR) { this.exportGR = exportGR; this.log = new Logger("Exporter", "Script Include"); } getData(exportGR) { throw HSISATError.create("Could not generate export", { details: "'getData' is not implemented"}); } getFileName() {} generate(data) { throw HSISATError.create("Could not generate export", { details: "'generate' is not implemented" }); } execute() { const data = this.getData(this.exportGR); const returnIds = this.generate(data); if (GeneralUtils.isEmpty(returnIds)) throw HSISATError.create("Unable to generate export file"); return returnIds; } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-14 18:39:15</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>ae7f7e6a1b5766103b5e657fe54bcbb0</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Exporter</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_ae7f7e6a1b5766103b5e657fe54bcbb0</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 18:39:15</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.Exporter_CurriculumModel</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>Exporter_CurriculumModel</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ class Exporter_CurriculumModel extends Exporter { constructor(exportGR) { super(exportGR); this.log = new Logger("Exporter_CurriculumModel", "Script Include"); } getData(exportGR) { const rows = []; const header = [ "CURRICULUM MODEL", "ENROLLMENT LIMIT", "INSTRUCTIONAL BLOCK NAME", "INSTRUCTIONAL BLOCK DESCRIPTION", "COURSE SEQUENCE", "AREA OF RESPONSIBILITY", "AOR SEQUENCE", "LP NUMBER", "CLASS DAY", "CLASS WEEK", "CLASS HOURS", "FACILITY REQUIREMENTS", "FACILITY SETS", "FACILITY PREFERENCES", ]; rows.push(header); const modelName = GlideRecordUtils.getDisplayValue(this.exportGR, "class_configuration_id"); const enrollmentLimit = GlideRecordUtils.getValue( this.exportGR, "class_configuration_id.enrollment_limit_count" ); const configGR = new GlideRecord(Constants.COURSE_CONFIGURATION_TABLE); configGR.addQuery( "class_configuration_id", GlideRecordUtils.getValue(this.exportGR, "class_configuration_id") ); configGR.orderBy("course_sequence"); configGR.query(); while (configGR.next()) { const row = []; row.push(modelName); row.push(enrollmentLimit); row.push(GlideRecordUtils.getDisplayValue(configGR, "name")); row.push(GlideRecordUtils.getDisplayValue(configGR, "description")); row.push(GlideRecordUtils.getDisplayValue(configGR, "course_sequence")); row.push(GlideRecordUtils.getDisplayValue(configGR, "aor_code")); row.push(GlideRecordUtils.getDisplayValue(configGR, "aor_class_sequence")); row.push(GlideRecordUtils.getDisplayValue(configGR, "course_number")); row.push(GlideRecordUtils.getDisplayValue(configGR, "class_day")); row.push(GlideRecordUtils.getDisplayValue(configGR, "class_week")); row.push(GlideRecordUtils.getDisplayValue(configGR, "total_class_hours")); row.push(GlideRecordUtils.getDisplayValue(configGR, "hsia_training_facility_requirements")); row.push(GlideRecordUtils.getDisplayValue(configGR, "fletc_facility_set")); const facilityGR = new GlideRecord(Constants.COURSE_FACILITY_PREFERENCE_TABLE); facilityGR.addQuery("course_configuration_id", configGR.getUniqueValue()); facilityGR.orderBy("preference_order"); facilityGR.query(); const facilities = []; while (facilityGR.next()) { facilities.push(GlideRecordUtils.getDisplayValue(facilityGR, "facility_id")); } row.push(facilities.filter(Boolean).join(", ")); rows.push(row); } return rows; } getFilename() { return `${this.exportGR.getDisplayValue("class_configuration_id")}.csv`; } generate(data) { const attachment = new GlideSysAttachment(); const content = data .map((row) => row.map((field) => `"${String(field).trim().replace(/"/g, "")}"`).join(",")) .join(ExportUtils.CRLF); return attachment.write(this.exportGR, this.getFilename(), "text/csv", content); } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-14 19:40:46</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>775047aa1b5766103b5e657fe54bcb99</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>Exporter_CurriculumModel</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_775047aa1b5766103b5e657fe54bcb99</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 19:59:28</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ExportUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ExportUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ExportUtils() { if (this.constructor === ExportUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // General Constants // ************************************************** ExportUtils.STATE_PENDING = 1; ExportUtils.STATE_GENERATING = 2; ExportUtils.STATE_COMPLETE = 3; ExportUtils.STATE_ERROR = -1; ExportUtils.DELIVERY_BROWSER = "BROWSER"; ExportUtils.DELIVERY_EMAIL = "EMAIL"; ExportUtils.FORMAT_CSV = "CSV"; ExportUtils.FORMAT_PDF = "PDF"; ExportUtils.CRLF = "\r\n"; // ************************************************** // Messages // ************************************************** ExportUtils.MESSAGE_EXPORT_IN_PROGRESS = "x_g_dh5_hsisat.export.message.export_in_progress"; ExportUtils.MESSAGE_EXPORT_COMPLETED = "x_g_dh5_hsisat.export.message.export_completed"; ExportUtils.MESSAGE_EXPORT_FAILED = "x_g_dh5_hsisat.export.message.export_failed"; ExportUtils.MESSAGE_NO_RECORDS_RETURNED = "x_g_dh5_hsisat.export.message.no_records_returned"; ExportUtils.getMessage_ExportInProgress = function getMessage_ExportInProgress(...args) { return GeneralUtils.getMessage(ExportUtils.MESSAGE_EXPORT_IN_PROGRESS, ...args); }; ExportUtils.getMessage_ExportCompleted = function getMessage_ExportCompleted(...args) { return GeneralUtils.getMessage(ExportUtils.MESSAGE_EXPORT_COMPLETED, ...args); }; ExportUtils.getMessage_ExportFailed = function getMessage_ExportFailed(...args) { return GeneralUtils.getMessage(ExportUtils.MESSAGE_EXPORT_FAILED, ...args); }; ExportUtils.getMessage_NoRecordsReturned = function getMessage_NoRecordsReturned(...args) { return GeneralUtils.getMessage(ExportUtils.MESSAGE_NO_RECORDS_RETURNED, ...args); }; // ************************************************** // Events // ************************************************** ExportUtils.EVENT_EXPORT_STARTED = "x_g_dh5_hsisat.export.started"; ExportUtils.EVENT_EXPORT_COMPLETE = "x_g_dh5_hsisat.export.complete"; ExportUtils.EVENT_EXPORT_FAILED = "x_g_dh5_hsisat.export.failed"; ExportUtils.triggerEvent_ExportStarted = function triggerEvent_ExportStarted(exportGR) { return gs.eventQueue(ExportUtils.EVENT_EXPORT_STARTED, exportGR); }; ExportUtils.triggerEvent_ExportComplete = function triggerEvent_ExportComplete(exportGR, state) { return gs.eventQueue(ExportUtils.EVENT_EXPORT_COMPLETE, exportGR, state); }; ExportUtils.triggerEvent_ExportFailed = function triggerEvent_ExportFailed(exportGR, error) { return gs.eventQueue(ExportUtils.EVENT_EXPORT_FAILED, exportGR, error); }; // ************************************************** // Utility Methods // ************************************************** ExportUtils.isPending = function isPending(exportGR) { return GeneralUtils.areEqual(GlideRecordUtils.getValue(exportGR, "state"), ExportUtils.STATE_PENDING); }; ExportUtils.isGenerating = function isGenerating(exportGR) { return GeneralUtils.areEqual(GlideRecordUtils.getValue(exportGR, "state"), ExportUtils.STATE_GENERATING); }; ExportUtils.isComplete = function isComplete(exportGR) { return GeneralUtils.areEqual(GlideRecordUtils.getValue(exportGR, "state"), ExportUtils.STATE_COMPLETE); }; ExportUtils.isError = function isError(exportGR) { return GeneralUtils.areEqual(GlideRecordUtils.getValue(exportGR, "state"), ExportUtils.STATE_ERROR); }; ExportUtils.isRequestedByUser = function isRequestedByUser(exportGR, userId) { return GeneralUtils.areEqual(GlideRecordUtils.getValue(exportGR, "requested_by_user_id"), userId); }; ExportUtils.isRequestedByCurrentUser = function isRequestedByCurrentUser(exportGR) { return ExportUtils.isRequestedByUser(exportGR, gs.getUserID()); }; ExportUtils.getExportGenerator = function getExportGenerator(exportGR) { switch (exportGR.getTableName()) { case Constants.EXPORT_CURRICULUM_MODEL_TABLE: return new Exporter_CurriculumModel(exportGR); default: throw HSISATError.create("Unable to generate export", { details: "Invalid Export Table", }); } }; ExportUtils.generateExport = function generateExport(exportGR) { const generator = ExportUtils.getExportGenerator(exportGR); try { const state = generator.execute(); ExportUtils.triggerEvent_ExportComplete(exportGR, state); } catch (err) { ExportUtils.triggerEvent_ExportFailed(exportGR, err.message); return false; } return true; }; ExportUtils.executeExport = function executeExport(exportGR) { if (LogicUtils.not(exportGR.isNewRecord())) { exportGR.setValue("number", Constants.VALUE_EMPTY); } exportGR.setValue("requested_by_user_id", gs.getUserID()); exportGR.setValue("requested_date", new GlideDateTime().getValue()); exportGR.setValue("state", ExportUtils.STATE_GENERATING); exportGR.setValue("error_message", Constants.VALUE_EMPTY); exportGR.insert(); ExportUtils.triggerEvent_ExportStarted(exportGR); return exportGR; }; // ************************************************** // UI Visibility Methods // ************************************************** ExportUtils.showGenerateExportAction = function showGenerateExportAction(exportGR) { if (exportGR.isNewRecord()) return true; return LogicUtils.or(ExportUtils.isComplete(exportGR), ExportUtils.isError(exportGR)); }; // ************************************************** // Access Control Methods // ************************************************** ExportUtils.canCreateRecord = function canCreateRecord(exportGR) { return SecurityUtils.isClassAdmin(); }; ExportUtils.canWriteRecord = function canWriteRecord(exportGR) { return LogicUtils.or( LogicUtils.and(SecurityUtils.isClassAdmin(), exportGR.isNewRecord()), ExportUtils.isRequestedByCurrentUser(exportGR) ); }; ExportUtils.canReadRecord = function canReadRecord(exportGR) { return LogicUtils.or( LogicUtils.and(SecurityUtils.isClassAdmin(), exportGR.isNewRecord()), ExportUtils.isRequestedByCurrentUser(exportGR) ); }; ExportUtils.canDeleteRecord = function canDeleteRecord(exportGR) { return gs.hasRole("nobody"); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-14 18:21:59</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>4c07ba261b1766103b5e657fe54bcb02</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>ExportUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_4c07ba261b1766103b5e657fe54bcb02</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-14 19:40:27</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.FacilityUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>FacilityUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function FacilityUtils() { if (this.constructor === FacilityUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Security Rules // ************************************************** FacilityUtils.canReadRecord = function canReadRecord(facilityGR) { return true; }; FacilityUtils.canCreateRecord = function canCreateRecord(facilityGR) { //const courseGR = facilityGR.course_id.getRefRecord(); if (SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS)) return false; return LogicUtils.or( SecurityUtils.isAdmin(), //SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), //CourseUtils.canCreateRecord(courseGR) ); }; FacilityUtils.canWriteRecord = function canWriteRecord(facilityGR) { //const courseGR = facilityGR.course_id.getRefRecord(); if (SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS)) return false; return LogicUtils.or( SecurityUtils.isAdmin(), //SecurityUtils.isClassAdmin(), SecurityUtils.isSchedulerUser(), //CourseUtils.canCreateRecord(courseGR) ); }; FacilityUtils.canDeleteRecord = function canDeleteRecord(facilityGR) { const courseGR = facilityGR.course_id.getRefRecord(); return CourseUtils.canDeleteRecord(courseGR); }; // ************************************************** // Facility Functions: // ************************************************** FacilityUtils.checkFaciltyPreferences = function checkFaciltyPreferences(specificClass) { // function to run through ALL courses in our system to check if they have their preferred facilities var course = new GlideRecord("x_g_dh5_hsisat_course"); if (!specificClass) { course.addEncodedQuery("stateINdraft,in_progress,scheduled^ORstateISEMPTY"); } else { //testing purposes course.addEncodedQuery("stateINdraft,in_progress,scheduled^ORstateISEMPTY^class_id=" + specificClass); } course.query(); var assignedFacilities = []; var preferredFacilities = []; var check = 0; while (course.next()) { check++; if (check < 10) { gs.info("checkFaciltyPreferences script"); } // get Course Configuration: var courseConfig = course.getValue("course_configuration_id"); // get the Course's Assigned Facilities and add the to the assigned facility array: var assndFac = new GlideRecord("x_g_dh5_hsisat_course_facility"); assndFac.addQuery('course_id', course.getValue('sys_id')); assndFac.query(); var totalAssignedFacs = assndFac.getRowCount(); while (assndFac.next()) { assignedFacilities.push(assndFac.sys_id); } // get the Course's Preferred Facilities by Course Configuration ID, add them to the preferred facility array: var preferredFac = new GlideRecord("x_g_dh5_hsisat_course_facility_preference"); preferredFac.addQuery('course_configuration_id', courseConfig); preferredFac.query(); var totalPreferredFacs = preferredFac.getRowCount(); // var matchedAssignedFacs = 0; // while (preferredFac.next()) { preferredFacilities.push(preferredFac.sys_id); } preferredFacilities.forEach(function(preferredFacility) { if (preferredFacility instanceof assignedFacilities) { // add one to the aligned Assigned facility Count matchedAssignedFacs++; } // compare the preferred facilities to the assigned facilities: // If (#preferred < #assigned, && All Preferred are met) - no issue if (totalPreferredFacs < totalAssignedFacs && matchedAssignedFacs == totalPreferredFacs) { // do nothing //gs.info("FacUtils: #preferred < #assigned, && All Preferred met, Course" + course.course_number + " CC: " + courseConfig + " totalPreferred " + totalPreferredFacs + " tAssigned: " + totalAssignedFacs + " tMatched: " + matchedAssignedFacs); } // If (#preferred >= #assigned, && All Preferred are met) - no issue if (totalPreferredFacs >= totalAssignedFacs && matchedAssignedFacs == totalAssignedFacs) { // do nothing //gs.info("FacUtils: #preferred >= #assigned, && All Preferred met, Course" + course.course_number + " CC: " + courseConfig + " totalPreferred " + totalPreferredFacs + " tAssigned: " + totalAssignedFacs + " tMatched: " + matchedAssignedFacs); } if (totalPreferredFacs < totalAssignedFacs && matchedAssignedFacs < totalPreferredFacs) { // one of them is Not a Preferred Facility, set Action Required // one of them is Not a Preferred Facility, set Action Required if (course.actions_required.indexOf("venue") == -1) { var ar_array = course.getValue('actions_required').split(','); ar_array.push('venue'); course.setValue('actions_required', ar_array); course.update(); } //gs.info("FacUtils: #preferred < #assigned, && one or more Preferred not met, Course" + course.course_number + " CC: " + courseConfig + " totalPreferred " + totalPreferredFacs + " tAssigned: " + totalAssignedFacs + " tMatched: " + matchedAssignedFacs); } // If (#preferred >= #assigned, && at least one Preferred is NOT met) - update the Not a Preferred Facility if (totalPreferredFacs >= totalAssignedFacs && matchedAssignedFacs < totalAssignedFacs) { // one of them is Not a Preferred Facility, set Action Required // one of them is Not a Preferred Facility, set Action Required if (course.actions_required.indexOf("venue") == -1) { var ar_array = course.getValue('actions_required').split(','); ar_array.push('venue'); course.setValue('actions_required', ar_array); course.update(); } //gs.info("FacUtils: #preferred >= #assigned, && one or more Preferred not met, Course" + course.course_number + " CC: " + courseConfig + " totalPreferred " + totalPreferredFacs + " tAssigned: " + totalAssignedFacs + " tMatched: " + matchedAssignedFacs); } }); } }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-01 16:28:52</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>7dd567561b4f26d0065762cae54bcb6b</sys_id>
+<sys_mod_count>20</sys_mod_count>
+<sys_name>FacilityUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_7dd567561b4f26d0065762cae54bcb6b</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-26 16:19:06</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.GeneralUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>GeneralUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * GeneralUtils * @author John MacKenzie <john.mackenzie@icf.com> * * General ServiceNow scripting utilities */ var GeneralUtils = Class.create(); GeneralUtils.prototype = { initialize: function() {}, type: "GeneralUtils", }; /** * Constant values for ServiceNow boolean quirks */ GeneralUtils.VALUE_TRUE = "1"; GeneralUtils.VALUE_FALSE = "0"; GeneralUtils.VALUE_EMPTY_STRING = ""; /** * Takes any input value and returns an appropriate value * to be used by ServiceNow * @param value * @returns a ServiceNow usable value */ GeneralUtils.cleanValue = function cleanValue(value) { if (typeof value == "undefined" || value == null) { return ""; } if (typeof value == "string") { return value.trim(); } return value; }; /** * Determines whether the input is a valid value * @param value * @returns {boolean} */ GeneralUtils.hasValue = function hasValue(value) { if (GeneralUtils.cleanValue(value) === "") { return false; } if (Array.isArray(value)) { return value.length > 0; } if (typeof value === "object") { return Object.keys(value).length > 0; } return true; }; /** * Determines whether the input is empty * (inverse of `hasValue`) * @param {any} value * @returns {boolean} */ GeneralUtils.isEmpty = function isEmpty(value) { return LogicUtils.not(GeneralUtils.hasValue(value)); }; /** * Returns a default value when the specified value is null or empty * @param {any} value the value to check * @param {any} fallback the value to return if value doesn't exist * @returns {any} */ GeneralUtils.defaultValue = function defaultValue(value, fallback) { if (GeneralUtils.hasValue(value)) { return GeneralUtils.cleanValue(value); } return GeneralUtils.cleanValue(fallback); }; /** * Determines if two values are equal to each other. Can also determine * if they are an exact match by passing in the `exact` parameter as `true` * @param {any} item1 * @param {any} item2 * @param {boolean} exact * @returns {boolean} */ GeneralUtils.areEqual = function areEqual(item1, item2, exact) { exact = GeneralUtils.defaultValue(exact, false); if (exact) { return item1 === item2; } return item1 == item2; }; /** * Determines if two values are not equal. * Using `exact` parameter can check for exactness (e.g. 1 != "1" => false; 1 !== "1" => true) * @param {any} item1 * @param {any} item2 * @param {boolean} exact * @returns {boolean} */ GeneralUtils.areNotEqual = (item1, item2, exact = false) => LogicUtils.not(GeneralUtils.areEqual(item1, item2, exact)); /** * Tries to match a value in a given array with a value at the same index in a * replacement array and returns either the value at the same index or a * default value if the value is not found * @param {any} value the value to search for in the array * @param {any[]} inArray the array to be searched * @param {any[]} replacement the array of replacement values * @param {any} fallback the default value to be returned if the search value is not found * @returns {any} */ GeneralUtils.displayValue = function displayValue( value, inArray, replacement, fallback ) { var finalFallback = GeneralUtils.defaultValue(fallback, null); if ( LogicUtils.or( LogicUtils.not(Array.isArray(inArray)), LogicUtils.not(Array.isArray(replacement)) ) ) { throw Error("`inArray` and `replacement` must be arrays"); } var index = inArray.indexOf(value); return GeneralUtils.defaultValue(replacement[index], finalFallback); }; /** * Returns the data[index] if it is valid or else returns the default value * @param {any} data an array, whose index value is expected, or an object that can be indexed * @param {number | string} index the index or array of indices of the data. Can be integer or text * @param {any} fallback the default value to be returned if the data or the index is invalid * @returns */ GeneralUtils.index = function index(data, index, fallback) { var finalFallback = GeneralUtils.defaultValue(fallback, null); if (Array.isArray(data)) { if (Array.isArray(index)) { return index.map(function(i) { return GeneralUtils.defaultValue(data[i], finalFallback); }); } return GeneralUtils.defaultValue(data[index], finalFallback); } return GeneralUtils.defaultValue(data[index], finalFallback); }; /** * Checks if the passed in value matches the expected type * @param {*} valueToCheck the value to check * @param {string} type the type to compare */ GeneralUtils.isTypeOf = function isTypeOf(valueToCheck, type) { return GeneralUtils.areEqual(typeof valueToCheck, type, true); }; /** * Checks if the passed in value is not the type of checked value * @param {*} valueToCheck the value to check * @param {string} type the type to compare */ GeneralUtils.isNotTypeOf = (valueToCheck, type) => LogicUtils.not(GeneralUtils.isTypeOf(valueToCheck, type)); /** * Returns a clone of the object passed into the function parameter * NOTE: If the passed in object is a `GlideRecord`, then to ensure * that it returns a valid `GlideRecord` it will query the database * otherwise trying to save the record would result in an insert of * a new record * * @param {any} obj the object to be cloned * @returns {any} */ GeneralUtils.clone = function clone(obj) { var clone = {}; if (GlideRecordUtils.isGlideRecord(obj)) { clone = new GlideRecord(obj.getTableName()); if (obj.getUniqueValue()) { clone.get(obj.getUniqueValue()); // in the event the passed in `GlideRecord` had changes // not yet saved to the database do not return // just the values that exist in the database } obj.getElements().forEach(function(element) { if (LogicUtils.not(element.getName().startsWith('sys_'))) { clone.setValue(element.getName(), obj.getValue(element.getName())); } }); } else { for (var property in obj) { clone[property] = obj[property]; } } return clone; }; /** * Determines if the current location is a related list render * @param {RenderProperties} RP Render Properties * @param {object} options * @returns {boolean} */ GeneralUtils.isRenderedOnRelatedList = function isRenderedOnRelatedList( RP, options ) { var finalOptions = Object.extend({ omitNewButton: true }, options); return LogicUtils.and( LogicUtils.or( LogicUtils.and( finalOptions.omitNewButton, LogicUtils.not(RP.getListControl().isOmitNewButton()) ), LogicUtils.not(finalOptions.omitNewButton) ), RP.isRelatedList(), LogicUtils.not(RP.isManyToMany()), LogicUtils.not(RP.isInDevStudio()) ); }; /** * A basic implementation of `String.prototype.replaceAll` for use in ServiceNow * @param {string} str original string to search * @param {string|RegExp} find string or regular expression to find within the string * @param {string} replace the value to replace in the string * @returns {string} */ GeneralUtils.replaceAll = function replaceAll(str, find, replace) { if ( GeneralUtils.or( GeneralUtils.areEqual(typeof str, "undefined"), GeneralUtils.areEqual(typeof find, "undefined") ) ) { return ""; } if (GeneralUtils.areEqual(typeof replace, "undefined")) { return str; } if (GeneralUtils.areEqual(typeof find, "string")) { find = find.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); } return str.replace(new RegExp(find, "g"), replace); }; /** * A wrapper around `gs.getMessage` * @param {string} message the message name or text * @param {...*} args the arguments used by the message * @returns {string} */ GeneralUtils.getMessage = function getMessage(message, ...args) { const finalArgs = args.map(arg => { if (LogicUtils.or(arg === null, GeneralUtils.isTypeOf(arg, "undefined"))) { return GeneralUtils.VALUE_EMPTY_STRING; } if (String(arg).match(/^\[object/)) { return JSON.stringify(arg); } return String(arg); }); return gs.getMessage(message, finalArgs); }; GeneralUtils.getProperty = function getProperty(key, _default) { const property = new GlideRecord("sys_properties"); if (property.get("name", key)) { const value = property.getValue("value"); switch (property.getValue("type")) { case "boolean": return value === "true"; case "integer": { const parse = parseInt(value, 10); return isNaN(parse) ? 0 : parse; } default: return value; } } return GeneralUtils.hasValue(_default) ? _default : null; }; GeneralUtils.tryCatch = function tryCatch(operation) { const onSuccess = (value) => [null, value]; const onFailure = (error) => { const parsedError = error instanceof Error ? error : new Error(String(error)); return [parsedError]; }; const isPromise = (value) => { return ( !!value && (typeof value === "object" || typeof value === "function") && typeof value.then === "function" ); }; try { const result = typeof operation === "function" ? operation() : operation; if (isPromise(result)) { return Promise.resolve(result) .then((data) => onSuccess(data)) .catch((error) => onFailure(error)); } return onSuccess(result); } catch (error) { return onFailure(error); } }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:53:02</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>815091eb1b5b1a105c8ccbb6624bcbb9</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>GeneralUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_815091eb1b5b1a105c8ccbb6624bcbb9</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-09 14:17:33</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>public</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.Get_facility_feild_values</api_name>
+<caller_access/>
+<client_callable>true</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>Get_facility_feild_values</name>
+<sandbox_callable>true</sandbox_callable>
+<script>
+<![CDATA[ var Get_facility_feild_values = Class.create(); Get_facility_feild_values.prototype = Object.extendsObject(global.AbstractAjaxProcessor, { getValue: function() { var field_values = {}; var location_sys_id = this.getParameter('sysparm_loc_sys_id'); var gr_location = new GlideRecord('x_g_dh5_hsisat_facility'); if(gr_location.get(location_sys_id)) { field_values.building_number = gr_location.building.toString(); field_values.room_number = gr_location.room.toString(); } return JSON.stringify(field_values); }, type: 'Get_facility_feild_values' }); ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>DCOparan</sys_created_by>
+<sys_created_on>2025-04-02 01:41:55</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>aa9059db1b2ce650065762cae54bcba9</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_name>Get_facility_feild_values</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_aa9059db1b2ce650065762cae54bcba9</sys_update_name>
+<sys_updated_by>DCOparan</sys_updated_by>
+<sys_updated_on>2025-04-02 02:32:20</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.GlideRecordUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>GlideRecordUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * GlideRecordUtils * @author John MacKenzie <john.mackenzie@icf.com> * * ServiceNow GlideRecord utilities for abstracting GlideRecord functions */ var GlideRecordUtils = Class.create(); GlideRecordUtils.prototype = { initialize: function initialize() {}, type: "GlideRecordUtils", }; /** * Determines if the inputted value is a `GlideRecord` or `GlideRecordSecure` * @param {any} input the value to check * @returns {boolean} */ GlideRecordUtils.isGlideRecord = function isGlideRecord(input) { return LogicUtils.or( input instanceof GlideRecord, input instanceof GlideRecordSecure ); }; /** * Returns a specified field value from a `GlideRecord`. * e.g. if a field is an `integer` it will return an `integer` instead of a `string` * as ServiceNow's `getValue` always returns a `string` * @param {GlideRecord} record The GlideRecord * @param {string} field a possibly dot-walked field name * @returns {any} */ GlideRecordUtils.getValue = function getValue(record, field) { if ( LogicUtils.or(GeneralUtils.isEmpty(record), GeneralUtils.isEmpty(field)) ) { return ""; } var path = field.split("."); var value = record; for (var i = 0; i < path.length; i += 1) { var pathPart = path[i]; if (value[pathPart] === undefined) { var objectType = GeneralUtils.defaultValue( value.getED().getReference(), value.getED().getInternalType() ); throw Error("`" + pathPart + "` does not exist on `" + objectType + "`"); } value = value[pathPart]; } var type = value.getED().getInternalType(); switch (type) { case "integer": return parseInt(value.toString(), 10); case "float": case "double": case "decimal": return parseFloat(value.toString()); case "boolean": return value == GeneralUtils.VALUE_TRUE; case "glide_list": return value.toString().split(",").filter(Boolean); default: return value.toString(); } }; /** * Returns a specified field's display value from a `GlideRecord`. * e.g. if a field is an `integer` it will return an `integer` instead of a `string` * as ServiceNow's `getValue` always returns a `string` * @param {GlideRecord} record The GlideRecord * @param {string} field a possibly dot-walked field name * @returns {any} */ GlideRecordUtils.getDisplayValue = function getDisplayValue(record, field) { if ( LogicUtils.or(GeneralUtils.isEmpty(record), GeneralUtils.isEmpty(field)) ) { return ""; } var path = field.split("."); var value = record; for (var i = 0; i < path.length; i += 1) { var pathPart = path[i]; if (value[pathPart] === undefined) { var objectType = GeneralUtils.defaultValue( value.getED().getReference(), value.getED().getInternalType() ); throw Error("`" + pathPart + "` does not exist on `" + objectType + "`"); } value = value[pathPart]; } if (value.getED().isChoiceTable()) { return value.getDisplayValue(); } var type = value.getED().getInternalType(); switch (type) { case "integer": case "float": case "double": case "decimal": return Number(value.getDisplayValue()); case "boolean": return value == Constants.TRUE ? "Yes" : "No"; case "glide_list": // TODO: the point was to have it separated nicely but because the display // ! values could have commas it could get a little messy return value.getDisplayValue().split(",").filter(Boolean).join(", "); default: return value.getDisplayValue(); } }; /** * Wrapper of the `isNewRecord` `GlideRecord` method * @param {GlideRecord} thisGR * @returns {boolean} */ GlideRecordUtils.isNewRecord = function isNewRecord(thisGR) { if (LogicUtils.not(GlideRecordUtils.isGlideRecord(thisGR))) { return LogicUtils.False(); } return thisGR.isNewRecord(); }; /** * Is the current user the create of the passed in record * @param {GlideRecord} thisGR any `GlideRecord` to check * @returns {boolean} */ GlideRecordUtils.isCreatedByUser = function isCreatedByUser(thisGR) { if (LogicUtils.not(GlideRecordUtils.isGlideRecord(thisGR))) { return LogicUtils.False(); } return GeneralUtils.areEqual( GlideRecordUtils.getValue(thisGR, "sys_created_by"), gs.getUserName() ); }; /** * Checks if a field value changed from a specific value to another * * @param {GlideRecord} thisGR the GlideRecord where changes occurred * @param {string} field the field that changed * @param {any} fromValue the value the field changed from * @param {any} toValue the value the field changed to * @returns {boolean} */ GlideRecordUtils.didFieldValueChangeFromAndTo = function didFieldValueChangeFromAndTo(thisGR, field, fromValue, toValue) { return GeneralUtils.and( thisGR[field].changesFrom(fromValue), thisGR[field].changesTo(toValue) ); }; /** * Wrapper method around the GlideRecord `insert` and `update` to save the * record and throw an error if fails. * NOTE: cross scope create/update need to be made available for write access * * @param {GlideRecord} thisGR the GlideRecord to save * @param {object} valuesToUpdate key-value pairs of the values to update on the GR * @returns {string} the `sys_id` of the saved record * @throws {Error} when record not saved */ GlideRecordUtils.saveGlideRecord = function saveGlideRecord( thisGR, valuesToUpdate ) { valuesToUpdate = GeneralUtils.defaultValue(valuesToUpdate, {}); var action = "update"; if (thisGR.isNewRecord()) { action = "insert"; } for (var field in valuesToUpdate) { thisGR.setValue(field, valuesToUpdate[field]); } if (LogicUtils.not(thisGR[action]())) { throw Error(thisGR.getLastErrorMessage()); } return thisGR.getUniqueValue(); }; /** * Wrapper method around the GlideRecord `insert` and `update` to save the * record and throw an error if save fails * * @param {GlideRecord} thisGR the GlideRecord to save * @param {Record<string, any>} valuesToUpdate key-value pairs of the values to update on the GlideRecord * @param {Record<string, any>} options additional options for saving * @returns {string} the `sys_id` of the saved record * @throws {APMSError} when record not saved */ GlideRecordUtils.save = function save( thisGR, valuesToUpdate = {}, options = {} ) { const { skipAutoFields = false, skipWorkflow = false, ...rest } = options; let action = "update"; if (thisGR.isNewRecord()) { action = "insert"; } for (let field in valuesToUpdate) { thisGR.setValue(field, GeneralUtils.defaultValue(valuesToUpdate[field], Constants.VALUE_EMPTY)); } thisGR.autoSysFields(LogicUtils.not(skipAutoFields)); thisGR.setWorkflow(LogicUtils.not(skipWorkflow)); if (LogicUtils.not(thisGR[action]())) { throw APMSError.create("Unable to save record", { details: thisGR.getLastErrorMessage() }); } return thisGR.getUniqueValue(); }; /** * Forces a database update for a GlideRecord * * @param {GlideRecord} thisGR the GlideRecord to force update * @returns {string} the `sys_id` of the saved record * @throws {APMSError} when record not saved */ GlideRecordUtils.forceUpdate = (thisGR) => { thisGR.autoSysFields(false); if (GeneralUtils.isEmpty(thisGR.getValue('sys_created_by'))) { thisGR.setValue('sys_created_by', gs.getUserName()); thisGR.setValue('sys_created_on', new GlideDateTime().getValue()); } thisGR.setValue('sys_mod_count', GeneralUtils.defaultValue(GlideRecordUtils.getValue(thisGR, 'sys_mod_count'), -1) + 1); // default 0 thisGR.setValue('sys_updated_by', gs.getUserName()); thisGR.setValue('sys_updated_on', new GlideDateTime().getValue()); if (GeneralUtils.isEmpty(thisGR.update())) { throw APMSError.create("Unable to save record", { details: thisGR.getLastErrorMessage() }); } return thisGR.getUniqueValue(); }; /** * Returns a JSON representation of a GlideRecord * * @param {GlideRecord} thisGR the GlideRecord to "jsonify" * @param {object} options additional options for modifying the result * @param {string[]} options.include specify the fields to include in the result * @param {string[]} options.exclude specify the fields to exclude in the result * @param {boolean} options.stringify specify whether the result should be converted to a string */ GlideRecordUtils.toJson_v1 = (thisGR, { include = [], exclude = [], stringify = false, full = false, } = {}) => { const output = {}; if (GeneralUtils.hasValue(include)) { for (const field of include) { try { if (full && GeneralUtils.hasValue(thisGR[field].getED().getReference())) { output[field] = { label: output[field] = GlideRecordUtils.getDisplayValue(thisGR, field), value: output[field] = GlideRecordUtils.getValue(thisGR, field), }; } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } catch (err) {} } return stringify ? JSON.stringify(output) : output; } for (const field in thisGR) { if (exclude.includes(field)) continue; try { if (full && GeneralUtils.hasValue(thisGR[field].getED().getReference())) { output[field] = { label: output[field] = GlideRecordUtils.getDisplayValue(thisGR, field), value: output[field] = GlideRecordUtils.getValue(thisGR, field), }; } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } catch (err) {} } return stringify ? JSON.stringify(output) : output; }; /** * Returns a JSON representation of a GlideRecord (version 2) * Includes breaking changes from v1 * * @param {GlideRecord} thisGR the GlideRecord to "jsonify" * @param {object} options additional options for modifying the result * @param {string[]} options.include specify the fields to include in the result * @param {string[]} options.exclude specify the fields to exclude in the result * @param {boolean} options.stringify specify whether the result should be converted to a string */ GlideRecordUtils.toJson_v2 = (thisGR, { include = [], exclude = [], stringify = false, full = false, } = {}) => { const DISPLAY_TYPES = [ "reference", "document_id", "choice", "glide_date", "glide_date_time", "glide_list", ]; const output = {}; if (GeneralUtils.hasValue(include)) { for (const field of include) { try { if (full) { const type = thisGR[field].getED().isChoiceTable() ? "choice" : thisGR[field].getED().getInternalType(); if (DISPLAY_TYPES.includes(type)) { output[field] = { label: output[field] = GlideRecordUtils.getDisplayValue(thisGR, field), value: output[field] = GlideRecordUtils.getValue(thisGR, field), }; } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } catch (err) {} } return stringify ? JSON.stringify(output) : output; } for (const field in thisGR) { if (exclude.includes(field)) continue; try { if (full) { const type = thisGR[field].getED().isChoiceTable() ? "choice" : thisGR[field].getED().getInternalType(); if (DISPLAY_TYPES.includes(type)) { output[field] = { label: output[field] = GlideRecordUtils.getDisplayValue(thisGR, field), value: output[field] = GlideRecordUtils.getValue(thisGR, field), }; } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } else { output[field] = GlideRecordUtils.getValue(thisGR, field); } } catch (err) {} } return stringify ? JSON.stringify(output) : output; }; GlideRecordUtils.toJson = (thisGR, { include = [], exclude = [], stringify = false, full = false, version = "v1", } = {}) => { if (GeneralUtils.areEqual(version, "v1")) { return GlideRecordUtils.toJson_v1(thisGR, { include, exclude, stringify, full }); } else { return GlideRecordUtils.toJson_v2(thisGR, { include, exclude, stringify, full }); } }; GlideRecordUtils.isDeleting = (thisGR) => GeneralUtils.areEqual(thisGR.operation(), 'delete'); GlideRecordUtils.isUpdating = (thisGR) => GeneralUtils.areEqual(thisGR.operation(), 'update'); GlideRecordUtils.isInserting = (thisGR) => GeneralUtils.areEqual(thisGR.operation(), 'insert'); GlideRecordUtils.didFieldChange = (thisGR, field) => thisGR[field].changed(); ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:56:48</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>3b11996f1b5b1a105c8ccbb6624bcb53</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>GlideRecordUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_3b11996f1b5b1a105c8ccbb6624bcb53</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-28 15:09:08</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.haisp_actions_helper</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>haisp_actions_helper</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ var haisp_actions_helper = Class.create(); haisp_actions_helper.prototype = { initialize: function() {}, getChoices: function(current) { var choices = []; // Check Assigned Facilities var gr = new GlideRecord("x_g_dh5_hsisat_course_facility"); gr.addQuery("course_id", current.getValue('sys_id')); gr.addQuery("is_approved", false); gr.query(); if (gr.next()) { choices.push('Not a Preferred Venue'); } return choices; }, type: 'haisp_actions_helper' }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-07-09 12:33:24</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>0e33dc4b1b22a2105c8ccbb6624bcbec</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>haisp_actions_helper</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_0e33dc4b1b22a2105c8ccbb6624bcbec</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-07-09 12:43:00</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.HSISATError</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>HSISATError</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ class HSISATError extends Error { constructor(message, options = {}) { super(message, options); this.name = "HSISATError"; this.details = options.details || null; } static create(message, options = {}) { return new this(message, options); } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:46:47</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>278ec5271b5b1a105c8ccbb6624bcbbf</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>HSISATError</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_278ec5271b5b1a105c8ccbb6624bcbbf</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-30 16:46:47</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.InstructorAjaxUtils</api_name>
+<caller_access/>
+<client_callable>true</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>InstructorAjaxUtils</name>
+<sandbox_callable>true</sandbox_callable>
+<script>
+<![CDATA[ var InstructorAjaxUtils = Class.create(); InstructorAjaxUtils.prototype = Object.extendsObject(global.AbstractAjaxProcessor, { hasAttachments: function(sysId) { var finalSysId = this.getParameter('sysparm_sys_id'); // Get the Sys ID from the parameters // Query the sys_attachment table for the specified record var attachmentGR = new GlideRecord('sys_attachment'); attachmentGR.addQuery('table_name', 'x_g_dh5_hsisat_instructor_certification'); attachmentGR.addQuery('table_sys_id', finalSysId); attachmentGR.query(); // Return true if attachments exist, false otherwise if (attachmentGR.hasNext()) { return 'true'; } else { return 'false'; } }, type: 'InstructorAjaxUtils' }); ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-04-01 20:20:39</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>c8b3405f1b28e6503b5e657fe54bcb72</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>InstructorAjaxUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_c8b3405f1b28e6503b5e657fe54bcb72</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-04-01 21:22:38</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.InstructorHoursUtil</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>InstructorHoursUtil</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ var InstructorHoursUtil = Class.create(); InstructorHoursUtil.prototype = { initialize: function() {}, getTheWeek: function(instructor, date) { var gdt = new GlideDateTime(date); var beginning = new GlideDateTime(gdt.getLocalDate() + " 00:00:00"); var end = new GlideDateTime(gdt.getLocalDate() + " 23:59:59"); var dayOfWeek = gdt.getDayOfWeekLocalTime(); var daysTillEnd = (7 - dayOfWeek) - 1; beginning.addDaysLocalTime(-1 * dayOfWeek); end.addDaysLocalTime(daysTillEnd); //gs.info('JW: ' + beginning + ' - ' + end); var beginning_arr = beginning.getDisplayValue().split(" "); var end_arr = end.getDisplayValue().split(" "); var gaScheduled = new GlideAggregate("x_g_dh5_hsisat_course_instructor"); gaScheduled.addQuery('instructor_id', instructor); gaScheduled.addEncodedQuery("course_id.start_date_timeBETWEENjavascript:gs.dateGenerate('" + beginning_arr.join("','") + "')@javascript:gs.dateGenerate('" + end_arr.join("','") + "')"); gaScheduled.groupBy('course_id'); gaScheduled.query(); var hours = 0; while (gaScheduled.next()) { hours += gaScheduled.course_id.class_hours_dec; } return Math.round(hours); }, getTheWeekv2: function(instructor, date) { //gs.info('JW: inputs ' + instructor + ' - ' + date); var gdt = new GlideDateTime(date); //gs.info('jw gdt ' + gdt.getValue()); var beginning = new GlideDateTime(gdt.getLocalDate() + " 00:00:00"); var end = new GlideDateTime(gdt.getLocalDate() + " 23:59:59"); var dayOfWeek = gdt.getDayOfWeekUTC(); var daysTillEnd = (7 - dayOfWeek); beginning.addDaysLocalTime(-1 * (dayOfWeek - 2)); end.addDaysLocalTime(daysTillEnd); //gs.info('JW: ' + dayOfWeek); var beginning_arr = beginning.getDisplayValue().split(" "); var end_arr = end.getDisplayValue().split(" "); const hourObj = { value: 0, date: beginning }; var gaScheduled = new GlideRecord(Constants.INSTRUCTOR_SCHEDULE_TABLE); gaScheduled.addQuery('instructor_id', instructor); gaScheduled.addQuery('unavailability_type', 'IX'); gaScheduled.addEncodedQuery("start_dateBETWEENjavascript:gs.dateGenerate('" + beginning_arr.join("','") + "')@javascript:gs.dateGenerate('" + end_arr.join("','") + "')"); gaScheduled.addEncodedQuery('deleted_atISEMPTY'); //gaScheduled.groupBy('course_id'); gaScheduled.query(); //gs.info('JW: count ' + gaScheduled.getRowCount()); while (gaScheduled.next()) { hourObj.value += gaScheduled.hours_unavailable; } //gs.info('JW: ' + JSON.stringify(hourObj)); return JSON.stringify(hourObj); }, calculateHours: function(start, end) { var startTime = new GlideDateTime(start); var endTime = new GlideDateTime(end); var duration = GlideDateTime.subtract(startTime, endTime); return (duration.getNumericValue() / 1000 / 60 / 60); }, type: 'InstructorHoursUtil' }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-17 17:11:17</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>63e84a671bd3ae10065762cae54bcb98</sys_id>
+<sys_mod_count>73</sys_mod_count>
+<sys_name>InstructorHoursUtil</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_63e84a671bd3ae10065762cae54bcb98</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-09-14 16:02:28</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.InstructorScheduleUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>InstructorScheduleUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * InstructorScheduleUtils */ function InstructorScheduleUtils() { if (this.constructor === InstructorScheduleUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** InstructorScheduleUtils.UNAVAILABILITY_TYPE_INSTRUCTOR_SCHEDULED = "IX"; InstructorScheduleUtils.UNAVAILABILITY_TYPE_TIME_OFF = "TO"; InstructorScheduleUtils.STATE_REQUESTED = 1; InstructorScheduleUtils.STATE_SCHEDULED = 2; // ************************************************** // Functions // ************************************************** /** * Creates a record on the Instructor Schedule table based * on the inserted/updated Course Instructor record * * @param {GlideRecord} assignmentGR - the Course Instructor record that was created/updated */ InstructorScheduleUtils.createSchedule = function createSchedule(assignmentGR) { const log = new Logger("InstructorScheduleUtils", "Script Include"); // if there is an existing schedule for the instructor assigned to the course // ignore creating a new record const scheduleGR = new GlideRecord(Constants.INSTRUCTOR_SCHEDULE_TABLE); scheduleGR.addQuery("instructor_id", assignmentGR.getValue("instructor_id")); scheduleGR.addQuery("course_id", assignmentGR.getValue("course_id")); scheduleGR.addNullQuery("deleted_at"); scheduleGR.query(); if (scheduleGR.next()) { return; } try { GlideRecordUtils.save(new GlideRecord(Constants.INSTRUCTOR_SCHEDULE_TABLE), { instructor_id: GlideRecordUtils.getValue(assignmentGR, "instructor_id"), course_id: GlideRecordUtils.getValue(assignmentGR, "course_id"), unavailability_type: InstructorScheduleUtils.UNAVAILABILITY_TYPE_INSTRUCTOR_SCHEDULED, start_date: GlideRecordUtils.getValue(assignmentGR, "course_id.start_date_time"), end_date: GlideRecordUtils.getValue(assignmentGR, "course_id.end_date_time"), state: InstructorScheduleUtils.STATE_SCHEDULED, }); } catch (err) { log.error(err.message, "createSchedule"); } }; /** * Deletes a record on the Instructor Schedule table based on the * deleted Course Instructor record * * @param {GlideRecord} assignmentGR - the Course Instructor record that was deleted */ InstructorScheduleUtils.deleteSchedule = function deleteSchedule(assignmentGR) { const log = new Logger("InstructorScheduleUtils", "Script Include"); const scheduleGR = new GlideRecord(Constants.INSTRUCTOR_SCHEDULE_TABLE); scheduleGR.addQuery("instructor_id", assignmentGR.getValue("instructor_id")); scheduleGR.addQuery("course_id", assignmentGR.getValue("course_id")); scheduleGR.addNullQuery("deleted_at"); scheduleGR.query(); if (scheduleGR.next()) { try { GlideRecordUtils.save(scheduleGR, { deleted_at: new GlideDateTime().getValue(), deleted_by: gs.getUserID(), }); } catch (err) { log.error(err.message, "deleteSchedule"); } } }; InstructorScheduleUtils.shouldFilterQueries = function shouldFilterQueries(scheduleGR) { return LogicUtils.not(gs.hasRole("admin")); // prevent any non system admins from viewing "deleted" records }; // ************************************************** // Security Rules // ************************************************** InstructorScheduleUtils.canReadRecord = function canReadRecord(scheduleGR) { return true; }; InstructorScheduleUtils.canCreateRecord = function canCreateRecord(scheduleGR) { return LogicUtils.or( SecurityUtils.isInstructorAdmin(), SecurityUtils.isInstructorUser(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS) ); }; InstructorScheduleUtils.canWriteRecord = function canWriteRecord(scheduleGR) { if (scheduleGR.isNewRecord()){ return true; } if ( GeneralUtils.areEqual(GlideRecordUtils.getValue(scheduleGR, "instructor_id.user_id"), gs.getUserID()) ) { return true; } return LogicUtils.or( SecurityUtils.isInstructorAdmin(), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS) ); }; InstructorScheduleUtils.canDeleteRecord = function canDeleteRecord(scheduleGR) { return false; // do not allow deletion for historical purposes }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-21 13:55:49</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>a5958aab1b902e105c8ccbb6624bcbb8</sys_id>
+<sys_mod_count>18</sys_mod_count>
+<sys_name>InstructorScheduleUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_a5958aab1b902e105c8ccbb6624bcbb8</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-10 21:44:26</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.InstructorUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>InstructorUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * InstructorUtils */ function InstructorUtils() { if (this.constructor === InstructorUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** // ************************************************** // Functions // ************************************************** // ************************************************** // Security Rules // ************************************************** InstructorUtils.canReadRecord = function canReadRecord(instructorGR) { return true; }; InstructorUtils.canCreateRecord = function canCreateRecord(instructorGR) { return SecurityUtils.isInstructorEditor(); }; InstructorUtils.canWriteRecord = function canWriteRecord(instructorGR) { if (GeneralUtils.areEqual(GlideRecordUtils.getValue(instructorGR, "user_id"), gs.getUserID())) return true; return SecurityUtils.isInstructorEditor(); }; InstructorUtils.canWriteSkillorCert = function canWriteSkillRecord(skillOrCertGR) { const instructorGR = skillOrCertGR.instructor_id.getRefRecord(); if (GeneralUtils.areEqual(GlideRecordUtils.getValue(instructorGR, "user_id"), gs.getUserID())) return true; return SecurityUtils.isInstructorEditor(); }; InstructorUtils.canCreateSkillorCert = function canCreateSkillRecord(skillOrCertGR) { return LogicUtils.or( SecurityUtils.isInstructorUser(), SecurityUtils.isInstructorEditor() ); }; InstructorUtils.canDeleteRecord = function canDeleteRecord(instructorGR) { return false; // do not allow deletion for historical purposes }; InstructorUtils.canDeleteCertificationRecord = function canDeleteCertificationRecord(instructorGR) { return false; // do not allow deletion for historical purposes }; InstructorUtils.canDeleteKnowledgeRecord = function canDeleteKnowledgeRecord(instructorGR) { return false; // do not allow deletion for historical purposes }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-17 18:56:03</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>71646e1a1bd4ae145c8ccbb6624bcbc9</sys_id>
+<sys_mod_count>19</sys_mod_count>
+<sys_name>InstructorUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_71646e1a1bd4ae145c8ccbb6624bcbc9</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-29 19:54:36</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.Logger</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>Logger</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ class Logger { constructor(className, snObjectType) { this.className = className; this.snObjectType = snObjectType; } log(logType, message, method, ...args) { if (typeof logType !== "function") { logType = gs.error; } let output = [ "(HSIAISP)", this.snObjectType, this.className ] .filter((item) => item !== null && typeof item !== "undefined") .join(" - "); if (method === null || typeof method === "undefined") { method = "(undefined method)"; } output = output + "." + method; if (message !== null && typeof message !== "undefined") { output = output + ":\n" + message; } logType(output, ...args); } error(message, method, ...args) { this.log(gs.error, message, method, ...args); } warn(message, method, ...args) { this.log(gs.warn, message, method, ...args); } info(message, method, ...args) { this.log(gs.info, message, method, ...args); } debug(message, method, ...args) { this.log(gs.debug, message, method, ...args); } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:58:08</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>526195ef1b5b1a105c8ccbb6624bcb86</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Logger</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_526195ef1b5b1a105c8ccbb6624bcb86</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-30 16:58:08</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.LogicUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>LogicUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * LogicUtils * @author John MacKenzie <john.mackenzie@icf.com> * * Wrapper utilities around JavaScript boolean logic and helpers */ var LogicUtils = Class.create(); LogicUtils.prototype = { initialize: function() {}, type: "LogicUtils", }; /** * A variable number of arguments can be passed in and returns whether all * arguments evaluate to true - does not apply to non-boolean truthy values * @param {...boolean} value Array of boolean checks * @returns {boolean} */ LogicUtils.and = function and() { var args = Array.prototype.slice.call(arguments); if (args.length > 0) { return args.every(function(arg) { if (Array.isArray(arg)) { return LogicUtils.and.apply(null, arg); } return typeof arg === "boolean" && Boolean(arg); }); } return false; }; /** * Evaluates the `choice` argument at the given `index` and returns the result * @param {number} index the zero-based index that selects which choice argument to evaluate and return * @param {...any} choices * @returns {any|null} */ LogicUtils.choose = function choose(index, choices) { choices = Array.prototype.slice.call(arguments); index = choices.shift(); if (typeof index !== "number") { throw Error("first argument must be a number"); } return choices[index] || null; }; /** * Returns `false` * @returns {boolean} */ LogicUtils.False = function False() { return false; }; /** * Returns one of two values dependent on the passed in condition. * This is not expected to work like the JavaScript `if` and is more akin to * the JavaScript ternary operator, and allows for nested ternaries * <pre> * usage: * `GeneralUtils.If(condition, true, false)` * or multiple conditions: * `GeneralUtils.If(condition1, true, condition2, true, false)` * </pre> * @param {boolean} condition a test to determine which value to return * @param {any} ifTrue the value to return if the condition is true * @param {any} ifFalse the value to return if the condition is false * @returns {any} */ LogicUtils.If = function If() { if (arguments.length < 3) { throw Error( "There must be at least 3 parameters (condition, true, false), passed " + arguments.length ); } if (arguments.length > 3 && arguments.length % 2 !== 1) { throw Error( "There must be an odd number of parameters, passed " + arguments.length ); } var args = Array.prototype.slice.call(arguments); // convert to array if (args.shift()) { return args.shift(); } args.shift(); if (args.length > 1) { return If.apply(null, args); } return args.shift(); }; /** * Returns the opposite boolean value * @param {any} value * @returns {boolean} */ LogicUtils.not = function not(value) { var args = ArrayUtils.flatten(Array.prototype.slice.call(arguments)); if (args.length === 0) { throw Error("Expected at least 1 parameter, but found " + args.length); } if (args.length === 1) { return !args[0]; } return args.map(function(arg) { return not(arg); }); }; /** * A variable number of arguments can be passed in and returns whether any of * the arguments evaluate to true - does not apply to non-boolean truthy values * @param {...boolean} value Array of boolean checks * @returns {boolean} */ LogicUtils.or = function or() { var args = Array.prototype.slice.call(arguments); if (args.length > 0) { return args.some(function(arg) { if (Array.isArray(arg)) { return LogicUtils.or.apply(null, arg); } return typeof arg === "boolean" && Boolean(arg); }); } return false; }; /** * Returns `true` * @returns {boolean} */ LogicUtils.True = function True() { return true; }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 16:58:52</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>8ab1196f1b5b1a105c8ccbb6624bcb14</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>LogicUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_8ab1196f1b5b1a105c8ccbb6624bcb14</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-30 16:58:52</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ReferenceDataUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ReferenceDataUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ReferenceDataUtils() { if (this.constructor === ReferenceDataUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } ReferenceDataUtils.getDefaultSequenceNumber = function getDefaultSequenceNumber(refGR) { return new global.GlideQuery(refGR.getTableName()) .count() + 1; }; ReferenceDataUtils.getSysIdFromCode = function getSysIdFromCode(tableName, code) { const refGR = new GlideRecord(tableName); if (refGR.get("code", code)) { return refGR.getUniqueValue(); } ErrorUtils.throw_InvalidReferenceValue(code, tableName); }; ReferenceDataUtils.getChoiceValues = function getChoiceValues(table, element) { return new global.GlideQuery("sys_choice") .where("name", table) .where("element", element) .where("inactive", false) .orderBy("sequence") .select("label", "value") .reduce(function(previous, current) { return previous.concat({ name: current.label, code: current.value, }); }, []); }; ReferenceDataUtils.getChoicesForReferenceTable = function getChoicesForReferenceTable(table, query) { const choices = []; const referenceGR = new GlideRecord(table); if (LogicUtils.not(referenceGR.isValid())) { ErrorUtils.throw_TableDoesNotExist(table); } for (const parameter in query) { let value = query[parameter]; if (GeneralUtils.hasValue(value)) { if (Array.isArray(value)) { referenceGR.addQuery(parameter, "IN", value); continue; } if (typeof value === "object") { referenceGR.addQuery( parameter, GeneralUtils.defaultValue(value.operator, "="), value.value ); continue; } if (typeof value === "string") { referenceGR.addQuery(parameter, value); } } } referenceGR.query(); while (referenceGR.next()) { choices.push({ sys_id: referenceGR.getUniqueValue(), code: GlideRecordUtils.getValue(referenceGR, "code"), name: GlideRecordUtils.getValue(referenceGR, "name"), }); } return choices; }; ReferenceDataUtils.getActiveChoicesForReferenceTable = function getActiveChoicesForReferenceTable(table, query) { return ReferenceDataUtils.getChoicesForReferenceTable(table, { ...query, is_active: Constants.VALUE_TRUE }); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 17:02:34</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>9a72556b1b9b1a105c8ccbb6624bcb23</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>ReferenceDataUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_9a72556b1b9b1a105c8ccbb6624bcb23</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-01-30 17:04:05</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>public</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ReferenceQualifierUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ReferenceQualifierUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function ReferenceQualifierUtils() { if (this.constructor === ReferenceQualifierUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } ReferenceQualifierUtils.getClassCoordinatorRefQual = function getClassCoordinatorRefQual(classGR) { return ClassUtils.getClassCoordinatorRefQual(classGR); }; ReferenceQualifierUtils.getUnitCodeRefQual = function getUnitCodeRefQual() { const modelId = gs.getSession().getClientData("curriculum_model_id"); if (GeneralUtils.isEmpty(modelId)) return "sys_id=invalid"; const ureqGR = new GlideRecord(Constants.CLASS_UNIT_REQUIREMENTS_TABLE); ureqGR.addQuery("class_configuration_id", modelId); ureqGR.addQuery("use_defined_instructors", true); ureqGR.query(); const unitIds = []; while (ureqGR.next()) { unitIds.push(ureqGR.getValue("unit_code")); } return `sys_idIN${unitIds.filter(Boolean)}`; }; ReferenceQualifierUtils.getInstructorRefQual = function getInstructorRefQual(variables) { const locationCode = gs.getSession().getClientData("location_code"); if (GeneralUtils.isEmpty(locationCode)) return "sys_id=invalid"; return `aor_code=${variables.aor_code}^location_code=${locationCode}^active=true`; }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-12 22:00:34</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>61fa9dca1b9baa54065762cae54bcbd2</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>ReferenceQualifierUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_61fa9dca1b9baa54065762cae54bcbd2</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-27 22:59:16</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.ReportGenerator</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>ReportGenerator</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * Report Generator * `ReportGenerator` is an "abstract" class that allows other classes to extend this class and implement the * necessary methods in a way that meets the requirements of the implementing class. * * `getData` should be overridden to get the data for the report. This can return any value(e.g., object * GlideRecord, etc.) * * `generate` should be overridden to transform the data returned from `getData` into the expected output. This * is dynamic enough to allow the "generated report" to be anything from saving to a database table to a * generated file. * The returned value should be a result of the report's generation (e.g., `ReportUtils.STATUS_COMPLETE`). * * `execute` executes the `ReportGenerator` calling the overridden `getData` and `generate` methods to create * the report output. This method does not need to be overridden. * * `getData` and `generate` must be defined in an extended class. Other methods can be defined within * an extended class, if necessary. */ class ReportGenerator { /** * @param {GlideRecord} reportGR a `GlideRecord` that extends the `Base Report` table */ constructor(reportGR) { if (LogicUtils.not(GlideRecordUtils.isGlideRecord(reportGR))) { throw HSISATError.create(`Could not initialize 'ReportGenerator'`, { details: `'reportGR' is not a valid 'GlideRecord'` }); } this.reportGR = reportGR; this.log = new Logger("ReportGenerator", "Script Include"); } getData(reportGR) { // define the data output to be used in the generated report throw HSISATError.create(`'getData' is not implemented`); } generate(data) { // define how the report is generated using the output from `getData` // e.g., database tables, files, etc. // grouping/summarization of data should also happen here throw HSISATError.create(`'generate' is not implemented`); } execute() { const data = this.getData(this.reportGR); const result = this.generate(data); if (GeneralUtils.isEmpty(result)) throw HSISATError.create("Unable to generate report"); return result; } } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-09-02 19:00:29</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>40eeac781b3b2a503b5e657fe54bcb68</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>ReportGenerator</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_40eeac781b3b2a503b5e657fe54bcb68</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-09-02 19:00:29</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.SecurityUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>SecurityUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function SecurityUtils() { if (this.constructor === SecurityUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Roles // ************************************************** SecurityUtils.ROLE_ADMIN = "admin"; SecurityUtils.ROLE_CLASS_ADMIN = "class_admin"; SecurityUtils.ROLE_DATA_ADMIN = "data_admin"; SecurityUtils.ROLE_FACILITY_ADMIN = "facility_admin"; SecurityUtils.ROLE_INSTRUCTOR_ADMIN = "instructor_admin"; SecurityUtils.ROLE_INSTRUCTOR_EDITOR = "instructor_editor"; SecurityUtils.ROLE_INSTRUCTOR_USER = "instructor_user"; SecurityUtils.ROLE_REPORT_USER = "report_user"; SecurityUtils.ROLE_SCHEDULER_USER = "scheduler_user"; SecurityUtils.ROLE_STUDENT_ADMIN = "student_admin"; SecurityUtils.ROLE_STUDENT_USER = "student_user"; SecurityUtils.ROLE_SUPER_ADMIN = "super_admin"; SecurityUtils.ROLE_USER = "user"; SecurityUtils.ROLE_USER_ADMIN = "user_admin"; // ************************************************** // Groups // ************************************************** SecurityUtils.GROUP_ALL_USERS = "HAISP - All Users"; SecurityUtils.GROUP_APPLICATION_ADMINISTRATORS = "HAISP - Application Administrators"; SecurityUtils.GROUP_CLASS_COORDINATORS = "HAISP - Class Coordinators"; SecurityUtils.GROUP_INSTRUCTORS = "HAISP - Instructors"; SecurityUtils.GROUP_SCHEDULERS = "HAISP - Schedulers"; SecurityUtils.GROUP_SECTION_CHIEFS = "HAISP - Section Chiefs"; SecurityUtils.GROUP_STUDENTS = "HAISP - Students"; SecurityUtils.GROUP_UNIT_CHIEFS = "HAISP - Unit Chiefs"; SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS = "HAISP - Unit Program Managers"; // ************************************************** // Utility Methods // ************************************************** SecurityUtils.getRole = function getRole(role) { return Constants.SCOPE + "." + role; }; SecurityUtils.hasRole = function hasRole(role) { return gs.hasRole(SecurityUtils.getRole(role)); }; SecurityUtils.isCurrentUserMemberOfGroup = function isCurrentUserMemberOfGroup(group) { return gs.getUser().isMemberOf(group); }; SecurityUtils.isUserMemberOfGroup = function isUserMemberOfGroup(userId, groupName) { const memberGR = new GlideRecord(Constants.USER_GROUP_MEMBER_TABLE); memberGR.addQuery("user", userId); memberGR.addQuery("group.name", groupName); memberGR.setLimit(1); memberGR.query(); return memberGR.hasNext(); }; SecurityUtils.isAdmin = function isAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_ADMIN); }; SecurityUtils.isSuperAdmin = function isSuperAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_SUPER_ADMIN); }; SecurityUtils.isClassAdmin = function isClassAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_CLASS_ADMIN); }; SecurityUtils.isDataAdmin = function isDataAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_DATA_ADMIN); }; SecurityUtils.isFacilityAdmin = function isFacilityAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_FACILITY_ADMIN); }; SecurityUtils.isInstructorAdmin = function isInstructorAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_INSTRUCTOR_ADMIN); }; SecurityUtils.isInstructorEditor = function isInstructorEditor() { return SecurityUtils.hasRole(SecurityUtils.ROLE_INSTRUCTOR_EDITOR); }; SecurityUtils.isStudentAdmin = function isStudentAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_STUDENT_ADMIN); }; SecurityUtils.isStudentUser = function isStudentAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_STUDENT_USER); }; SecurityUtils.isUserAdmin = function isUserAdmin() { return SecurityUtils.hasRole(SecurityUtils.ROLE_USER_ADMIN); }; SecurityUtils.isInstructorUser = function isInstructorUser() { return SecurityUtils.hasRole(SecurityUtils.ROLE_INSTRUCTOR_USER); }; SecurityUtils.isSchedulerUser = function isSchedulerUser() { return SecurityUtils.hasRole(SecurityUtils.ROLE_SCHEDULER_USER); }; SecurityUtils.isReportUser = function isReportUser() { return SecurityUtils.hasRole(SecurityUtils.ROLE_REPORT_USER); }; SecurityUtils.isApplicationAdministrator = function isApplicationAdministrator() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_APPLICATION_ADMINISTRATORS); }; SecurityUtils.isClassCoordinator = function isClassCoordinator() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_CLASS_COORDINATORS); }; SecurityUtils.isInstructor = function isInstructor() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_INSTRUCTORS); }; SecurityUtils.isScheduler = function isScheduler() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS); }; SecurityUtils.isSectionChief = function isSectionChief() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS); }; SecurityUtils.isStudent = function isStudent() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_STUDENTS); }; SecurityUtils.isUnitChief = function isUnitChief() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_CHIEFS); }; SecurityUtils.isProgramManager = function isProgramManager() { return SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS); }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-01-30 17:07:39</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>bf0319ab1b9b1a105c8ccbb6624bcb6d</sys_id>
+<sys_mod_count>9</sys_mod_count>
+<sys_name>SecurityUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_bf0319ab1b9b1a105c8ccbb6624bcb6d</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-08 18:16:15</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.StudentUtils</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>StudentUtils</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ /** * StudentUtils */ function StudentUtils() { if (this.constructor === StudentUtils) { ErrorUtils.throw_CannotInstantiateRecord(this.constructor.name); } } // ************************************************** // Constants // ************************************************** // ************************************************** // Functions // ************************************************** // ************************************************** // Security Rules // ************************************************** StudentUtils.canReadRecord = function canReadRecord(studentGR) { return true; }; StudentUtils.canCreateRecord = function canCreateRecord(studentGR) { return SecurityUtils.isStudentAdmin(); }; StudentUtils.canWriteRecord = function canWriteRecord(studentGR) { return LogicUtils.or( SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_APPLICATION_ADMINISTRATORS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SECTION_CHIEFS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_SCHEDULERS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_CLASS_COORDINATORS), SecurityUtils.isCurrentUserMemberOfGroup(SecurityUtils.GROUP_UNIT_PROGRAM_MANAGERS) ); // if (GeneralUtils.areEqual(GlideRecordUtils.getValue(studentGR, "user_id"), gs.getUserID())) return true; // return SecurityUtils.isStudentAdmin(); }; StudentUtils.canDeleteRecord = function canDeleteRecord(studentGR) { return false; // to preserve historical records }; ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-03-17 19:20:02</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>c14a26161b58ae145c8ccbb6624bcbe0</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_name>StudentUtils</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_c14a26161b58ae145c8ccbb6624bcbe0</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-08-01 20:28:37</sys_updated_on>
+</sys_script_include>
+<sys_script_include action="INSERT_OR_UPDATE">
+<access>package_private</access>
+<active>true</active>
+<api_name>x_g_dh5_hsisat.VCalendar</api_name>
+<caller_access/>
+<client_callable>false</client_callable>
+<description/>
+<mobile_callable>false</mobile_callable>
+<name>VCalendar</name>
+<sandbox_callable>false</sandbox_callable>
+<script>
+<![CDATA[ function VCalendar(productId) { const CRLF = "\r\n"; const calendar = this; calendar.productId = `-//${productId}//NONSGML v1.0//EN`; calendar.events = []; calendar.addEvent = function (eventId, dtStart) { return new VEvent(eventId, dtStart); }; calendar.removeEvent = function (eventId) { const index = this.events.findIndex((event) => event.eventId === eventId); if (index < 0) return; this.events.splice(index, 1); }; calendar.getOutput = function () { let output = "BEGIN:VCALENDAR" + CRLF; output += "VERSION:2.0" + CRLF; output += "PRODID:" + calendar.productId + CRLF; output += "CALSCALE:GREGORIAN" + CRLF; output += "METHOD:REQUEST" + CRLF; for (let i = 0, event; (event = calendar.events[i]); i++) { output += event.getOutput() + CRLF; } output += "END:VCALENDAR"; return output; }; calendar.validate = function () {}; function VEvent(eventId, dtStart) { const event = this; if (GeneralUtils.isEmpty(eventId)) { throw HSISATError.create("Could not create 'VEvent'", { details: "'eventId' cannot be empty", }); } event.eventId = eventId; const dtStartGDT = new GlideDateTime(dtStart); if (GeneralUtils.isEmpty(dtStartGDT.getValue())) { throw HSISATError.create("Could not create 'VEvent'", { details: "'dtStart' must be a valid datetime string or GlideDateTime object", }); } event.done = function () { calendar.events.push(event); return calendar; }; event.dtStart = convertToISO(dtStartGDT); event.dtStamp = convertToISO(new GlideDateTime()); event.attendees = []; event.attachments = []; event.validate = function () {}; event.getOutput = function () { let output = "BEGIN:VEVENT" + CRLF; output += "UID:" + event.eventId + CRLF; output += "DTSTAMP:" + event.dtStamp + CRLF; output += "DTSTART:" + event.dtStart + CRLF; if (event.duration) { output += "DURATION:" + event.duration + CRLF; } else if (event.dtEnd) { output += "DTEND:" + event.dtEnd + CRLF; } if (event.created) { output += "CREATED:" + event.created + CRLF; } if (event.summary) { output += "SUMMARY:" + event.summary + CRLF; } if (event.description) { output += "DESCRIPTION:" + event.description.replace(/<[^>]*>/g, "") + CRLF; output += "X-ALT-DESC;FMTTYPE=text/html:" + event.description + CRLF; } if (event.classification) { output += "CLASS:" + event.classification + CRLF; } if (event.created) { output += "CREATED:" + event.created + CRLF; } if (event.lastModified) { output += "LAST-MODIFIED:" + event.lastModified + CRLF; } if (event.location) { output += "LOCATION:" + event.location + CRLF; } if (event.priority) { output += "PRIORITY:" + event.priority + CRLF; } if (parseInt(event.sequence) > -1) { output += "SEQUENCE:" + event.sequence + CRLF; } if (event.transparency) { output += "TRANSP:" + event.transparency; } if (event.organizer) { output += event.organizer.getOutput() + CRLF; } if (event.rrule) { output += event.rrule.getOutput() + CRLF; } for (let i = 0, attendee; (attendee = event.attendees[i]); i++) { output += attendee.getOutput() + CRLF; } for (let i = 0, attachment; (attachment = event.attachments[i]); i++) { output += attachment.getOutput() + CRLF; } output += "END:VEVENT"; return output; }; event.setEndDate = function (dtEnd) { const gdt = new GlideDateTime(dtEnd); event.dtEnd = convertToISO(gdt); return event; }; /** * this must be a valid duration string. e.g., -P15DTH0M20S */ event.setDuration = function (duration) { event.duration = duration; return event; }; event.setSummary = function (summary) { event.summary = summary; return event; }; event.setDescription = function (description) { event.description = description; return event; }; event.setClassification = function (classification) { if (LogicUtils.not(["PUBLIC", "PRIVATE", "CONFIDENTIAL"].includes(classification))) { event.classification = ""; } else { event.classification = classification; } return event; }; event.setCreated = function (created) { const gdt = new GlideDateTime(created); if (GeneralUtils.isEmpty(gdt.getValue())) return Constants.VALUE_EMPTY; event.created = convertToISO(gdt); return event; }; event.setLastModified = function (modified) { const gdt = new GlideDateTime(modified); if (GeneralUtils.isEmpty(gdt.getValue())) return Constants.VALUE_EMPTY; event.lastModified = convertToISO(gdt); return event; }; event.setLocation = function (location) { event.location = location; return event; }; event.setPriority = function (priority) { if (isNaN(parseInt(priority))) return event; event.priority = priority; return event; }; event.setSequence = function (sequence) { if (isNaN(parseInt(sequence))) return event; event.sequence = sequence; return event; }; event.setTransparency = function (transparency) { if (LogicUtils.not(["OPAQUE", "TRANSPARENT"].includes(transparency))) return event; event.transparency = transparency; return event; }; event.setURL = function (url) { event.url = url; return event; }; event.setOrganizer = function (email, { name = "", sentBy = "" } = {}) { event.organizer = new Organizer(email, { name, sentBy }); return event; }; event.addAlarm = function () { if (event.alarm) return event.alarm; return new VAlarm(); }; event.addRrule = function () { if (event.rrule) return event.rrule; return new RRule(); }; event.addAttendee = function (name, email) { event.attendees.push(new Attendee(name, email)); return event; }; event.addAttachment = function (uriOrAttachmentId) { const attachmentGR = new GlideRecord("sys_attachment"); if (attachmentGR.get(uriOrAttachmentId)) { event.attachments.push(new Attachment(attachmentGR.getLink(true), format)); } else { event.attachments.push(new Attachment(uriOrAttachmentId)); } return event; }; event.addCategories = function (categories) { event.categories = (categories || Constants.VALUE_EMPTY).split(",").filter(Boolean); return event; }; function VAlarm(description, trigger) { const alarm = this; alarm.description = description; const gdt = new GlideDateTime(trigger); if (gdt.getValue()) { alarm.trigger = gdt; } else { alarm.trigger = trigger; } alarm.setDuration = function (duration) { alarm.duration = duration; return alarm; }; alarm.setRepeat = function (repeat) { if (!isNaN(parseInt(repeat, 10))) { alarm.repeat = repeat; } return alarm; }; alarm.getOutput = function () { let output = "BEGIN:VALARM" + CRLF; output += "ACTION:DISPLAY" + CRLF; output += "DESCRIPTION:" + alarm.description.replace(/<[^>]*>/g, "") + CRLF; output += "X-ALT-DESC;FMTTYPE=text/html:" + alarm.description + CRLF; if (alarm.trigger?.getValue()) { output += "TRIGGER;VALUE=DATE-TIME:" + convertToISO(alarm.trigger) + CRLF; } else { output += "TRIGGER:" + alarm.trigger + CRLF; } if (alarm.duration) { output += "DURATION:" + alarm.duration + CRLF; } output += "END:VALARM"; return output; }; alarm.done = function () { event.alarm = alarm; return event; }; alarm.validate = function () {}; } function RRule() { const FREQUENCIES = ["SECONDLY", "MINUTELY", "HOURLY", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"]; const WEEKDAYS = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"]; const rrule = this; rrule.bySecond = new Set(); rrule.byMinute = new Set(); rrule.byHour = new Set(); rrule.byWeekDay = new Set(); rrule.byMonthDay = new Set(); rrule.byYearDay = new Set(); rrule.byWeek = new Set(); rrule.byMonth = new Set(); rrule.setFrequency = function (frequency) { if (FREQUENCIES.includes(frequency)) { rrule.frequency = frequency; } return rrule; }; rrule.setUntil = function (until) { const gdt = new GlideDateTime(until); if (gdt.getValue()) { rrule.until = convertToISO(gdt); } return rrule; }; rrule.setCount = function (count) { if (count) { rrule.count = count; } return rrule; }; rrule.setInterval = function (interval) { if (interval) { rrule.interval = interval; } return rrule; }; rrule.addBySecond = function (bysecond) { if (bysecond >= 0 && bysecond <= 60) { rrule.bySecond.add(bysecond); } return rrule; }; rrule.addByMinute = function (byminute) { if (byminute >= 0 && byminute < 60) { rrule.byMinute.add(byminute); } return rrule; }; rrule.addByHour = function (byhour) { if (byhour >= 0 && byhour < 24) { rrule.byHour.add(byhour); } return rrule; }; rrule.addByWeekDay = function (byweekday) { if (WEEKDAYS.includes(byweekday)) { rrule.byWeekDay.add(byweekday); } return rrule; }; rrule.addByMonthDay = function (bymonthday) { if (bymonthday > 0 && bymonthday <= 31) { rrule.byMonthDay.add(bymonthday); } return rrule; }; rrule.addByYearDay = function (byyearday) { if (byyearday > 0 && byyearday <= 366) { rrule.byYearDay.add(byyearday); } return rrule; }; rrule.addByWeek = function (byweek) { if (byweek > 0 && byweek <= 53) { rrule.byWeek.add(byweek); } return rrule; }; rrule.addByMonth = function (bymonth) { if (bymonth > 0 && bymonth <= 12) { rrule.byMonth.add(bymonth); } return rrule; }; rrule.setWeekStart = function (weekday) { if (WEEKDAYS.includes(weekday)) { rrule.wkst = weekday; } return rrule; }; rrule.getOutput = function () { let output = []; if (rrule.frequency) { output.push("FREQ=" + rrule.frequency); } if (rrule.until) { output.push("UTIL=" + rrule.until); } if (rrule.count) { output.push("COUNT=" + rrule.count); } if (rrule.interval) { output.push("INTERVAL=" + rrule.interval); } if (rrule.bySecond.size) { output.push("BYSECOND=" + [...rrule.bySecond].sort().join(",")); } if (rrule.byMinute.size) { output.push("BYMINUTE=" + [...rrule.byMinute].sort().join(",")); } if (rrule.byHour.size) { output.push("BYHOUR=" + [...rrule.byHour].sort().join(",")); } if (rrule.byWeekDay.size) { output.push("BYDAY=" + [...rrule.byWeekDay].sort((a, b) => WEEKDAYS.indexOf(a) - WEEKDAYS.indexOf(b)).join(",")); } if (rrule.byMonthDay.size) { output.push("BYMONTHDAY=" + [...rrule.byMonthDay].sort().join(",")); } if (rrule.byYearDay.size) { output.push("BYYEARDAY=" + [...rrule.byYearDay].sort().join(",")); } if (rrule.byWeek.size) { output.push("BYWEEKNO=" + [...rrule.byWeek].sort().join(",")); } if (rrule.byMonth.size) { output.push("BYMONTH=" + [...rrule.byMonth].sort().join(",")); } if (rrule.wkst) { output.push("WKST=" + rrule.wkst); } return "RRULE:" + output.join(";"); }; rrule.done = function () { event.rrule = rrule; return event; }; rrule.validate = function () {}; } function Attendee(email, { name = "", role = "", status = "" } = {}) { const attendee = this; attendee.name = name; attendee.email = email; attendee.role = role; attendee.status = status; attendee.getOutput = function () { let output = "ATTENDEE"; if (attendee.role) { output += ";ROLE=" + attendee.role; } if (attendee.status) { output += ";PARTSTAT=" + attendee.status; } if (attendee.name) { output += ";CN=" + attendee.name; } output += ":mailto:" + attendee.email; return output; }; attendee.validate = function () {}; } function Organizer(email, { name = "", sentBy = "" } = {}) { const organizer = this; organizer.email = email; organizer.name = name; organizer.sentBy = sentBy; organizer.getOutput = function () { let output = "ORGANIZER"; if (organizer.sentBy) { output += ';SENT-BY="mailto:' + organizer.sentBy + '"'; } if (organizer.name) { output += ";CN=" + organizer.name; } output += ":mailto:" + organizer.email; return output; }; organizer.validate = function () {}; } function Attachment(uri, format) { const attachment = this; attachment.uri = uri; attachment.format = format; attachment.getOutput = function () { let output = "ATTACH"; if (attachment.format) { output += ";FMTTYPE=" + attachment.format; } output += ":" + attachment.uri; }; attachment.validate = function () {}; } } } function convertToISO(gdt) { return gdt.getValue().split(" ").join("T").replace(/[-]|:/g, "") + "Z"; } ]]>
+</script>
+<sys_class_name>sys_script_include</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-07-21 19:26:07</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>c073eb361bbea2503b5e657fe54bcb1d</sys_id>
+<sys_mod_count>25</sys_mod_count>
+<sys_name>VCalendar</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy>read</sys_policy>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_include_c073eb361bbea2503b5e657fe54bcb1d</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-07-22 18:48:46</sys_updated_on>
+</sys_script_include>
+</unload>
