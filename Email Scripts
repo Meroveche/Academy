@@ -1,0 +1,296 @@
+<unload unload_date="2025-09-26 17:41:39">
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>unit_chief_rejected_comments</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { // Add your code here var gr = new GlideRecord("sysapproval_approver"); //gr.addQuery('x_g_dh5_hsisat_instructor_certification', current.getTableName()); gr.addQuery('state', 'rejected'); var qc = gr.addQuery('sysapproval', current.getUniqueValue()); qc.addOrCondition('document_id', current.getUniqueValue()); gr.orderByDesc('sys_updated_on'); gr.setLimit(1); gr.query(); gs.info("lakhs looking for approvalss:" + current.getUniqueValue()); var reason = ''; if (gr.next()) { gs.info('lakhss found approver:' + gr.getUniqueValue() + 'state:' + gr.getValue('state')); var jf = new GlideRecord("sys_journal_field"); jf.addQuery('name', 'sysapproval_approver'); jf.addQuery('element_id', gr.getUniqueValue()); jf.addQuery('element', 'comments'); jf.orderByDesc('sys_created_on'); jf.setLimit(1); jf.query(); if (jf.next()) { reason = jf.getValue('value'); } if (!reason) { reason = gr.getValue('comments') || ''; } if (!reason) { reason = gr.getValue('approval_comments') || ''; } } else { //gs.info("No_approval_found"+current.getUniqueValue()); } template.print(reason || ''); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-05 19:44:28</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>c24024f91b7b66903b5e657fe54bcb83</sys_id>
+<sys_mod_count>16</sys_mod_count>
+<sys_name>unit_chief_rejected_comments</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_c24024f91b7b66903b5e657fe54bcb83</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-18 16:11:50</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>instructor_profile_link</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var instructorProfile = current.instructor_id.sys_id; template.print('<a href="' + instance_url + 'hsi-academy?id=haisp_instructor_profile&sys_id='+instructorProfile+'">Instructor Profile.</a>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-05 20:57:02</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>cb794df71bc766143b5e657fe54bcbc4</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>instructor_profile_link</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_cb794df71bc766143b5e657fe54bcbc4</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:13:49</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>haisp_class_scheduled</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { // https://iceserviceportaldev.servicenowservices.com/hsi-academy?id=haisp_class_homepage&class_id=4a42846a1babe6d05c8ccbb6624bcb4d var instance_url = gs.getProperty('glide.servlet.uri'); var class_id = current.getUniqueValue(); // sys_id var link = instance_url + 'hsi-academy?id=haisp_class_homepage&class_id=' + class_id; template.print('<a href="' + link+ ' ">'+current.class_number+'</a>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-09-10 20:51:25</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>f26fd69f1b336ad05c8ccbb6624bcb47</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>haisp_class_scheduled</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_f26fd69f1b336ad05c8ccbb6624bcb47</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:01:31</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>Instructor_profile_link_knowledge</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var sysid = current.getUniqueValue(); var instructorId = current.instructor_id + ""; var link = instance_url + 'hsi-academy?id=hsi_form' +'&instructor_id='+instructorId + '&table=x_g_dh5_hsisat_instructor_skill' +'&sys_id=' + sysid; template.print('<a href="' + link+ ' ">here</a>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-08 13:46:32</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>961d62e21bb3ee905c8ccbb6624bcb54</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Instructor_profile_link_knowledge</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_961d62e21bb3ee905c8ccbb6624bcb54</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:01:13</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>instructor_certification_link</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var sysid = current.getUniqueValue(); var instructorId = current.instructor_id + ""; var link = instance_url + 'hsi-academy?id=hsi_form' +'&instructor_id='+instructorId + '&table=x_g_dh5_hsisat_instructor_certification' +'&sys_id=' + sysid; template.print('<a href="' + link+ ' ">Link to Instructors Certification Record Request</a>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-05 18:40:47</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>5ba05cf91bb766903b5e657fe54bcbe5</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>instructor_certification_link</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_5ba05cf91bb766903b5e657fe54bcbe5</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:00:40</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>Instructor_profile_link_certification</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var sysid = current.getUniqueValue(); var instructorId = current.instructor_id + ""; var link = instance_url + 'hsi-academy?id=hsi_form' +'&instructor_id='+instructorId + '&table=x_g_dh5_hsisat_instructor_certification' +'&sys_id=' + sysid; template.print('<a href="' + link+ ' ">here</a>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-08 13:34:40</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>012aeeea1b73ee905c8ccbb6624bcb9f</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Instructor_profile_link_certification</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_012aeeea1b73ee905c8ccbb6624bcb9f</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 14:59:16</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>haisp_cc_instructor</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { email.addAddress("cc", current.instructor_id.email.toString()); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-12 18:58:08</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>0c38d4c81b887ed0065762cae54bcbf2</sys_id>
+<sys_mod_count>19</sys_mod_count>
+<sys_name>haisp_cc_instructor</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_0c38d4c81b887ed0065762cae54bcbf2</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-12 22:10:45</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>knowlege_link_for_reject</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var sysid = current.getUniqueValue(); var instructorId = current.instructor_id + ""; var link = instance_url + 'hsi-academy?id=hsi_form' +'&instructor_id='+instructorId + '&table=x_g_dh5_hsisat_instructor_skill' +'&sys_id=' + sysid; template.print('<a href="' + link+ ' ">Link to Instructors Knowledge Area Request record</a><br>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-10 19:22:31</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>85ec8adf1b73e6d03b5e657fe54bcb4b</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>knowlege_link_for_reject</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_85ec8adf1b73e6d03b5e657fe54bcb4b</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-09-10 19:22:31</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>Instructor_profile_link_here</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); template.print('<a href="' + instance_url + 'hsi-academy?id=haisp_instructor_profile&sys_id=me">here.</a><br>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-05 18:09:02</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>b84c08791b7766903b5e657fe54bcb1d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>Instructor_profile_link_here</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_b84c08791b7766903b5e657fe54bcb1d</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-09-05 18:09:02</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>Timeoff_request_link</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); var sysid = current.getUniqueValue(); var link = instance_url + 'hsi-academy?id=hsi_form&table=x_g_dh5_hsisat_instructor_schedule&sys_id=' + sysid; template.print('<a href="' + link+ ' ">here.</a><br>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-28 18:43:39</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>9f978b871b6fe6105c8ccbb6624bcb6a</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Timeoff_request_link</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_9f978b871b6fe6105c8ccbb6624bcb6a</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-09-03 13:48:09</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>haisp_facility_changes_recipient</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { // Add your code here var instance_url = gs.getProperty('glide.servlet.uri'); var inst = new GlideRecord("x_g_dh5_hsisat_course_instructor"); inst.addQuery('course_id', current.course_id); inst.query(); while (inst.next()) { email.addAddress("cc", inst.instructor_id.email.toString()); } var cgr = new GlideRecord("x_g_dh5_hsisat_class"); cgr.get(current.course_id); var classId = cgr.class_id; var stut = new GlideRecord("x_g_dh5_hsisat_class_enrollment"); stut.addQuery('class_id', classId); stut.query(); while (stut.next()) { email.addAddress("cc", stut.student_id.work_email.toString()); } var nw = new GlideRecord("x_g_dh5_hsisat_course_facility"); nw.addQuery("course_id", current.getUniqueValue()); nw.addQuery("is_deleted", false); nw.query(); var facilites = []; while (nw.next()) { facilites.push(nw.getDisplayValue("facility_id")); var classysid = current.getValue('class_id'); var classnumm = nw.getDisplayValue('course_id.class_id'); var lastclasid = nw.getValue('class_id'); var coursenum = nw.getDisplayValue('course_id'); var start_date1 = new GlideDateTime(nw.course_id.start_date_time); } var facilitlist = facilites.join(","); var subject = (coursenum) + " has been relocated to a new facility"; email.setSubject(subject); var here = instance_url + 'hsi-academy?id=haisp_course_homepage&course_id=' + current.getUniqueValue(); var body = "<p><strong>" + (classnumm) + "-" + (coursenum) + "</strong> scheduled on <strong>" + (start_date1) + "</strong> has been updated to the following location(s): " + (facilitlist) + " To review course details please click<a href=\"" + here + "\"> here</a>.</p>"; // template.print('<p>Facilities' + nw.getDisplayValue("facility_id") + '</p>'); var isSubject = (template && template.name && ('' + template.name).toLowerCase().indexOf('subject') > -1); if (!isSubject) { var contentmsg = "Facility has been relocated for " + coursenum + "\n scheduled on " + start_date1 + "\nto " + (facilitlist); var start_date = new GlideDateTime(); var end_date = new GlideDateTime(); var ann = new GlideRecord("x_g_dh5_hsisat_announcement"); ann.initialize(); ann.setValue('content', contentmsg); ann.setValue('announcement_for', 'class'); ann.setValue('class', classysid); ann.setValue('type', 'danger'); ann.setValue('start_date', start_date.getDate()); ann.setValue('end_date', end_date.getDate()); var annid = ann.insert(); } if (isSubject) { template.print(subject); } else { template.print(body); } //template.print('<a href="' + instance_url + 'hsi-academy?id=haisp_course_homepage&course_id=' + current.course_id + '">here.</a><br>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-26 15:51:01</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>58dc48661be72e90065762cae54bcbe6</sys_id>
+<sys_mod_count>87</sys_mod_count>
+<sys_name>haisp_facility_changes_recipient</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_58dc48661be72e90065762cae54bcbe6</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-09-02 13:28:32</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>haisp_generic_email</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { const initiator = GeneralUtils.defaultValue(current.getValue("from"), gs.getUser().getEmail()); if (current.getValue("cc")) { const cc = GlideRecordUtils.getValue(current, "cc") .split(",").map((item) => item.trim()).filter(Boolean); for (let i = 0; i < cc.length; i++) { email.addAddress("cc", cc[i]); } } if (current.getValue("bcc")) { const bcc = GlideRecordUtils.getValue(current, "bcc") .split(",").map((item) => item.trim()).filter(Boolean); for (let i = 0; i < bcc.length; i++) { email.addAddress("bcc", bcc[i]); } } email.addAddress("cc", initiator); email.setReplyTo(initiator); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-07 16:35:03</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>efdf921c1b17e614065762cae54bcb97</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>haisp_generic_email</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_efdf921c1b17e614065762cae54bcb97</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-07 17:24:13</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>pcts_instructor_links</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var instance_url = gs.getProperty('glide.servlet.uri'); template.print('<a href="' + instance_url + 'hsi-academy?id=haisp_instructor_profile&sys_id=me">My Instructor Profile</a><br>'); template.print('<a href="' + instance_url + 'hsi-academy?id=haisp_homepage">HSI Academy Instructor Scheduling Portal</a><br>'); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-08-05 19:36:42</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>cf76383f1b876214065762cae54bcb55</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>pcts_instructor_links</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_cf76383f1b876214065762cae54bcb55</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-05 19:38:47</sys_updated_on>
+</sys_script_email>
+<sys_script_email action="INSERT_OR_UPDATE">
+<name>haisp_facility_change</name>
+<new_lines_to_html>false</new_lines_to_html>
+<script>
+<![CDATA[ (function runMailScript(current, template, email, email_action, event) { var gr_course_config = new GlideRecord("x_g_dh5_hsisat_course_configuration"); gr_course_config.get(current.getValue('course_configuration_id')); var gr_assigned_facs = new GlideRecord("x_g_dh5_hsisat_course_facility"); gr_assigned_facs.addQuery("course_id", current.getUniqueValue()); gr_assigned_facs.addQuery("is_deleted", false); gr_assigned_facs.query(); var gr_preferred_facs = new GlideRecord("x_g_dh5_hsisat_course_facility_preference"); gr_preferred_facs.addQuery("course_configuration_id", current.getValue('course_configuration_id')); gr_preferred_facs.query(); email.setSubject(current.getDisplayValue('instructional_block_name') + ' requires a venue change'); template.print('Course Name: ' + current.getDisplayValue('instructional_block_name') + '<br>'); template.print('Scheduled Date and Time: ' + current.getDisplayValue('start_date_time') + '<br><br>'); template.print('Currently assigned facility(s):<br><br>'); while(gr_assigned_facs.next()){ template.print(' • ' + gr_assigned_facs.getDisplayValue('facility_id') + '<br>'); } template.print('<br>'); template.print('does not meet the course requirements. We are requesting the facility to be changed to one of the preferred facilities below:<br><br>'); while(gr_preferred_facs.next()){ template.print(' • ' + gr_preferred_facs.getDisplayValue('facility_id') + '<br>'); } template.print('<br>'); template.print('Course facility requirements include:<br><br>'); template.print(gr_course_config.getDisplayValue('hsia_training_facility_requirements')); })(current, template, email, email_action, event); ]]>
+</script>
+<sys_class_name>sys_script_email</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-07-10 22:40:04</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_id>17c7eb5b1baea6103b5e657fe54bcbea</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>haisp_facility_change</sys_name>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sys_script_email_17c7eb5b1baea6103b5e657fe54bcbea</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-01 18:12:44</sys_updated_on>
+</sys_script_email>
+</unload>
