@@ -1,0 +1,1542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2025-09-26 17:27:14">
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition><![CDATA[(function() {
+	var isHSIAdmin = SecurityUtils.isApplicationAdministrator();
+	
+	if(isHSIAdmin){
+		return true;
+		// Might be redundant code?
+	}
+})();]]></advanced_condition>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">The ${certification_code} Certification has been added to ${instructor_id.user_id}'s Profile. To view ${instructor_id.user_id}'s profile,&nbsp;click ${mail_script:Instructor_profile_link_certification}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Admin Submits Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email,instructor_id.branch_chief_email,instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>Certification has been added to ${instructor_id.user_id}'s Profile</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-09 05:18:58</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>01828efa1b3762d03b5e657fe54bcb9c</sys_id>
+<sys_mod_count>11</sys_mod_count>
+<sys_name>Admin Submits Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_01828efa1b3762d03b5e657fe54bcb9c</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-11 08:38:07</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition><![CDATA[(function() {
+	var isHSIAdmin = SecurityUtils.isApplicationAdministrator();
+	
+	if(isHSIAdmin){
+		return true;
+		// Might be redundant code?
+	}
+})();]]></advanced_condition>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">The ${skill_code} Knowledge Area has been added to ${instructor_id.user_id}'s Profile. To view ${instructor_id.user_id}'s profile, click ${mail_script:Instructor_profile_link_knowledge}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Admin Submits Knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email,instructor_id.email,instructor_id.branch_chief_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>Knowledge Area has been added to ${instructor_id.user_id}'s Profile</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-09 05:29:22</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>e9e406721b7762d03b5e657fe54bcbdf</sys_id>
+<sys_mod_count>20</sys_mod_count>
+<sys_name>Admin Submits Knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_e9e406721b7762d03b5e657fe54bcbdf</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-11 06:35:15</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>x_g_dh5_hsisat.cert.expiry.notification</event_name>
+<event_parm_1>true</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>event</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${instructor_id.instructor_sys_user_id} has ${certification_code.name} on their profile that is set to expire on ${expiration_date}.&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">Please take the necessary steps to renew the certification before ${expiration_date} and update your ${mail_script:instructor_profile_link}&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Certification Expiry Reminder</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields/>
+<recipient_groups/>
+<recipient_users>HSIAcademyHAISPPMs@icegov.onmicrosoft.com</recipient_users>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>${certification_code.name} is set to expire in ${event.parm2}  days, action is needed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-07-30 19:02:25</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4e15b9f91b43ee90065762cae54bcbba</sys_id>
+<sys_mod_count>14</sys_mod_count>
+<sys_name>Certification Expiry Reminder</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_4e15b9f91b43ee90065762cae54bcbba</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-08-06 13:20:20</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="HSI Academy" name="HSI Academy">677f16d81b17e614065762cae54bcbdf</category>
+<collection>x_g_dh5_hsisat_email</collection>
+<condition table="x_g_dh5_hsisat_email"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>x_g_dh5_hsisat.action.send_email</event_name>
+<event_parm_1>true</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>event</generation_type>
+<importance/>
+<include_attachments>true</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${message}</p>
+<p style="font-family: calibri; font-size: 12pt;">${mail_script:haisp_generic_email}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>HAISP - Generic Email</name>
+<omit_watermark>true</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields/>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>${subject}</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>RJMacKen</sys_created_by>
+<sys_created_on>2025-08-07 16:29:00</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>204fd6981b17e614065762cae54bcb4a</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>HAISP - Generic Email</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_204fd6981b17e614065762cae54bcb4a</sys_update_name>
+<sys_updated_by>RJMacKen</sys_updated_by>
+<sys_updated_on>2025-08-15 19:42:13</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="haisp.generic.email">f79f9ad81b17e614065762cae54bcb36</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition table="x_g_dh5_hsisat_instructor_schedule"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p><span style="font-size: 12pt;">Your time-off request for ${start_date} to ${end_date} has been approved. Please submit a time-off request in GovTA to finalize this request.</span></p>
+<p style="font-family: calibri; font-size: 12pt;"><span style="font-size: 12pt;">{link to GovTA - <a href="https://dhsgta.nfc.usda.gov/govta/Login">https://dhsgta.nfc.usda.gov/govta/Login</a>} </span></p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>HAISP Instructor Time-off Accepted</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>Your Time-Off Request Has Been Approved</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-07-09 19:20:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>87a961871ba6e210065762cae54bcbb6</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_name>HAISP Instructor Time-off Accepted</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_87a961871ba6e210065762cae54bcbb6</sys_update_name>
+<sys_updated_by>JHudson1</sys_updated_by>
+<sys_updated_on>2025-07-24 12:19:16</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition table="x_g_dh5_hsisat_instructor_schedule"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p><span style="font-size: 12pt;">Your time-off request for ${start_date} to ${end_date} has been denied.</span></p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>HAISP Instructor Time-off Denied</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>Your Time-Off Request Has Been Denied</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-07-09 19:20:40</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>1a9071871be6e210065762cae54bcbaf</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>HAISP Instructor Time-off Denied</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_1a9071871be6e210065762cae54bcbaf</sys_update_name>
+<sys_updated_by>JHudson1</sys_updated_by>
+<sys_updated_on>2025-07-24 12:19:59</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_course</collection>
+<condition table="x_g_dh5_hsisat_course"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>x_g_dh5_hsisat.notify_fletc</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>event</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${mail_script:haisp_facility_change}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>HAISP Request Facility Change</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields/>
+<recipient_groups/>
+<recipient_users>fletc-glyncoscheduling@fletc.dhs.gov</recipient_users>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject/>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JNWurm</sys_created_by>
+<sys_created_on>2025-07-10 22:39:35</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4c076fd71baea6103b5e657fe54bcb86</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>HAISP Request Facility Change</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_4c076fd71baea6103b5e657fe54bcb86</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-07-11 16:28:43</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value=""/>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="HSI Academy" name="HSI Academy">677f16d81b17e614065762cae54bcbdf</category>
+<collection>x_g_dh5_hsisat_class</collection>
+<condition table="x_g_dh5_hsisat_class">state=3^EQ<item goto="false" or="false" field="state" endquery="false" value="3" operator="=" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">Instructor assignments for ${mail_script:haisp_class_scheduled} have been scheduled. Please review at your earliest convivence.&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>HAISP Schedule Instructor Assignments</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>class_coordinator_user_id</recipient_fields>
+<recipient_groups>b2eef24a1b88e6503b5e657fe54bcb64,809ef60a1b88e6503b5e657fe54bcbeb,3e7e360a1b88e6503b5e657fe54bcb14</recipient_groups>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>Instructor assignments for ${class_number} are ready for review </subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JMCumbee</sys_created_by>
+<sys_created_on>2025-09-10 20:29:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>45db12571b336ad05c8ccbb6624bcb35</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>HAISP Schedule Instructor Assignments</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_45db12571b336ad05c8ccbb6624bcb35</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:02:57</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor</collection>
+<condition table="x_g_dh5_hsisat_instructor"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>An Instructor Profile has been created for ${first_name} ${last_name} in HAISP. Please review the profile to ensure all information is accurate.</p>
+<p>${mail_script:pcts_instructor_links}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Instructor Profile Is Created</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>An Instructor Profile has been created for ${first_name} ${last_name}</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JHudson1</sys_created_by>
+<sys_created_on>2025-07-31 19:05:12</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>6aaf3e4a1b8f26d03b5e657fe54bcbf7</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>Instructor Profile Is Created</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_6aaf3e4a1b8f26d03b5e657fe54bcbf7</sys_update_name>
+<sys_updated_by>JNWurm</sys_updated_by>
+<sys_updated_on>2025-08-05 19:38:15</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${instructor_id.user_id} has submitted a ${certification_code.name} certification request. Please review the request ${mail_script:Instructor_profile_link_certification} for additional information.&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Instructor Submits Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject> A Certification has been submitted and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-08 13:32:32</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4ae8666a1b73ee905c8ccbb6624bcb33</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_name>Instructor Submits Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_4ae8666a1b73ee905c8ccbb6624bcb33</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-17 20:36:30</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${instructor_id.user_id} has submitted a ${skill_code.name} knowledge area request. Please review the request ${mail_script:Instructor_profile_link_knowledge} for additional information.&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Instructor submits knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A knowledge area has been submitted and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-08 13:38:54</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>6a2bea6e1b73ee905c8ccbb6624bcba1</sys_id>
+<sys_mod_count>4</sys_mod_count>
+<sys_name>Instructor submits knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_6a2bea6e1b73ee905c8ccbb6624bcba1</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-17 20:37:33</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>true</action_insert>
+<action_update>false</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_schedule</collection>
+<condition table="x_g_dh5_hsisat_instructor_schedule">unavailability_type=TO^EQ<item goto="false" or="false" field="unavailability_type" endquery="false" value="TO" operator="=" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${instructor_id} has submitted a time off request for your review. Please review this request and take action as soon as possible so this instructor can proceed with next steps. To review this request click ${mail_script:Timeoff_request_link}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Notify Section chief on time off request</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>${instructor_id.aor_code.name}:  ${instructor_id} has submitted a time off request for your review</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-08-28 15:57:56</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>e261a6871be3e6105c8ccbb6624bcbf7</sys_id>
+<sys_mod_count>12</sys_mod_count>
+<sys_name>Notify Section chief on time off request</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_e261a6871be3e6105c8ccbb6624bcbf7</sys_update_name>
+<sys_updated_by>LSingh</sys_updated_by>
+<sys_updated_on>2025-09-05 18:45:58</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification">statusCHANGESTOUNIT_CHIEF^EQ<item goto="false" or="false" field="status" endquery="false" value="UNIT_CHIEF" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${instructor_id.user_id} has submitted a ${certification_code} certification request. ${instructor_id.manager_id} has reviewed and approved the request. The request needs your final review and approval. Please review the request ${mail_script:Instructor_profile_link_certification} for additional information.</p>
+<p style="font-family: calibri; font-size: 12pt;">&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">${mail_script:haisp_cc_instructor}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Section Chief Approves Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.branch_chief_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>The ${instructor_id.aor_code} Certification has been submitted and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-11 08:33:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>b622cde31b376ad03b5e657fe54bcb07</sys_id>
+<sys_mod_count>9</sys_mod_count>
+<sys_name>Section Chief Approves Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_b622cde31b376ad03b5e657fe54bcb07</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:10:10</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill">statusCHANGESTOUNIT_CHIEF^EQ<item goto="false" or="false" field="status" endquery="false" value="UNIT_CHIEF" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${instructor_id.user_id} has submitted a ${skill_code} knowledge area request. ${instructor_id.manager_id} has reviewed and approved the request. The request needs your final review and approval. Please review the request ${mail_script:Instructor_profile_link_knowledge}&nbsp; for additional information.</p>
+<p style="font-family: calibri; font-size: 12pt;">&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">${mail_script:haisp_cc_instructor}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Section Chief Approves Knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.branch_chief_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>The ${instructor_id.aor_code} Knowledge Area has been submitted and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-13 01:00:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>92ade1801bc832145c8ccbb6624bcb6f</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Section Chief Approves Knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_92ade1801bc832145c8ccbb6624bcb6f</sys_update_name>
+<sys_updated_by>JCMoldes</sys_updated_by>
+<sys_updated_on>2025-09-13 01:17:41</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification">statusCHANGESTOREJECTED^EQ<item goto="false" or="false" field="status" endquery="false" value="REJECTED" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${certification_code} Certification has been rejected. The reason for the rejection is, ${mail_script:unit_chief_rejected_comments}.<br>Please make any updates needed and resubmit request. click ${mail_script:Instructor_profile_link}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Section Chief Rejects Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A Certification has been rejected and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-04 14:23:11</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>dc2f8a991b7fee503b5e657fe54bcbc8</sys_id>
+<sys_mod_count>14</sys_mod_count>
+<sys_name>Section Chief Rejects Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_dc2f8a991b7fee503b5e657fe54bcbc8</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-18 16:20:13</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill">statusCHANGESTOREJECTED^EQ<item goto="false" or="false" field="status" endquery="false" value="REJECTED" operator="CHANGESTO" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</condition>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>engine</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p style="font-family: calibri; font-size: 12pt;">${skill_code} Knowledge Skill has been rejected. The reason for the rejection is,<br>${mail_script:unit_chief_rejected_comments}.&nbsp;</p>
+<p style="font-family: calibri; font-size: 12pt;">Please make any updates needed and resubmit request. click ${mail_script:Instructor_profile_link}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Section Chief Rejects Knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A Knowledge Area has been rejected and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>JCMoldes</sys_created_by>
+<sys_created_on>2025-09-11 08:40:58</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>27e3812b1b376ad03b5e657fe54bcb62</sys_id>
+<sys_mod_count>21</sys_mod_count>
+<sys_name>Section Chief Rejects Knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_27e3812b1b376ad03b5e657fe54bcb62</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-18 16:20:28</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${instructor_id} has submitted a ${certification_code.name} certification request. ${instructor_id.branch_chief_id} has reviewed and approved the request. It has now been added to your Instructor Profile and can be reviewed ${mail_script:instructor_profile_link}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Unit Chief Approves Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email,instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A ${instructor_id.aor_code.name}  Certification has been approved for  ${instructor_id}</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-04 13:45:16</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>49360e511bfbee503b5e657fe54bcb6c</sys_id>
+<sys_mod_count>20</sys_mod_count>
+<sys_name>Unit Chief Approves Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_49360e511bfbee503b5e657fe54bcb6c</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-16 15:15:13</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value=""/>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${instructor_id} has submitted a ${skill_code.name} knowledge area request. ${instructor_id.branch_chief_id.name} has reviewed and approved the request. It has now been added to your Instructor Profile and can be reviewed ${mail_script:instructor_profile_link}&nbsp;&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Unit Chief Approves Knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email,instructor_id.manager_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A ${instructor_id.aor_code} Knowledge Area has been approved for ${instructor_id}</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-10 18:58:24</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>9aa7065f1b33e6d03b5e657fe54bcb55</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>Unit Chief Approves Knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_9aa7065f1b33e6d03b5e657fe54bcb55</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-17 21:34:53</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value=""/>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_certification</collection>
+<condition table="x_g_dh5_hsisat_instructor_certification"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${certification_code.name} Certification has been rejected. The reason for the rejection is,</p>
+<p>${mail_script:unit_chief_rejected_comments}.&nbsp; &nbsp;Please make any updates needed and resubmit request. click ${mail_script:Instructor_profile_link}&nbsp;</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Unit Chief Rejects Certification</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.manager_email,instructor_id.email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A Certification has been rejected and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-05 18:12:24</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>e32d04bd1b7766903b5e657fe54bcb5c</sys_id>
+<sys_mod_count>12</sys_mod_count>
+<sys_name>Unit Chief Rejects Certification</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_e32d04bd1b7766903b5e657fe54bcb5c</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-18 16:20:49</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+<sysevent_email_action action="INSERT_OR_UPDATE">
+<action_insert>false</action_insert>
+<action_update>true</action_update>
+<active>true</active>
+<advanced_condition/>
+<affected_field_on_event/>
+<category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
+<collection>x_g_dh5_hsisat_instructor_skill</collection>
+<condition table="x_g_dh5_hsisat_instructor_skill"/>
+<content_type>text/html</content_type>
+<default_interval display_value=""/>
+<description/>
+<digest_from/>
+<digest_html/>
+<digest_reply_to/>
+<digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>]]></digest_separator_html>
+<digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+<digest_subject/>
+<digest_template display_value=""/>
+<digest_text/>
+<digestable>false</digestable>
+<enable_dynamic_translation>false</enable_dynamic_translation>
+<event_name>access_request.approved</event_name>
+<event_parm_1>false</event_parm_1>
+<event_parm_2>false</event_parm_2>
+<exclude_delegates>false</exclude_delegates>
+<force_delivery>false</force_delivery>
+<from/>
+<generation_type>triggered</generation_type>
+<importance/>
+<include_attachments>false</include_attachments>
+<item>event.parm1</item>
+<item_table/>
+<mandatory>false</mandatory>
+<message/>
+<message_html><![CDATA[<p>${skill_code.name} knowledge area has been rejected. The reason for the rejection is, ${mail_script:unit_chief_rejected_comments}.&nbsp;</p>
+<p>Please make any updates needed and resubmit request. ${mail_script:knowlege_link_for_reject}</p>]]></message_html>
+<message_list/>
+<message_text/>
+<name>Unit Chief Rejects Knowledge</name>
+<omit_watermark>false</omit_watermark>
+<order>100</order>
+<push_message_only>false</push_message_only>
+<recipient_fields>instructor_id.email,instructor_id.manager_email</recipient_fields>
+<recipient_groups/>
+<recipient_users/>
+<reply_to/>
+<send_self>true</send_self>
+<sms_alternate/>
+<style display_value=""/>
+<subject>A knowledge area has been rejected and needs to be reviewed</subject>
+<subscribable>false</subscribable>
+<sys_class_name>sysevent_email_action</sys_class_name>
+<sys_created_by>LSingh</sys_created_by>
+<sys_created_on>2025-09-10 18:38:43</sys_created_on>
+<sys_customer_update>false</sys_customer_update>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>4e238adf1bffa6d03b5e657fe54bcb2f</sys_id>
+<sys_mod_count>7</sys_mod_count>
+<sys_name>Unit Chief Rejects Knowledge</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="HSI Academy Instructor Scheduling Portal" source="x_g_dh5_hsisat">4fa2b1261b1fda50065762cae54bcb72</sys_package>
+<sys_policy/>
+<sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+<sys_scope display_value="HSI Academy Instructor Scheduling Portal">4fa2b1261b1fda50065762cae54bcb72</sys_scope>
+<sys_update_name>sysevent_email_action_4e238adf1bffa6d03b5e657fe54bcb2f</sys_update_name>
+<sys_updated_by>JMCumbee</sys_updated_by>
+<sys_updated_on>2025-09-18 16:21:04</sys_updated_on>
+<sys_version>2</sys_version>
+<template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+<type>email</type>
+<weight>0</weight>
+</sysevent_email_action>
+</unload>
