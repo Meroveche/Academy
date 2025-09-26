@@ -1,0 +1,27 @@
+------------------------  HTML  ------------------------------
+<div ng-if="!c.data.isStudent">
+  <sp-widget widget="data.announcements"></sp-widget>
+  <sp-widget widget="data.courses"></sp-widget>
+</div>
+
+-------------------------   SERVER -------------------------
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.isStudent = (SecurityUtils.isStudentUser() && !gs.hasRole('admin'));
+
+	data.announcements = $sp.getWidget('hsi-announcements');
+	data.courses = $sp.getWidget('hsi-courses');
+})();
+
+--------------------- CLIENT ---------------------------
+api.controller=function() {
+  /* widget controller */
+  var c = this;
+};
+
+------------- CSS --------------------------
+img {
+  max-width: 100%;
+}
+
