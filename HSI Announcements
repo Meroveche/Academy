@@ -1,0 +1,102 @@
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"> Announcements </h3>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="announcement in data.announcements" class="panel panel-{{announcement.type}}" role="alert">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          {{announcement.announcement_for}} Announcement
+        </h4>
+      </div>
+      <div class="panel-body" ng-bind-html="announcement.content"></div>
+    </div>
+    <p ng-if="!data.announcements.length"> There are currently no active announcements. </p>
+  </div>
+</section>
+
+
+
+------------------------------------------  SERVER --------------------------------------------------
+(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.announcements = [];
+	
+	const today = new GlideDate().getValue();
+	
+	const announcementGR = new GlideRecord(Constants.ANNOUNCEMENT_TABLE);
+	announcementGR.addQuery("start_date", "<=", today);
+	announcementGR.addQuery("end_date", ">=", today);
+	let query = Constants.VALUE_EMPTY;
+	if (SecurityUtils.isInstructor()) {
+		const courseGA = new GlideAggregate(Constants.COURSE_INSTRUCTOR_TABLE);
+		courseGA.addQuery("instructor_id.user_id", gs.getUserID());
+		courseGA.addAggregate("COUNT");
+		courseGA.groupBy("course_id.class_id");
+		courseGA.query();
+		const classIds = [];
+		while (courseGA.next()) {
+  		classIds.push(courseGA.getValue("course_id.class_id"));
+		}
+		
+		query = "announcement_for=academy^ORclassIN" + classIds;
+	} else if (SecurityUtils.isStudent()) {
+		const enrollmentGR = new GlideRecord(Constants.CLASS_ENROLLMENT_TABLE);
+		enrollmentGR.addQuery("student_id.user_id", gs.getUserID());
+		enrollmentGR.query();
+		const classIds = [];
+		while (enrollmentGR.next()) {
+			classIds.push(enrollmentGR.getValue("class_id"));
+		}
+		
+		query = "announcement_for=academy^ORclassIN" + classIds;
+	}
+	if (GeneralUtils.hasValue(query)) {
+		announcementGR.addEncodedQuery(query);
+	}
+	announcementGR.orderByDesc("end_date");
+	announcementGR.query();
+	while (announcementGR.next()) {
+		data.announcements.push({
+			type: announcementGR.getValue("type"),
+			content: announcementGR.getValue("content"),
+			announcement_for: announcementGR.getDisplayValue("announcement_for") + (announcementGR.getValue("announcement_for") === "class" ? (" " + announcementGR.getDisplayValue("class")) : ""),																																	
+		});
+	}
+})();
+
+--------------------- CLIENT ------------------------------------
+
+api.controller=function() {
+  /* widget controller */
+  var c = this;
+};
+
+
+-------------------- CSS
+
+.alert a {
+  font-weight: 700;
+}
+
+.alert-success a {
+  color: darken($brand-success, 20%);
+}
+
+.alert-info a {
+  color: darken($brand-info, 20%);
+}
+
+.alert-warning a {
+  color: darken($state-warning-text, 20%);
+}
+
+.alert-danger a {
+  color: darken($brand-danger, 20%);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
