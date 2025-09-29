@@ -1,0 +1,14 @@
+<div>
+  <div class="panel panel-{{::options.color}} b">
+    <div class="panel-heading">
+      <h4 class="panel-title">${Details for {{::task.table}} {{::task.number.display_value}}}</h4>
+    </div>
+    <div class="panel-body">
+      <fieldset disabled>
+        <sp-model form-model="data.f" mandatory="mandatory"></sp-model>
+      </fieldset>
+      
+      <sp-widget widget="data.ticketConversation"></sp-widget>
+    </div>
+  </div>
+</div>
