@@ -1,0 +1,69 @@
+TABLE OF CONTENTS
+Change History	1
+1	Pre-Installation	3
+1.1	Impact/Dependencies	4
+1.2	Software Inventory	4
+1.3	Accounts	4
+2	Installation Process	4
+2.1	Install/Upgrade the HSI Academy Instructor Scheduling Portal	4
+2.2	Install the HSI Academy Instructor Scheduling Portal Application Global update set	4
+2.3	Import data	5
+2.4	Final Verification	5
+3	Smoke Testing	5
+4	Contingency Plan	5
+4.1	Restoring the Application	5
+
+ 
+1	PRE-INSTALLATION
+1.1	IMPACT/DEPENDENCIES
+The installation of this release will not impact other applications hosted within the ICE instances of ServiceNow.
+While this is a Custom Scoped Application, there should be little technical risk with the installation due to notifications and general access being limited to users with reporting and/or system administrators rights.
+The verification and validation of the system has been performed in the TEST instances. Further verification and validation will occur in the Production instances on the go-live date.
+1.2	SOFTWARE INVENTORY
+Installable application features are located in the ServiceNow Application Repository and a set Global Update Sets. The update sets are outlined below in 2.2
+1.3	ACCOUNTS
+Installation requires the ServiceNow `admin` role to perform the necessary steps.
+
+2	INSTALLATION PROCESS
+2.1	INSTALL/UPGRADE THE HSI ACADEMY INSTRUCTOR SCHEDULING PORTAL
+1.	From the instance, navigate to My Company Applications.
+2.	Select the HSI Academy Instructor Scheduling Portal application.
+3.	On the right hand side, next to the version number, click the down arrow button and select version 1.2.2.
+4.	If a message appears asking about subscriptions, you may ignore that and continue the update.
+5.	Review the sys_upgrade_history after the app has been installed to see if there are any skipped changes that need to be reviewed
+2.2	INSTALL THE HSI ACADEMY INSTRUCTOR SCHEDULING PORTAL APPLICATION GLOBAL UPDATE SET
+1.	Download the Global Update set from Test: HAISP-GLOBALS-1.0.0 | Update Set | ICE Service Desk 
+a.	Navigate to the HAISP-GLOBALS-1.0.0 update set on test (use the link above)
+b.	On the HAISP-GLOBALS-1.0.0 page, click on the Export Update Set Batch to XML related link and download the update set
+2.	In the Production instance, navigate to Retrieved Update sets.
+3.	Scroll down to the bottom and click the Retrieve Completed Update Sets related link
+4.	Select and load the update downloaded in step 1.
+5.	After the upload has completed, in Retrieved Update Sets, locate and click on the HAISP-GLOBALS-1.0.0 update set (its state will be loaded).
+6.	In Click the Preview button, and if no errors, commit. 
+a.	If errors are listed, address each one (typically accept remote update).
+7.	Once issues from the Preview have been addressed – if any, click Commit.
+8.	Perform steps 1 – 7 for the HAISP_GLOBAL_BATCH_Version_1.2.0 update set.
+9.	Once the commits are complete, continue to the next section.
+2.3	IMPORT DATA
+•	Import the following xml data/lists:
+a.	Instructor Role Codes
+b.	Uniform Codes
+c.	AOR/Unit Codes
+d.	Facilities
+e.	Facility Codes
+f.	Certifications Codes (already added to Production)
+g.	Knowledge/Skill Codes (already added to Production)
+2.4	FINAL VERIFICATION
+•	Developers should thoroughly test all updates - all associated flows, forms, and notifications to ensure they are working as expected in Production.
+•	Validate all existing configurations (e.g., system properties, etc.) to ensure they have the correct values for the Production instance.
+•	Validate that all forms, flows, and portal pages are accurate and aligned with the approved version.
+•	Review the system logs post-implementation to ensure no errors or unexpected warnings are present.
+
+3	SMOKE TESTING
+•	The development team should conduct testing of the Production system once all updates have been completed.
+
+4	CONTINGENCY PLAN
+4.1	RESTORING THE APPLICATION
+
+•	You can roll back the last installation or upgrade of all applications that are installed from the application store or repository. Rolling back an installation enables you to make needed changes to artifacts associated with an application before you publish and install it again. To Roll Back to an earlier version, go to My Company Applications, select the HSI Academy Instructor Scheduling Portal, click into the application (not the version as before), in the Related Links, click Roll back.
+
